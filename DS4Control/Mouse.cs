@@ -12,7 +12,7 @@ namespace DS4Windows
         protected Touch firstTouch, secondTouch;
         private DS4State s = new DS4State();
         protected int deviceNum;
-        private DS4Device dev = null;
+        private MiDevice dev = null;
         private readonly MouseCursor cursor;
         private readonly MouseWheel wheel;
         private bool tappedOnce = false, secondtouchbegin = false;
@@ -21,10 +21,10 @@ namespace DS4Windows
         public bool slideleft, slideright;
         // touch area stuff
         public bool leftDown, rightDown, upperDown, multiDown;
-        protected DS4Controls pushed = DS4Controls.None;
+        protected MiControls pushed = MiControls.None;
         protected Mapping.Click clicked = Mapping.Click.None;
 
-        public Mouse(int deviceID, DS4Device d)
+        public Mouse(int deviceID, MiDevice d)
         {
             deviceNum = deviceID;
             dev = d;
@@ -133,48 +133,48 @@ namespace DS4Windows
         private DS4State remapped = new DS4State();
         private void synthesizeMouseButtons()
         {
-            if (Global.getCustomButton(deviceNum, DS4Controls.TouchLeft) == X360Controls.None &&
-                Global.getCustomMacro(deviceNum, DS4Controls.TouchLeft) == "0" &&
-                    Global.getCustomKey(deviceNum, DS4Controls.TouchLeft) == 0 &&
-                leftDown)
-                Mapping.MapClick(deviceNum, Mapping.Click.Left);
-            if (Global.getCustomButton(deviceNum, DS4Controls.TouchUpper) == X360Controls.None &&
-                Global.getCustomMacro(deviceNum, DS4Controls.TouchUpper) == "0" &&
-                    Global.getCustomKey(deviceNum, DS4Controls.TouchUpper) == 0 &&
-                upperDown)
-                Mapping.MapClick(deviceNum, Mapping.Click.Middle);
-            if (Global.getCustomButton(deviceNum, DS4Controls.TouchRight) == X360Controls.None &&
-                Global.getCustomMacro(deviceNum, DS4Controls.TouchRight) == "0" &&
-                    Global.getCustomKey(deviceNum, DS4Controls.TouchRight) == 0 &&
-                rightDown)
-                Mapping.MapClick(deviceNum, Mapping.Click.Left);
-            if (Global.getCustomButton(deviceNum, DS4Controls.TouchMulti) == X360Controls.None &&
-                Global.getCustomMacro(deviceNum, DS4Controls.TouchMulti) == "0" &&
-                    Global.getCustomKey(deviceNum, DS4Controls.TouchMulti) == 0 &&
-                multiDown)
-                Mapping.MapClick(deviceNum, Mapping.Click.Right);
-            if (!Global.UseTPforControls[deviceNum])
-            {
-                if (tappedOnce)
-                {
-                    DateTime tester = DateTime.Now;
-                    if (tester > (TimeofEnd + TimeSpan.FromMilliseconds((double)(Global.TapSensitivity[deviceNum]) * 1.5)))
-                    {
-                        Mapping.MapClick(deviceNum, Mapping.Click.Left);
-                        tappedOnce = false;
-                    }
-                    //if it fails the method resets, and tries again with a new tester value (gives tap a delay so tap and hold can work)
-                }
-                if (secondtouchbegin) //if tap and hold (also works as double tap)
-                    Mapping.MapClick(deviceNum, Mapping.Click.Left);
-            }
+            //if (Global.getCustomButton(deviceNum, MiControls.TouchLeft) == X360Controls.None &&
+            //    Global.getCustomMacro(deviceNum, MiControls.TouchLeft) == "0" &&
+            //        Global.getCustomKey(deviceNum, MiControls.TouchLeft) == 0 &&
+            //    leftDown)
+            //    Mapping.MapClick(deviceNum, Mapping.Click.Left);
+            //if (Global.getCustomButton(deviceNum, MiControls.TouchUpper) == X360Controls.None &&
+            //    Global.getCustomMacro(deviceNum, MiControls.TouchUpper) == "0" &&
+            //        Global.getCustomKey(deviceNum, MiControls.TouchUpper) == 0 &&
+            //    upperDown)
+            //    Mapping.MapClick(deviceNum, Mapping.Click.Middle);
+            //if (Global.getCustomButton(deviceNum, MiControls.TouchRight) == X360Controls.None &&
+            //    Global.getCustomMacro(deviceNum, MiControls.TouchRight) == "0" &&
+            //        Global.getCustomKey(deviceNum, MiControls.TouchRight) == 0 &&
+            //    rightDown)
+            //    Mapping.MapClick(deviceNum, Mapping.Click.Left);
+            //if (Global.getCustomButton(deviceNum, MiControls.TouchMulti) == X360Controls.None &&
+            //    Global.getCustomMacro(deviceNum, MiControls.TouchMulti) == "0" &&
+            //        Global.getCustomKey(deviceNum, MiControls.TouchMulti) == 0 &&
+            //    multiDown)
+            //    Mapping.MapClick(deviceNum, Mapping.Click.Right);
+            //if (!Global.UseTPforControls[deviceNum])
+            //{
+            //    if (tappedOnce)
+            //    {
+            //        DateTime tester = DateTime.Now;
+            //        if (tester > (TimeofEnd + TimeSpan.FromMilliseconds((double)(Global.TapSensitivity[deviceNum]) * 1.5)))
+            //        {
+            //            Mapping.MapClick(deviceNum, Mapping.Click.Left);
+            //            tappedOnce = false;
+            //        }
+            //        //if it fails the method resets, and tries again with a new tester value (gives tap a delay so tap and hold can work)
+            //    }
+            //    if (secondtouchbegin) //if tap and hold (also works as double tap)
+            //        Mapping.MapClick(deviceNum, Mapping.Click.Left);
+            //}
             s = remapped;
             //remapped.CopyTo(s);
         }
 
         public virtual void touchButtonUp(object sender, TouchpadEventArgs arg)
         {
-            pushed = DS4Controls.None;
+            pushed = MiControls.None;
             upperDown = leftDown = rightDown = multiDown = false;
             dev.setRumble(0, 0);
             dev.getCurrentState(s);

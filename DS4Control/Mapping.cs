@@ -308,43 +308,43 @@ namespace DS4Windows
             }
         }
 
-        public static int DS4ControltoInt(DS4Controls ctrl)
+        public static int DS4ControltoInt(MiControls ctrl)
         {
             switch (ctrl)
             {
-                case DS4Controls.Share: return 1;
-                case DS4Controls.Options: return 2;
-                case DS4Controls.L1: return 3;
-                case DS4Controls.R1: return 4;
-                case DS4Controls.L3: return 5;
-                case DS4Controls.R3: return 6;
-                case DS4Controls.DpadUp: return 7;
-                case DS4Controls.DpadDown: return 8;
-                case DS4Controls.DpadLeft: return 9;
-                case DS4Controls.DpadRight: return 10;
-                case DS4Controls.PS: return 11;
-                case DS4Controls.Cross: return 12;
-                case DS4Controls.Square: return 13;
-                case DS4Controls.Triangle: return 14;
-                case DS4Controls.Circle: return 15;
-                case DS4Controls.LXNeg: return 16;
-                case DS4Controls.LYNeg: return 17;
-                case DS4Controls.RXNeg: return 18;
-                case DS4Controls.RYNeg: return 19;
-                case DS4Controls.LXPos: return 20;
-                case DS4Controls.LYPos: return 21;
-                case DS4Controls.RXPos: return 22;
-                case DS4Controls.RYPos: return 23;
-                case DS4Controls.L2: return 24;
-                case DS4Controls.R2: return 25;
-                case DS4Controls.TouchMulti: return 26;
-                case DS4Controls.TouchLeft: return 27;
-                case DS4Controls.TouchRight: return 28;
-                case DS4Controls.TouchUpper: return 29;
-                case DS4Controls.GyroXNeg: return 30;
-                case DS4Controls.GyroXPos: return 31;
-                case DS4Controls.GyroZNeg: return 32;
-                case DS4Controls.GyroZPos: return 33;
+                case MiControls.Menu: return 1;
+                case MiControls.Back: return 2;
+                case MiControls.L1: return 3;
+                case MiControls.R1: return 4;
+                case MiControls.LS: return 5;
+                case MiControls.RS: return 6;
+                case MiControls.DpadUp: return 7;
+                case MiControls.DpadDown: return 8;
+                case MiControls.DpadLeft: return 9;
+                case MiControls.DpadRight: return 10;
+                case MiControls.HomeSimulated: return 11;
+                case MiControls.A: return 12;
+                case MiControls.X: return 13;
+                case MiControls.Y: return 14;
+                case MiControls.B: return 15;
+                case MiControls.LXNeg: return 16;
+                case MiControls.LYNeg: return 17;
+                case MiControls.RXNeg: return 18;
+                case MiControls.RYNeg: return 19;
+                case MiControls.LXPos: return 20;
+                case MiControls.LYPos: return 21;
+                case MiControls.RXPos: return 22;
+                case MiControls.RYPos: return 23;
+                case MiControls.LT: return 24;
+                case MiControls.RT: return 25;
+                //case MiControls.TouchMulti: return 26;
+                //case MiControls.TouchLeft: return 27;
+                //case MiControls.TouchRight: return 28;
+                //case MiControls.TouchUpper: return 29;
+                //case MiControls.GyroXNeg: return 30;
+                //case MiControls.GyroXPos: return 31;
+                //case MiControls.GyroZNeg: return 32;
+                //case MiControls.GyroZPos: return 33;
             }
             return 0; 
         }
@@ -475,41 +475,41 @@ namespace DS4Windows
             if (Global.GetActions().Count > 0 && (Global.ProfileActions[device].Count > 0 ||
                 !string.IsNullOrEmpty(Global.tempprofilename[device])))
                 MapCustomAction(device, cState, MappedState, eState, tp, ctrl);
-            if (ctrl.DS4Controllers[device] == null) return;
+            if (ctrl.MiControllers[device] == null) return;
             switch (Global.ShiftModifier[device])
             {
-                case 1: shift = getBoolMapping(DS4Controls.Cross, cState, eState, tp); break;
-                case 2: shift = getBoolMapping(DS4Controls.Circle, cState, eState, tp); break;
-                case 3: shift = getBoolMapping(DS4Controls.Square, cState, eState, tp); break;
-                case 4: shift = getBoolMapping(DS4Controls.Triangle, cState, eState, tp); break;
-                case 5: shift = getBoolMapping(DS4Controls.Options, cState, eState, tp); break;
-                case 6: shift = getBoolMapping(DS4Controls.Share, cState, eState, tp); break;
-                case 7: shift = getBoolMapping(DS4Controls.DpadUp, cState, eState, tp); break;
-                case 8: shift = getBoolMapping(DS4Controls.DpadDown, cState, eState, tp); break;
-                case 9: shift = getBoolMapping(DS4Controls.DpadLeft, cState, eState, tp); break;
-                case 10: shift = getBoolMapping(DS4Controls.DpadRight, cState, eState, tp); break;
-                case 11: shift = getBoolMapping(DS4Controls.PS, cState, eState, tp); break;
-                case 12: shift = getBoolMapping(DS4Controls.L1, cState, eState, tp); break;
-                case 13: shift = getBoolMapping(DS4Controls.R1, cState, eState, tp); break;
-                case 14: shift = getBoolMapping(DS4Controls.L2, cState, eState, tp); break;
-                case 15: shift = getBoolMapping(DS4Controls.R2, cState, eState, tp); break;
-                case 16: shift = getBoolMapping(DS4Controls.L3, cState, eState, tp); break;
-                case 17: shift = getBoolMapping(DS4Controls.R3, cState, eState, tp); break;
-                case 18: shift = getBoolMapping(DS4Controls.TouchLeft, cState, eState, tp); break;
-                case 19: shift = getBoolMapping(DS4Controls.TouchUpper, cState, eState, tp); break;
-                case 20: shift = getBoolMapping(DS4Controls.TouchMulti, cState, eState, tp); break;
-                case 21: shift = getBoolMapping(DS4Controls.TouchRight, cState, eState, tp); break;
-                case 22: shift = getBoolMapping(DS4Controls.GyroZNeg, cState, eState, tp); break;
-                case 23: shift = getBoolMapping(DS4Controls.GyroZPos, cState, eState, tp); break;
-                case 24: shift = getBoolMapping(DS4Controls.GyroXPos, cState, eState, tp); break;
-                case 25: shift = getBoolMapping(DS4Controls.GyroXNeg, cState, eState, tp); break;
-                case 26: shift = cState.Touch1; break;
+                case 1: shift = getBoolMapping(MiControls.A, cState, eState, tp); break;
+                case 2: shift = getBoolMapping(MiControls.B, cState, eState, tp); break;
+                case 3: shift = getBoolMapping(MiControls.X, cState, eState, tp); break;
+                case 4: shift = getBoolMapping(MiControls.Y, cState, eState, tp); break;
+                case 5: shift = getBoolMapping(MiControls.Back, cState, eState, tp); break;
+                case 6: shift = getBoolMapping(MiControls.Menu, cState, eState, tp); break;
+                case 7: shift = getBoolMapping(MiControls.DpadUp, cState, eState, tp); break;
+                case 8: shift = getBoolMapping(MiControls.DpadDown, cState, eState, tp); break;
+                case 9: shift = getBoolMapping(MiControls.DpadLeft, cState, eState, tp); break;
+                case 10: shift = getBoolMapping(MiControls.DpadRight, cState, eState, tp); break;
+                case 11: shift = getBoolMapping(MiControls.HomeSimulated, cState, eState, tp); break;
+                case 12: shift = getBoolMapping(MiControls.L1, cState, eState, tp); break;
+                case 13: shift = getBoolMapping(MiControls.R1, cState, eState, tp); break;
+                case 14: shift = getBoolMapping(MiControls.LT, cState, eState, tp); break;
+                case 15: shift = getBoolMapping(MiControls.RT, cState, eState, tp); break;
+                case 16: shift = getBoolMapping(MiControls.LS, cState, eState, tp); break;
+                case 17: shift = getBoolMapping(MiControls.RS, cState, eState, tp); break;
+                //case 18: shift = getBoolMapping(MiControls.TouchLeft, cState, eState, tp); break;
+                //case 19: shift = getBoolMapping(MiControls.TouchUpper, cState, eState, tp); break;
+                //case 20: shift = getBoolMapping(MiControls.TouchMulti, cState, eState, tp); break;
+                //case 21: shift = getBoolMapping(MiControls.TouchRight, cState, eState, tp); break;
+                //case 22: shift = getBoolMapping(MiControls.GyroZNeg, cState, eState, tp); break;
+                //case 23: shift = getBoolMapping(MiControls.GyroZPos, cState, eState, tp); break;
+                //case 24: shift = getBoolMapping(MiControls.GyroXPos, cState, eState, tp); break;
+                //case 25: shift = getBoolMapping(MiControls.GyroXNeg, cState, eState, tp); break;
+                //case 26: shift = cState.Touch1; break;
                 default: shift = false; break;
             }
             cState.CopyTo(MappedState);
             if (shift)
                 MapShiftCustom(device, cState, MappedState, eState, tp);
-            foreach (KeyValuePair<DS4Controls, string> customKey in Global.getCustomMacros(device))
+            foreach (KeyValuePair<MiControls, string> customKey in Global.getCustomMacros(device))
             {
                 if (shift == false ||
                     (Global.getShiftCustomMacro(device, customKey.Key) == "0" &&
@@ -528,7 +528,7 @@ namespace DS4Windows
                     }
                 }
             }
-            foreach (KeyValuePair<DS4Controls, ushort> customKey in Global.getCustomKeys(device))
+            foreach (KeyValuePair<MiControls, ushort> customKey in Global.getCustomKeys(device))
             {
                 if (shift == false ||
                     (Global.getShiftCustomMacro(device, customKey.Key) == "0" &&
@@ -564,32 +564,32 @@ namespace DS4Windows
 
             //Dictionary<DS4Controls, X360Controls> customButtons = Global.getCustomButtons(device);
             //foreach (KeyValuePair<DS4Controls, X360Controls> customButton in customButtons)
-            List<DS4Controls> Cross = new List<DS4Controls>();
-            List<DS4Controls> Circle = new List<DS4Controls>();
-            List<DS4Controls> Square = new List<DS4Controls>();
-            List<DS4Controls> Triangle = new List<DS4Controls>();
-            List<DS4Controls> Options = new List<DS4Controls>();
-            List<DS4Controls> Share = new List<DS4Controls>();
-            List<DS4Controls> DpadUp = new List<DS4Controls>();
-            List<DS4Controls> DpadDown = new List<DS4Controls>();
-            List<DS4Controls> DpadLeft = new List<DS4Controls>();
-            List<DS4Controls> DpadRight = new List<DS4Controls>();
-            List<DS4Controls> PS = new List<DS4Controls>();
-            List<DS4Controls> L1 = new List<DS4Controls>();
-            List<DS4Controls> R1 = new List<DS4Controls>();
-            List<DS4Controls> L2 = new List<DS4Controls>();
-            List<DS4Controls> R2 = new List<DS4Controls>();
-            List<DS4Controls> L3 = new List<DS4Controls>();
-            List<DS4Controls> R3 = new List<DS4Controls>();
-            List<DS4Controls> LXN = new List<DS4Controls>();
-            List<DS4Controls> LXP = new List<DS4Controls>();
-            List<DS4Controls> LYN = new List<DS4Controls>();
-            List<DS4Controls> LYP = new List<DS4Controls>();
-            List<DS4Controls> RXN = new List<DS4Controls>();
-            List<DS4Controls> RXP = new List<DS4Controls>();
-            List<DS4Controls> RYN = new List<DS4Controls>();
-            List<DS4Controls> RYP = new List<DS4Controls>();
-            foreach (KeyValuePair<DS4Controls, X360Controls> customButton in Global.getCustomButtons(device))
+            List<MiControls> Cross = new List<MiControls>();
+            List<MiControls> Circle = new List<MiControls>();
+            List<MiControls> Square = new List<MiControls>();
+            List<MiControls> Triangle = new List<MiControls>();
+            List<MiControls> Options = new List<MiControls>();
+            List<MiControls> Share = new List<MiControls>();
+            List<MiControls> DpadUp = new List<MiControls>();
+            List<MiControls> DpadDown = new List<MiControls>();
+            List<MiControls> DpadLeft = new List<MiControls>();
+            List<MiControls> DpadRight = new List<MiControls>();
+            List<MiControls> PS = new List<MiControls>();
+            List<MiControls> L1 = new List<MiControls>();
+            List<MiControls> R1 = new List<MiControls>();
+            List<MiControls> L2 = new List<MiControls>();
+            List<MiControls> R2 = new List<MiControls>();
+            List<MiControls> L3 = new List<MiControls>();
+            List<MiControls> R3 = new List<MiControls>();
+            List<MiControls> LXN = new List<MiControls>();
+            List<MiControls> LXP = new List<MiControls>();
+            List<MiControls> LYN = new List<MiControls>();
+            List<MiControls> LYP = new List<MiControls>();
+            List<MiControls> RXN = new List<MiControls>();
+            List<MiControls> RXP = new List<MiControls>();
+            List<MiControls> RYN = new List<MiControls>();
+            List<MiControls> RYP = new List<MiControls>();
+            foreach (KeyValuePair<MiControls, X360Controls> customButton in Global.getCustomButtons(device))
             {
                 if (shift == false ||
                     (Global.getShiftCustomMacro(device, customButton.Key) == "0" &&
@@ -748,81 +748,81 @@ namespace DS4Windows
             if (macroControl[22]) MappedState.RX = 0;
             if (macroControl[23]) MappedState.RY = 255;
             if (macroControl[24]) MappedState.RY = 0;
-            foreach (DS4Controls dc in Cross)
+            foreach (MiControls dc in Cross)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.Cross = true;
-            foreach (DS4Controls dc in Circle)
+            foreach (MiControls dc in Circle)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.Circle = true;
-            foreach (DS4Controls dc in Square)
+            foreach (MiControls dc in Square)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.Square = true;
-            foreach (DS4Controls dc in Triangle)
+            foreach (MiControls dc in Triangle)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.Triangle = true;
-            foreach (DS4Controls dc in L1)
+            foreach (MiControls dc in L1)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.L1 = true;
-            foreach (DS4Controls dc in L2)
+            foreach (MiControls dc in L2)
                 if (getByteMapping(device, dc, cState, eState, tp) > 5)
                     MappedState.L2 = getByteMapping(device, dc, cState, eState, tp);
-            foreach (DS4Controls dc in L3)
+            foreach (MiControls dc in L3)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.L3 = true;
-            foreach (DS4Controls dc in R1)
+            foreach (MiControls dc in R1)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.R1 = true;
-            foreach (DS4Controls dc in R2)
+            foreach (MiControls dc in R2)
                 if (getByteMapping(device, dc, cState, eState, tp) > 5)
                     MappedState.R2 = getByteMapping(device, dc, cState, eState, tp);
-            foreach (DS4Controls dc in R3)
+            foreach (MiControls dc in R3)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.R3 = true;
-            foreach (DS4Controls dc in DpadUp)
+            foreach (MiControls dc in DpadUp)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.DpadUp = true;
-            foreach (DS4Controls dc in DpadRight)
+            foreach (MiControls dc in DpadRight)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.DpadRight = true;
-            foreach (DS4Controls dc in DpadLeft)
+            foreach (MiControls dc in DpadLeft)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.DpadLeft = true;
-            foreach (DS4Controls dc in DpadDown)
+            foreach (MiControls dc in DpadDown)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.DpadDown = true;
-            foreach (DS4Controls dc in Options)
+            foreach (MiControls dc in Options)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.Options = true;
-            foreach (DS4Controls dc in Share)
+            foreach (MiControls dc in Share)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.Share = true;
-            foreach (DS4Controls dc in PS)
+            foreach (MiControls dc in PS)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.PS = true;
 
-            if (Global.getCustomButton(device, DS4Controls.LXNeg) == X360Controls.None)
-                LXN.Add(DS4Controls.LXNeg);
-            if (Global.getCustomButton(device, DS4Controls.LXPos) == X360Controls.None)
-                LXP.Add(DS4Controls.LXPos);
-            if (Global.getCustomButton(device, DS4Controls.LYNeg) == X360Controls.None)
-                LYN.Add(DS4Controls.LYNeg);
-            if (Global.getCustomButton(device, DS4Controls.LYPos) == X360Controls.None)
-                LYP.Add(DS4Controls.LYPos);
-            if (Global.getCustomButton(device, DS4Controls.RXNeg) == X360Controls.None)
-                RXN.Add(DS4Controls.RXNeg);
-            if (Global.getCustomButton(device, DS4Controls.RXPos) == X360Controls.None)
-                RXP.Add(DS4Controls.RXPos);
-            if (Global.getCustomButton(device, DS4Controls.RYNeg) == X360Controls.None)
-                RYN.Add(DS4Controls.RYNeg);
-            if (Global.getCustomButton(device, DS4Controls.RYPos) == X360Controls.None)
-                RYP.Add(DS4Controls.RYPos);
+            if (Global.getCustomButton(device, MiControls.LXNeg) == X360Controls.None)
+                LXN.Add(MiControls.LXNeg);
+            if (Global.getCustomButton(device, MiControls.LXPos) == X360Controls.None)
+                LXP.Add(MiControls.LXPos);
+            if (Global.getCustomButton(device, MiControls.LYNeg) == X360Controls.None)
+                LYN.Add(MiControls.LYNeg);
+            if (Global.getCustomButton(device, MiControls.LYPos) == X360Controls.None)
+                LYP.Add(MiControls.LYPos);
+            if (Global.getCustomButton(device, MiControls.RXNeg) == X360Controls.None)
+                RXN.Add(MiControls.RXNeg);
+            if (Global.getCustomButton(device, MiControls.RXPos) == X360Controls.None)
+                RXP.Add(MiControls.RXPos);
+            if (Global.getCustomButton(device, MiControls.RYNeg) == X360Controls.None)
+                RYN.Add(MiControls.RYNeg);
+            if (Global.getCustomButton(device, MiControls.RYPos) == X360Controls.None)
+                RYP.Add(MiControls.RYPos);
             if ((shift && MappedState.LX == 127) || !shift)
                 if (LXN.Count > 0 || LXP.Count > 0)
                 {
-                    foreach (DS4Controls dc in LXP)
+                    foreach (MiControls dc in LXP)
                         if (Math.Abs(127 - getXYAxisMapping(device, dc, cState, eState, tp, true)) > 5)
                             MappedState.LX = getXYAxisMapping(device, dc, cState, eState, tp, true);
-                    foreach (DS4Controls dc in LXN)
+                    foreach (MiControls dc in LXN)
                         if (Math.Abs(127 - getXYAxisMapping(device, dc, cState, eState, tp)) > 5)
                             MappedState.LX = getXYAxisMapping(device, dc, cState, eState, tp);
                 }
@@ -831,10 +831,10 @@ namespace DS4Windows
             if ((shift && MappedState.LY == 127) || !shift)
                 if (LYN.Count > 0 || LYP.Count > 0)
                 {
-                    foreach (DS4Controls dc in LYN)
+                    foreach (MiControls dc in LYN)
                         if (Math.Abs(127 - getXYAxisMapping(device, dc, cState, eState, tp)) > 5)
                             MappedState.LY = getXYAxisMapping(device, dc, cState, eState, tp);
-                    foreach (DS4Controls dc in LYP)
+                    foreach (MiControls dc in LYP)
                         if (Math.Abs(127 - getXYAxisMapping(device, dc, cState, eState, tp, true)) > 5)
                             MappedState.LY = getXYAxisMapping(device, dc, cState, eState, tp, true);
                 }
@@ -843,10 +843,10 @@ namespace DS4Windows
             if ((shift && MappedState.RX == 127) || !shift)
                 if (RXN.Count > 0 || RXP.Count > 0)
                 {
-                    foreach (DS4Controls dc in RXN)
+                    foreach (MiControls dc in RXN)
                         if (Math.Abs(127 - getXYAxisMapping(device, dc, cState, eState, tp)) > 5)
                             MappedState.RX = getXYAxisMapping(device, dc, cState, eState, tp);
-                    foreach (DS4Controls dc in RXP)
+                    foreach (MiControls dc in RXP)
                         if (Math.Abs(127 - getXYAxisMapping(device, dc, cState, eState, tp, true)) > 5)
                             MappedState.RX = getXYAxisMapping(device, dc, cState, eState, tp, true);
                 }
@@ -855,10 +855,10 @@ namespace DS4Windows
             if ((shift && MappedState.RY == 127) || !shift)
                 if (RYN.Count > 0 || RYP.Count > 0)
                 {
-                    foreach (DS4Controls dc in RYN)
+                    foreach (MiControls dc in RYN)
                         if (Math.Abs(127 - getXYAxisMapping(device, dc, cState, eState, tp)) > 5)
                             MappedState.RY = getXYAxisMapping(device, dc, cState, eState, tp);
-                    foreach (DS4Controls dc in RYP)
+                    foreach (MiControls dc in RYP)
                         if (Math.Abs(127 - getXYAxisMapping(device, dc, cState, eState, tp, true)) > 5)
                             MappedState.RY = getXYAxisMapping(device, dc, cState, eState, tp, true);
                 }
@@ -871,7 +871,7 @@ namespace DS4Windows
         {
             //cState.CopyTo(MappedState);
             SyntheticState deviceState = Mapping.deviceState[device];
-            foreach (KeyValuePair<DS4Controls, string> customKey in Global.getShiftCustomMacros(device)) //with delays
+            foreach (KeyValuePair<MiControls, string> customKey in Global.getShiftCustomMacros(device)) //with delays
             {
                 DS4KeyType keyType = Global.getShiftCustomKeyType(device, customKey.Key);
                 if (getBoolMapping(customKey.Key, cState, eState, tp))
@@ -884,7 +884,7 @@ namespace DS4Windows
                     EndMacro(device, macroControl, customKey.Value, customKey.Key);
                 }
             }
-            foreach (KeyValuePair<DS4Controls, ushort> customKey in Global.getShiftCustomKeys(device))
+            foreach (KeyValuePair<MiControls, ushort> customKey in Global.getShiftCustomKeys(device))
             {
                 DS4KeyType keyType = Global.getShiftCustomKeyType(device, customKey.Key);
                 if (getBoolMapping(customKey.Key, cState, eState, tp))
@@ -919,36 +919,36 @@ namespace DS4Windows
             int MouseDeltaX = 0;
             int MouseDeltaY = 0;
 
-            Dictionary<DS4Controls, X360Controls> customButtons = Global.getShiftCustomButtons(device);
+            Dictionary<MiControls, X360Controls> customButtons = Global.getShiftCustomButtons(device);
             //foreach (KeyValuePair<DS4Controls, X360Controls> customButton in customButtons)
             // resetToDefaultValue(customButton.Key, MappedState); // erase default mappings for things that are remapped
 
-            List<DS4Controls> Cross = new List<DS4Controls>();
-            List<DS4Controls> Circle = new List<DS4Controls>();
-            List<DS4Controls> Square = new List<DS4Controls>();
-            List<DS4Controls> Triangle = new List<DS4Controls>();
-            List<DS4Controls> Options = new List<DS4Controls>();
-            List<DS4Controls> Share = new List<DS4Controls>();
-            List<DS4Controls> DpadUp = new List<DS4Controls>();
-            List<DS4Controls> DpadDown = new List<DS4Controls>();
-            List<DS4Controls> DpadLeft = new List<DS4Controls>();
-            List<DS4Controls> DpadRight = new List<DS4Controls>();
-            List<DS4Controls> PS = new List<DS4Controls>();
-            List<DS4Controls> L1 = new List<DS4Controls>();
-            List<DS4Controls> R1 = new List<DS4Controls>();
-            List<DS4Controls> L2 = new List<DS4Controls>();
-            List<DS4Controls> R2 = new List<DS4Controls>();
-            List<DS4Controls> L3 = new List<DS4Controls>();
-            List<DS4Controls> R3 = new List<DS4Controls>();
-            List<DS4Controls> LXN = new List<DS4Controls>();
-            List<DS4Controls> LXP = new List<DS4Controls>();
-            List<DS4Controls> LYN = new List<DS4Controls>();
-            List<DS4Controls> LYP = new List<DS4Controls>();
-            List<DS4Controls> RXN = new List<DS4Controls>();
-            List<DS4Controls> RXP = new List<DS4Controls>();
-            List<DS4Controls> RYN = new List<DS4Controls>();
-            List<DS4Controls> RYP = new List<DS4Controls>();
-            foreach (KeyValuePair<DS4Controls, X360Controls> customButton in customButtons)
+            List<MiControls> Cross = new List<MiControls>();
+            List<MiControls> Circle = new List<MiControls>();
+            List<MiControls> Square = new List<MiControls>();
+            List<MiControls> Triangle = new List<MiControls>();
+            List<MiControls> Options = new List<MiControls>();
+            List<MiControls> Share = new List<MiControls>();
+            List<MiControls> DpadUp = new List<MiControls>();
+            List<MiControls> DpadDown = new List<MiControls>();
+            List<MiControls> DpadLeft = new List<MiControls>();
+            List<MiControls> DpadRight = new List<MiControls>();
+            List<MiControls> PS = new List<MiControls>();
+            List<MiControls> L1 = new List<MiControls>();
+            List<MiControls> R1 = new List<MiControls>();
+            List<MiControls> L2 = new List<MiControls>();
+            List<MiControls> R2 = new List<MiControls>();
+            List<MiControls> L3 = new List<MiControls>();
+            List<MiControls> R3 = new List<MiControls>();
+            List<MiControls> LXN = new List<MiControls>();
+            List<MiControls> LXP = new List<MiControls>();
+            List<MiControls> LYN = new List<MiControls>();
+            List<MiControls> LYP = new List<MiControls>();
+            List<MiControls> RXN = new List<MiControls>();
+            List<MiControls> RXP = new List<MiControls>();
+            List<MiControls> RYN = new List<MiControls>();
+            List<MiControls> RYP = new List<MiControls>();
+            foreach (KeyValuePair<MiControls, X360Controls> customButton in customButtons)
             {
                 resetToDefaultValue(customButton.Key, MappedState); // erase default mappings for things that are remapped
                 DS4KeyType keyType = Global.getShiftCustomKeyType(device, customButton.Key);
@@ -1087,80 +1087,80 @@ namespace DS4Windows
             if (macroControl[22]) MappedState.RX = 0;
             if (macroControl[23]) MappedState.RY = 255;
             if (macroControl[24]) MappedState.RY = 0;
-            foreach (DS4Controls dc in Cross)
+            foreach (MiControls dc in Cross)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.Cross = true;
-            foreach (DS4Controls dc in Circle)
+            foreach (MiControls dc in Circle)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.Circle = true;
-            foreach (DS4Controls dc in Square)
+            foreach (MiControls dc in Square)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.Square = true;
-            foreach (DS4Controls dc in Triangle)
+            foreach (MiControls dc in Triangle)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.Triangle = true;
-            foreach (DS4Controls dc in L1)
+            foreach (MiControls dc in L1)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.L1 = true;
-            foreach (DS4Controls dc in L2)
+            foreach (MiControls dc in L2)
                 if (getByteMapping(device, dc, cState, eState, tp) != 0)
                     MappedState.L2 = getByteMapping(device, dc, cState, eState, tp);
-            foreach (DS4Controls dc in L3)
+            foreach (MiControls dc in L3)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.L3 = true;
-            foreach (DS4Controls dc in R1)
+            foreach (MiControls dc in R1)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.R1 = true;
-            foreach (DS4Controls dc in R2)
+            foreach (MiControls dc in R2)
                   if (getByteMapping(device, dc, cState, eState, tp) != 0)
                     MappedState.R2 = getByteMapping(device, dc, cState, eState, tp);
-            foreach (DS4Controls dc in R3)
+            foreach (MiControls dc in R3)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.R3 = true;
-            foreach (DS4Controls dc in DpadUp)
+            foreach (MiControls dc in DpadUp)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.DpadUp = true;
-            foreach (DS4Controls dc in DpadRight)
+            foreach (MiControls dc in DpadRight)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.DpadRight = true;
-            foreach (DS4Controls dc in DpadLeft)
+            foreach (MiControls dc in DpadLeft)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.DpadLeft = true;
-            foreach (DS4Controls dc in DpadDown)
+            foreach (MiControls dc in DpadDown)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.DpadDown = true;
-            foreach (DS4Controls dc in Options)
+            foreach (MiControls dc in Options)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.Options = true;
-            foreach (DS4Controls dc in Share)
+            foreach (MiControls dc in Share)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.Share = true;
-            foreach (DS4Controls dc in PS)
+            foreach (MiControls dc in PS)
                 if (getBoolMapping(dc, cState, eState, tp))
                     MappedState.PS = true;
 
-            if (Global.getShiftCustomButton(device, DS4Controls.LXNeg) == X360Controls.None)
-                LXN.Add(DS4Controls.LXNeg);
-            if (Global.getShiftCustomButton(device, DS4Controls.LXPos) == X360Controls.None)
-                LXP.Add(DS4Controls.LXPos);
-            if (Global.getShiftCustomButton(device, DS4Controls.LYNeg) == X360Controls.None)
-                LYN.Add(DS4Controls.LYNeg);
-            if (Global.getShiftCustomButton(device, DS4Controls.LYPos) == X360Controls.None)
-                LYP.Add(DS4Controls.LYPos);
-            if (Global.getShiftCustomButton(device, DS4Controls.RXNeg) == X360Controls.None)
-                RXN.Add(DS4Controls.RXNeg);
-            if (Global.getShiftCustomButton(device, DS4Controls.RXPos) == X360Controls.None)
-                RXP.Add(DS4Controls.RXPos);
-            if (Global.getShiftCustomButton(device, DS4Controls.RYNeg) == X360Controls.None)
-                RYN.Add(DS4Controls.RYNeg);
-            if (Global.getShiftCustomButton(device, DS4Controls.RYPos) == X360Controls.None)
-                RYP.Add(DS4Controls.RYPos);
+            if (Global.getShiftCustomButton(device, MiControls.LXNeg) == X360Controls.None)
+                LXN.Add(MiControls.LXNeg);
+            if (Global.getShiftCustomButton(device, MiControls.LXPos) == X360Controls.None)
+                LXP.Add(MiControls.LXPos);
+            if (Global.getShiftCustomButton(device, MiControls.LYNeg) == X360Controls.None)
+                LYN.Add(MiControls.LYNeg);
+            if (Global.getShiftCustomButton(device, MiControls.LYPos) == X360Controls.None)
+                LYP.Add(MiControls.LYPos);
+            if (Global.getShiftCustomButton(device, MiControls.RXNeg) == X360Controls.None)
+                RXN.Add(MiControls.RXNeg);
+            if (Global.getShiftCustomButton(device, MiControls.RXPos) == X360Controls.None)
+                RXP.Add(MiControls.RXPos);
+            if (Global.getShiftCustomButton(device, MiControls.RYNeg) == X360Controls.None)
+                RYN.Add(MiControls.RYNeg);
+            if (Global.getShiftCustomButton(device, MiControls.RYPos) == X360Controls.None)
+                RYP.Add(MiControls.RYPos);
             if (LXN.Count > 0 || LXP.Count > 0)
             {
-                foreach (DS4Controls dc in LXP)
+                foreach (MiControls dc in LXP)
                     if (Math.Abs(127 - getXYAxisMapping(device, dc, cState, eState, tp, true)) > 5)
                         MappedState.LX = getXYAxisMapping(device, dc, cState, eState, tp, true);
-                foreach (DS4Controls dc in LXN)
+                foreach (MiControls dc in LXN)
                     if (Math.Abs(127 - getXYAxisMapping(device, dc, cState, eState, tp)) > 5)
                         MappedState.LX = getXYAxisMapping(device, dc, cState, eState, tp);
             }
@@ -1168,10 +1168,10 @@ namespace DS4Windows
                 MappedState.LX = cState.LX;
             if (LYN.Count > 0 || LYP.Count > 0)
             {
-                foreach (DS4Controls dc in LYN)
+                foreach (MiControls dc in LYN)
                     if (Math.Abs(127 - getXYAxisMapping(device, dc, cState, eState, tp)) > 5)
                         MappedState.LY = getXYAxisMapping(device, dc, cState, eState, tp);
-                foreach (DS4Controls dc in LYP)
+                foreach (MiControls dc in LYP)
                     if (Math.Abs(127 - getXYAxisMapping(device, dc, cState, eState, tp, true)) > 5)
                         MappedState.LY = getXYAxisMapping(device, dc, cState, eState, tp, true);
             }
@@ -1179,14 +1179,14 @@ namespace DS4Windows
                 MappedState.LY = cState.LY;
             if (RXN.Count > 0 || RXP.Count > 0)
             {
-                foreach (DS4Controls dc in RXN)
+                foreach (MiControls dc in RXN)
                 {
                     if (Math.Abs(127 - getXYAxisMapping(device, dc, cState, eState, tp)) > 5)
                     {
                         MappedState.RX = getXYAxisMapping(device, dc, cState, eState, tp);
                     }
                 }
-                foreach (DS4Controls dc in RXP)
+                foreach (MiControls dc in RXP)
                     if (Math.Abs(127 - getXYAxisMapping(device, dc, cState, eState, tp, true)) > 5)
                         MappedState.RX = getXYAxisMapping(device, dc, cState, eState, tp, true);
             }
@@ -1194,10 +1194,10 @@ namespace DS4Windows
                 MappedState.RX = cState.RX;
             if (RYN.Count > 0 || RYP.Count > 0)
             {
-                foreach (DS4Controls dc in RYN)
+                foreach (MiControls dc in RYN)
                     if (Math.Abs(127 - getXYAxisMapping(device, dc, cState, eState, tp)) > 5)
                         MappedState.RY = getXYAxisMapping(device, dc, cState, eState, tp);
-                foreach (DS4Controls dc in RYP)
+                foreach (MiControls dc in RYP)
                     if (Math.Abs(127 - getXYAxisMapping(device, dc, cState, eState, tp, true)) > 5)
                         MappedState.RY = getXYAxisMapping(device, dc, cState, eState, tp, true);
             }
@@ -1227,7 +1227,7 @@ namespace DS4Windows
                     {
                         triggeractivated = false;
                         bool subtriggeractivated = true;
-                        foreach (DS4Controls dc in action.trigger)
+                        foreach (MiControls dc in action.trigger)
                         {
                             if (!getBoolMapping(dc, cState, eState, tp))
                             {
@@ -1249,7 +1249,7 @@ namespace DS4Windows
                     {
                         triggeractivated = false;
                         bool subtriggeractivated = true;
-                        foreach (DS4Controls dc in action.trigger)
+                        foreach (MiControls dc in action.trigger)
                         {
                             if (!getBoolMapping(dc, cState, eState, tp))
                             {
@@ -1266,7 +1266,7 @@ namespace DS4Windows
                     {
                         triggeractivated = false;
                         bool subtriggeractivated = true;
-                        foreach (DS4Controls dc in action.trigger)
+                        foreach (MiControls dc in action.trigger)
                         {
                             if (!getBoolMapping(dc, cState, eState, tp))
                             {
@@ -1285,7 +1285,7 @@ namespace DS4Windows
                             oldnowKeyAct[device] = DateTime.MinValue;
                     }
                     else
-                        foreach (DS4Controls dc in action.trigger)
+                        foreach (MiControls dc in action.trigger)
                         {
                             if (!getBoolMapping(dc, cState, eState, tp))
                             {
@@ -1297,7 +1297,7 @@ namespace DS4Windows
                     bool utriggeractivated = true;
                     if (action.type == "Key" && action.uTrigger.Count > 0)
                     {
-                        foreach (DS4Controls dc in action.uTrigger)
+                        foreach (MiControls dc in action.uTrigger)
                         {
                             if (!getBoolMapping(dc, cState, eState, tp))
                             {
@@ -1326,7 +1326,7 @@ namespace DS4Windows
                             actionDone[device, index] = true;
                             untriggeraction[device] = action;
                             untriggerindex[device] = index;
-                            foreach (DS4Controls dc in action.trigger)
+                            foreach (MiControls dc in action.trigger)
                             {
                                 InputMethods.performKeyRelease(Global.getCustomKey(0, dc));
                                 string[] skeys = Global.getCustomMacro(0, dc).Split('/');
@@ -1347,12 +1347,12 @@ namespace DS4Windows
                         {
                             DS4KeyType keyType = action.keyType;
                             actionDone[device, index] = true;
-                            foreach (DS4Controls dc in action.trigger)
+                            foreach (MiControls dc in action.trigger)
                                 resetToDefaultValue(dc, MappedState);
-                            PlayMacro(device, macroControl, String.Join("/", action.macro), DS4Controls.None, keyType);
+                            PlayMacro(device, macroControl, String.Join("/", action.macro), MiControls.None, keyType);
                         }
                         else
-                            EndMacro(device, macroControl, String.Join("/", action.macro), DS4Controls.None);
+                            EndMacro(device, macroControl, String.Join("/", action.macro), MiControls.None);
                     }
                     else if (triggeractivated && action.type == "Key")
                     {
@@ -1395,11 +1395,11 @@ namespace DS4Windows
                     }
                     else if (triggeractivated && action.type == "DisconnectBT")
                     {
-                        DS4Device d = ctrl.DS4Controllers[device];
+                        MiDevice d = ctrl.MiControllers[device];
                         if (!d.Charging)
                         {
                             d.DisconnectBT();
-                            foreach (DS4Controls dc in action.trigger)
+                            foreach (MiControls dc in action.trigger)
                             {
                                 InputMethods.performKeyRelease(Global.getCustomKey(0, dc));
                                 string[] skeys = Global.getCustomMacro(0, dc).Split('/');
@@ -1413,46 +1413,46 @@ namespace DS4Windows
                             return;
                         }
                     }
-                    else if (triggeractivated && action.type == "BatteryCheck")
-                    {
-                        string[] dets = action.details.Split(',');
-                        if (bool.Parse(dets[1]) && !actionDone[device, index])
-                        {
-                           Log.LogToTray("Controller " + (device + 1) + ": " +
-                               ctrl.getDS4Battery(device), true);
-                        }
-                        if (bool.Parse(dets[2]))
-                        {
-                            DS4Device d = ctrl.DS4Controllers[device];
-                            if (!actionDone[device, index])
-                            {
-                                lastColor[device] = d.LightBarColor;
-                                DS4LightBar.forcelight[device] = true;
-                            }
-                            DS4Color empty = new DS4Color(byte.Parse(dets[3]), byte.Parse(dets[4]), byte.Parse(dets[5]));
-                            DS4Color full = new DS4Color(byte.Parse(dets[6]), byte.Parse(dets[7]), byte.Parse(dets[8]));
-                            DS4Color trans = Global.getTransitionedColor(empty, full, d.Battery);
-                            if (fadetimer[device] < 100)
-                            DS4LightBar.forcedColor[device] = Global.getTransitionedColor(lastColor[device], trans, fadetimer[device] += 2);
-                        }
-                        actionDone[device, index] = true;
-                    }
-                    else if (!triggeractivated && action.type == "BatteryCheck")
-                    {
-                        if (actionDone[device, index])
-                        {
-                            fadetimer[device] = 0;
-                            /*if (prevFadetimer[device] == fadetimer[device])
-                            {
-                                prevFadetimer[device] = 0;
-                                fadetimer[device] = 0;
-                            }
-                            else
-                                prevFadetimer[device] = fadetimer[device];*/
-                            DS4LightBar.forcelight[device] = false;
-                            actionDone[device, index] = false;
-                        }
-                    }
+                    //else if (triggeractivated && action.type == "BatteryCheck")
+                    //{
+                    //    string[] dets = action.details.Split(',');
+                    //    if (bool.Parse(dets[1]) && !actionDone[device, index])
+                    //    {
+                    //       Log.LogToTray("Controller " + (device + 1) + ": " +
+                    //           ctrl.getDS4Battery(device), true);
+                    //    }
+                    //    if (bool.Parse(dets[2]))
+                    //    {
+                    //        MiDevice d = ctrl.MiControllers[device];
+                    //        if (!actionDone[device, index])
+                    //        {
+                    //            lastColor[device] = d.LightBarColor;
+                    //            //DS4LightBar.forcelight[device] = true;
+                    //        }
+                    //        DS4Color empty = new DS4Color(byte.Parse(dets[3]), byte.Parse(dets[4]), byte.Parse(dets[5]));
+                    //        DS4Color full = new DS4Color(byte.Parse(dets[6]), byte.Parse(dets[7]), byte.Parse(dets[8]));
+                    //        DS4Color trans = Global.getTransitionedColor(empty, full, d.Battery);
+                    //        //if (fadetimer[device] < 100)
+                    //        //DS4LightBar.forcedColor[device] = Global.getTransitionedColor(lastColor[device], trans, fadetimer[device] += 2);
+                    //    }
+                    //    actionDone[device, index] = true;
+                    //}
+                    //else if (!triggeractivated && action.type == "BatteryCheck")
+                    //{
+                    //    if (actionDone[device, index])
+                    //    {
+                    //        fadetimer[device] = 0;
+                    //        /*if (prevFadetimer[device] == fadetimer[device])
+                    //        {
+                    //            prevFadetimer[device] = 0;
+                    //            fadetimer[device] = 0;
+                    //        }
+                    //        else
+                    //            prevFadetimer[device] = fadetimer[device];*/
+                    //        //DS4LightBar.forcelight[device] = false;
+                    //        actionDone[device, index] = false;
+                    //    }
+                    //}
                     else
                         actionDone[device, index] = false;
                 }
@@ -1463,7 +1463,7 @@ namespace DS4Windows
                 SpecialAction action = untriggeraction[device];
                 int index = untriggerindex[device];
                 bool utriggeractivated = true;
-                foreach (DS4Controls dc in action.uTrigger)
+                foreach (MiControls dc in action.uTrigger)
                 {
                     if (!getBoolMapping(dc, cState, eState, tp))
                     {
@@ -1478,7 +1478,7 @@ namespace DS4Windows
                     action.controls != action.ucontrols)
                         if (!string.IsNullOrEmpty(Global.tempprofilename[device]))
                         {
-                            foreach (DS4Controls dc in action.uTrigger)
+                            foreach (MiControls dc in action.uTrigger)
                             {
                                 actionDone[device, index] = true;
                                 InputMethods.performKeyRelease(Global.getCustomKey(0, dc));
@@ -1499,7 +1499,7 @@ namespace DS4Windows
             }
         }
 
-        private static async void PlayMacro(int device, bool[] macrocontrol, string macro, DS4Controls control, DS4KeyType keyType)
+        private static async void PlayMacro(int device, bool[] macrocontrol, string macro, MiControls control, DS4KeyType keyType)
         {
             if (macro.StartsWith("164/9/9/164") || macro.StartsWith("18/9/9/18"))
             {
@@ -1513,7 +1513,7 @@ namespace DS4Windows
                         wait = delay - 300;
                 }
                 AltTabSwapping(wait, device);
-                if (control != DS4Controls.None)
+                if (control != MiControls.None)
                     macrodone[DS4ControltoInt(control)] = true;
             }
             else
@@ -1533,9 +1533,9 @@ namespace DS4Windows
                 for (int i = 0; i < keys.Length; i++)
                     keys[i] = ushort.Parse(skeys[i]);
                 bool[] keydown = new bool[286];
-                if (control == DS4Controls.None || !macrodone[DS4ControltoInt(control)])
+                if (control == MiControls.None || !macrodone[DS4ControltoInt(control)])
                 {
-                    if (control != DS4Controls.None)
+                    if (control != MiControls.None)
                         macrodone[DS4ControltoInt(control)] = true;
                     foreach (int i in keys)
                     {
@@ -1659,18 +1659,18 @@ namespace DS4Windows
                     if (keyType.HasFlag(DS4KeyType.HoldMacro))
                     {
                         await Task.Delay(50);
-                        if (control != DS4Controls.None)
+                        if (control != MiControls.None)
                             macrodone[DS4ControltoInt(control)] = false;
                     }
                 }
             }
         }
 
-        private static void EndMacro(int device, bool[] macrocontrol, string macro, DS4Controls control)
+        private static void EndMacro(int device, bool[] macrocontrol, string macro, MiControls control)
         {
             if ((macro.StartsWith("164/9/9/164") || macro.StartsWith("18/9/9/18")) && !altTabDone)
                 AltTabSwappingRelease();
-            if (control != DS4Controls.None)
+            if (control != MiControls.None)
                 macrodone[DS4ControltoInt(control)] = false;
         }
         private static void AltTabSwapping(int wait, int device)
@@ -1704,7 +1704,7 @@ namespace DS4Windows
             }
         }
 
-        private static void getMouseWheelMapping(int device, DS4Controls control, DS4State cState, DS4StateExposed eState, Mouse tp, bool down)
+        private static void getMouseWheelMapping(int device, MiControls control, DS4State cState, DS4StateExposed eState, Mouse tp, bool down)
         {
             DateTime now = DateTime.UtcNow;
             if (now >= oldnow + TimeSpan.FromMilliseconds(10) && !pressagain)
@@ -1714,7 +1714,7 @@ namespace DS4Windows
             }
         }
 
-        private static int getMouseMapping(int device, DS4Controls control, DS4State cState, DS4StateExposed eState, int mnum)
+        private static int getMouseMapping(int device, MiControls control, DS4State cState, DS4StateExposed eState, int mnum)
         {
             int controlnum = DS4ControltoInt(control);
             double SXD = Global.SXDeadzone[device];
@@ -1732,63 +1732,63 @@ namespace DS4Windows
             //DateTime now = mousenow[mnum];
             switch (control)
             {
-                case DS4Controls.LXNeg:
+                case MiControls.LXNeg:
                     if (cState.LX - 127.5f < -deadzoneL)
                         value = -(cState.LX - 127.5f) / 2550d * speed;
                     break;
-                case DS4Controls.LXPos:
+                case MiControls.LXPos:
                     if (cState.LX - 127.5f > deadzoneL)
                         value = (cState.LX - 127.5f) / 2550d * speed;
                     break;
-                case DS4Controls.RXNeg:
+                case MiControls.RXNeg:
                     if (cState.RX - 127.5f < -deadzoneR)
                         value = -(cState.RX - 127.5f) / 2550d * speed;
                     break;
-                case DS4Controls.RXPos:
+                case MiControls.RXPos:
                     if (cState.RX - 127.5f > deadzoneR)
                         value = (cState.RX - 127.5f) / 2550d * speed;
                     break;
-                case DS4Controls.LYNeg:
+                case MiControls.LYNeg:
                     if (cState.LY - 127.5f < -deadzoneL)
                         value = -(cState.LY - 127.5f) / 2550d * speed;
                     break;
-                case DS4Controls.LYPos:
+                case MiControls.LYPos:
                     if (cState.LY - 127.5f > deadzoneL)
                         value = (cState.LY - 127.5f) / 2550d * speed;
                     break;
-                case DS4Controls.RYNeg:
+                case MiControls.RYNeg:
                     if (cState.RY - 127.5f < -deadzoneR)
                         value = -(cState.RY - 127.5f) / 2550d * speed;
                     break;
-                case DS4Controls.RYPos:
+                case MiControls.RYPos:
                     if (cState.RY - 127.5f > deadzoneR)
                         value = (cState.RY - 127.5f) / 2550d * speed;
                     break;
-                case DS4Controls.Share: value = (cState.Share ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
-                case DS4Controls.Options: value = (cState.Options ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
-                case DS4Controls.L1: value = (cState.L1 ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
-                case DS4Controls.R1: value = (cState.R1 ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
-                case DS4Controls.L3: value = (cState.L3 ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
-                case DS4Controls.R3: value = (cState.R3 ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
-                case DS4Controls.DpadUp: value = (cState.DpadUp ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
-                case DS4Controls.DpadDown: value = (cState.DpadDown ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
-                case DS4Controls.DpadLeft: value = (cState.DpadLeft ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
-                case DS4Controls.DpadRight: value = (cState.DpadRight ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
-                case DS4Controls.PS: value = (cState.PS ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
-                case DS4Controls.Cross: value = (cState.Cross ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
-                case DS4Controls.Square: value = (cState.Square ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
-                case DS4Controls.Triangle: value = (cState.Triangle ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
-                case DS4Controls.Circle: value = (cState.Circle ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
-                case DS4Controls.L2: value = Math.Pow(root + speed / divide, cState.L2 / 2d) - 1; break;
-                case DS4Controls.R2: value = Math.Pow(root + speed / divide, cState.R2 / 2d) - 1; break;
-                case DS4Controls.GyroXPos: return (byte)(eState.GyroX > SXD * 7500 ?
-                    Math.Pow(root + speed / divide, eState.GyroX / 62) : 0);
-                case DS4Controls.GyroXNeg: return (byte)(eState.GyroX < -SXD * 7500 ?
-                    Math.Pow(root + speed / divide, -eState.GyroX / 48) : 0);
-                case DS4Controls.GyroZPos: return (byte)(eState.GyroZ > SZD * 7500 ?
-                    Math.Pow(root + speed / divide, eState.GyroZ / 62) : 0);
-                case DS4Controls.GyroZNeg: return (byte)(eState.GyroZ < -SZD * 7500 ?
-                    Math.Pow(root + speed / divide, -eState.GyroZ / 62) : 0);
+                case MiControls.Menu: value = (cState.Share ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
+                case MiControls.Back: value = (cState.Options ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
+                case MiControls.L1: value = (cState.L1 ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
+                case MiControls.R1: value = (cState.R1 ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
+                case MiControls.LS: value = (cState.L3 ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
+                case MiControls.RS: value = (cState.R3 ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
+                case MiControls.DpadUp: value = (cState.DpadUp ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
+                case MiControls.DpadDown: value = (cState.DpadDown ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
+                case MiControls.DpadLeft: value = (cState.DpadLeft ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
+                case MiControls.DpadRight: value = (cState.DpadRight ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
+                case MiControls.HomeSimulated: value = (cState.PS ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
+                case MiControls.A: value = (cState.Cross ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
+                case MiControls.X: value = (cState.Square ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
+                case MiControls.Y: value = (cState.Triangle ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
+                case MiControls.B: value = (cState.Circle ? Math.Pow(root + speed / divide, 100) - 1 : 0); break;
+                case MiControls.LT: value = Math.Pow(root + speed / divide, cState.L2 / 2d) - 1; break;
+                case MiControls.RT: value = Math.Pow(root + speed / divide, cState.R2 / 2d) - 1; break;
+                //case MiControls.GyroXPos: return (byte)(eState.GyroX > SXD * 7500 ?
+                //    Math.Pow(root + speed / divide, eState.GyroX / 62) : 0);
+                //case MiControls.GyroXNeg: return (byte)(eState.GyroX < -SXD * 7500 ?
+                //    Math.Pow(root + speed / divide, -eState.GyroX / 48) : 0);
+                //case MiControls.GyroZPos: return (byte)(eState.GyroZ > SZD * 7500 ?
+                //    Math.Pow(root + speed / divide, eState.GyroZ / 62) : 0);
+                //case MiControls.GyroZNeg: return (byte)(eState.GyroZ < -SZD * 7500 ?
+                //    Math.Pow(root + speed / divide, -eState.GyroZ / 62) : 0);
             }
             bool LXChanged = (Math.Abs(127 - cState.LX) < deadzoneL);
             bool LYChanged = (Math.Abs(127 - cState.LY) < deadzoneL);
@@ -1844,99 +1844,99 @@ namespace DS4Windows
             return true;
         }
 
-        public static byte getByteMapping(int device, DS4Controls control, DS4State cState, DS4StateExposed eState, Mouse tp)
+        public static byte getByteMapping(int device, MiControls control, DS4State cState, DS4StateExposed eState, Mouse tp)
         {
             double SXD = Global.SXDeadzone[device];
             double SZD = Global.SZDeadzone[device];
             switch (control)
             {
-                case DS4Controls.Share: return (byte)(cState.Share ? 255 : 0);
-                case DS4Controls.Options: return (byte)(cState.Options ? 255 : 0);
-                case DS4Controls.L1: return (byte)(cState.L1 ? 255 : 0);
-                case DS4Controls.R1: return (byte)(cState.R1 ? 255 : 0);
-                case DS4Controls.L3: return (byte)(cState.L3 ? 255 : 0);
-                case DS4Controls.R3: return (byte)(cState.R3 ? 255 : 0);
-                case DS4Controls.DpadUp: return (byte)(cState.DpadUp ? 255 : 0);
-                case DS4Controls.DpadDown: return (byte)(cState.DpadDown ? 255 : 0);
-                case DS4Controls.DpadLeft: return (byte)(cState.DpadLeft ? 255 : 0);
-                case DS4Controls.DpadRight: return (byte)(cState.DpadRight ? 255 : 0);
-                case DS4Controls.PS: return (byte)(cState.PS ? 255 : 0);
-                case DS4Controls.Cross: return (byte)(cState.Cross ? 255 : 0);
-                case DS4Controls.Square: return (byte)(cState.Square ? 255 : 0);
-                case DS4Controls.Triangle: return (byte)(cState.Triangle ? 255 : 0);
-                case DS4Controls.Circle: return (byte)(cState.Circle ? 255 : 0);
-                case DS4Controls.TouchLeft: return (byte)(tp != null && tp.leftDown ? 255 : 0);
-                case DS4Controls.TouchRight: return (byte)(tp != null && tp.rightDown ? 255 : 0);
-                case DS4Controls.TouchMulti: return (byte)(tp != null && tp.multiDown ? 255 : 0);
-                case DS4Controls.TouchUpper: return (byte)(tp != null && tp.upperDown ? 255 : 0);
-                case DS4Controls.LXNeg: return (byte)(cState.LX - 127.5f > 0 ? 0 : -(cState.LX - 127.5f) * 2);
-                case DS4Controls.LYNeg: return (byte)(cState.LY - 127.5f > 0 ? 0 : -(cState.LY - 127.5f) * 2);
-                case DS4Controls.RXNeg: return (byte)(cState.RX - 127.5f > 0 ? 0 : -(cState.RX - 127.5f) * 2);
-                case DS4Controls.RYNeg: return (byte)(cState.RY - 127.5f > 0 ? 0 : -(cState.RY - 127.5f) * 2);
-                case DS4Controls.LXPos: return (byte)(cState.LX - 127.5f < 0 ? 0 : (cState.LX - 127.5f) * 2);
-                case DS4Controls.LYPos: return (byte)(cState.LY - 127.5f < 0 ? 0 : (cState.LY - 127.5f) * 2);
-                case DS4Controls.RXPos: return (byte)(cState.RX - 127.5f < 0 ? 0 : (cState.RX - 127.5f) * 2);
-                case DS4Controls.RYPos: return (byte)(cState.RY - 127.5f < 0 ? 0 : (cState.RY - 127.5f) * 2);
-                case DS4Controls.L2: return cState.L2;
-                case DS4Controls.R2: return cState.R2;
-                case DS4Controls.GyroXPos: return (byte)(eState.GyroX > SXD * 7500 ? Math.Min(255, eState.GyroX / 31) : 0);
-                case DS4Controls.GyroXNeg: return (byte)(eState.GyroX < -SXD * 7500 ? Math.Min(255, -eState.GyroX / 31) : 0);
-                case DS4Controls.GyroZPos: return (byte)(eState.GyroZ > SZD * 7500 ? Math.Min(255, eState.GyroZ / 31) : 0);
-                case DS4Controls.GyroZNeg: return (byte)(eState.GyroZ < -SZD * 7500 ? Math.Min(255, -eState.GyroZ / 31) : 0);
-                case DS4Controls.SwipeUp: return (byte)(tp != null ? tp.swipeUpB : 0);
-                case DS4Controls.SwipeDown: return (byte)(tp != null ? tp.swipeDownB: 0);
-                case DS4Controls.SwipeLeft: return (byte)(tp != null ?  tp.swipeLeftB: 0);
-                case DS4Controls.SwipeRight: return (byte)(tp != null ? tp.swipeRightB : 0);
+                case MiControls.Menu: return (byte)(cState.Share ? 255 : 0);
+                case MiControls.Back: return (byte)(cState.Options ? 255 : 0);
+                case MiControls.L1: return (byte)(cState.L1 ? 255 : 0);
+                case MiControls.R1: return (byte)(cState.R1 ? 255 : 0);
+                case MiControls.LS: return (byte)(cState.L3 ? 255 : 0);
+                case MiControls.RS: return (byte)(cState.R3 ? 255 : 0);
+                case MiControls.DpadUp: return (byte)(cState.DpadUp ? 255 : 0);
+                case MiControls.DpadDown: return (byte)(cState.DpadDown ? 255 : 0);
+                case MiControls.DpadLeft: return (byte)(cState.DpadLeft ? 255 : 0);
+                case MiControls.DpadRight: return (byte)(cState.DpadRight ? 255 : 0);
+                case MiControls.HomeSimulated: return (byte)(cState.PS ? 255 : 0);
+                case MiControls.A: return (byte)(cState.Cross ? 255 : 0);
+                case MiControls.X: return (byte)(cState.Square ? 255 : 0);
+                case MiControls.Y: return (byte)(cState.Triangle ? 255 : 0);
+                case MiControls.B: return (byte)(cState.Circle ? 255 : 0);
+                //case MiControls.TouchLeft: return (byte)(tp != null && tp.leftDown ? 255 : 0);
+                //case MiControls.TouchRight: return (byte)(tp != null && tp.rightDown ? 255 : 0);
+                //case MiControls.TouchMulti: return (byte)(tp != null && tp.multiDown ? 255 : 0);
+                //case MiControls.TouchUpper: return (byte)(tp != null && tp.upperDown ? 255 : 0);
+                case MiControls.LXNeg: return (byte)(cState.LX - 127.5f > 0 ? 0 : -(cState.LX - 127.5f) * 2);
+                case MiControls.LYNeg: return (byte)(cState.LY - 127.5f > 0 ? 0 : -(cState.LY - 127.5f) * 2);
+                case MiControls.RXNeg: return (byte)(cState.RX - 127.5f > 0 ? 0 : -(cState.RX - 127.5f) * 2);
+                case MiControls.RYNeg: return (byte)(cState.RY - 127.5f > 0 ? 0 : -(cState.RY - 127.5f) * 2);
+                case MiControls.LXPos: return (byte)(cState.LX - 127.5f < 0 ? 0 : (cState.LX - 127.5f) * 2);
+                case MiControls.LYPos: return (byte)(cState.LY - 127.5f < 0 ? 0 : (cState.LY - 127.5f) * 2);
+                case MiControls.RXPos: return (byte)(cState.RX - 127.5f < 0 ? 0 : (cState.RX - 127.5f) * 2);
+                case MiControls.RYPos: return (byte)(cState.RY - 127.5f < 0 ? 0 : (cState.RY - 127.5f) * 2);
+                case MiControls.LT: return cState.L2;
+                case MiControls.RT: return cState.R2;
+                //case MiControls.GyroXPos: return (byte)(eState.GyroX > SXD * 7500 ? Math.Min(255, eState.GyroX / 31) : 0);
+                //case MiControls.GyroXNeg: return (byte)(eState.GyroX < -SXD * 7500 ? Math.Min(255, -eState.GyroX / 31) : 0);
+                //case MiControls.GyroZPos: return (byte)(eState.GyroZ > SZD * 7500 ? Math.Min(255, eState.GyroZ / 31) : 0);
+                //case MiControls.GyroZNeg: return (byte)(eState.GyroZ < -SZD * 7500 ? Math.Min(255, -eState.GyroZ / 31) : 0);
+                //case MiControls.SwipeUp: return (byte)(tp != null ? tp.swipeUpB : 0);
+                //case MiControls.SwipeDown: return (byte)(tp != null ? tp.swipeDownB: 0);
+                //case MiControls.SwipeLeft: return (byte)(tp != null ?  tp.swipeLeftB: 0);
+                //case MiControls.SwipeRight: return (byte)(tp != null ? tp.swipeRightB : 0);
             }
             return 0;
         }
 
-        public static bool getBoolMapping(DS4Controls control, DS4State cState, DS4StateExposed eState, Mouse tp)
+        public static bool getBoolMapping(MiControls control, DS4State cState, DS4StateExposed eState, Mouse tp)
         {
             switch (control)
             {
-                case DS4Controls.Share: return cState.Share;
-                case DS4Controls.Options: return cState.Options;
-                case DS4Controls.L1: return cState.L1;
-                case DS4Controls.R1: return cState.R1;
-                case DS4Controls.L3: return cState.L3;
-                case DS4Controls.R3: return cState.R3;
-                case DS4Controls.DpadUp: return cState.DpadUp;
-                case DS4Controls.DpadDown: return cState.DpadDown;
-                case DS4Controls.DpadLeft: return cState.DpadLeft;
-                case DS4Controls.DpadRight: return cState.DpadRight;
-                case DS4Controls.PS: return cState.PS;
-                case DS4Controls.Cross: return cState.Cross;
-                case DS4Controls.Square: return cState.Square;
-                case DS4Controls.Triangle: return cState.Triangle;
-                case DS4Controls.Circle: return cState.Circle;
-                case DS4Controls.TouchLeft: return (tp != null ? tp.leftDown : false);
-                case DS4Controls.TouchRight: return (tp != null ? tp.rightDown : false);
-                case DS4Controls.TouchMulti: return (tp != null ? tp.multiDown : false);
-                case DS4Controls.TouchUpper: return (tp != null ? tp.upperDown : false);
-                case DS4Controls.LXNeg: return cState.LX < 127 - 55;
-                case DS4Controls.LYNeg: return cState.LY < 127 - 55;
-                case DS4Controls.RXNeg: return cState.RX < 127 - 55;
-                case DS4Controls.RYNeg: return cState.RY < 127 - 55;
-                case DS4Controls.LXPos: return cState.LX > 127 + 55;
-                case DS4Controls.LYPos: return cState.LY > 127 + 55;
-                case DS4Controls.RXPos: return cState.RX > 127 + 55;
-                case DS4Controls.RYPos: return cState.RY > 127 + 55;
-                case DS4Controls.L2: return cState.L2 > 100;
-                case DS4Controls.R2: return cState.R2 > 100;
-                case DS4Controls.GyroXPos: return eState.GyroX > 5000;
-                case DS4Controls.GyroXNeg: return eState.GyroX < -5000;
-                case DS4Controls.GyroZPos: return eState.GyroZ > 5000;
-                case DS4Controls.GyroZNeg: return eState.GyroZ < -5000;
-                case DS4Controls.SwipeUp: return (tp != null && tp.swipeUp);
-                case DS4Controls.SwipeDown: return (tp != null && tp.swipeDown);
-                case DS4Controls.SwipeLeft: return (tp != null && tp.swipeLeft);
-                case DS4Controls.SwipeRight: return (tp != null && tp.swipeRight);
+                case MiControls.Menu: return cState.Share;
+                case MiControls.Back: return cState.Options;
+                case MiControls.L1: return cState.L1;
+                case MiControls.R1: return cState.R1;
+                case MiControls.LS: return cState.L3;
+                case MiControls.RS: return cState.R3;
+                case MiControls.DpadUp: return cState.DpadUp;
+                case MiControls.DpadDown: return cState.DpadDown;
+                case MiControls.DpadLeft: return cState.DpadLeft;
+                case MiControls.DpadRight: return cState.DpadRight;
+                case MiControls.HomeSimulated: return cState.PS;
+                case MiControls.A: return cState.Cross;
+                case MiControls.X: return cState.Square;
+                case MiControls.Y: return cState.Triangle;
+                case MiControls.B: return cState.Circle;
+                //case MiControls.TouchLeft: return (tp != null ? tp.leftDown : false);
+                //case MiControls.TouchRight: return (tp != null ? tp.rightDown : false);
+                //case MiControls.TouchMulti: return (tp != null ? tp.multiDown : false);
+                //case MiControls.TouchUpper: return (tp != null ? tp.upperDown : false);
+                case MiControls.LXNeg: return cState.LX < 127 - 55;
+                case MiControls.LYNeg: return cState.LY < 127 - 55;
+                case MiControls.RXNeg: return cState.RX < 127 - 55;
+                case MiControls.RYNeg: return cState.RY < 127 - 55;
+                case MiControls.LXPos: return cState.LX > 127 + 55;
+                case MiControls.LYPos: return cState.LY > 127 + 55;
+                case MiControls.RXPos: return cState.RX > 127 + 55;
+                case MiControls.RYPos: return cState.RY > 127 + 55;
+                case MiControls.LT: return cState.L2 > 100;
+                case MiControls.RT: return cState.R2 > 100;
+            //    case MiControls.GyroXPos: return eState.GyroX > 5000;
+            //    case MiControls.GyroXNeg: return eState.GyroX < -5000;
+            //    case MiControls.GyroZPos: return eState.GyroZ > 5000;
+            //    case MiControls.GyroZNeg: return eState.GyroZ < -5000;
+            //    case MiControls.SwipeUp: return (tp != null && tp.swipeUp);
+            //    case MiControls.SwipeDown: return (tp != null && tp.swipeDown);
+            //    case MiControls.SwipeLeft: return (tp != null && tp.swipeLeft);
+            //    case MiControls.SwipeRight: return (tp != null && tp.swipeRight);
             }
             return false;
         }
 
-        public static byte getXYAxisMapping(int device, DS4Controls control, DS4State cState, DS4StateExposed eState, Mouse tp, bool alt = false)
+        public static byte getXYAxisMapping(int device, MiControls control, DS4State cState, DS4StateExposed eState, Mouse tp, bool alt = false)
         {
             byte trueVal = 0;
             byte falseVal = 127;
@@ -1946,70 +1946,70 @@ namespace DS4Windows
                 trueVal = 255;
             switch (control)
             {
-                case DS4Controls.Share: return (byte)(cState.Share ? trueVal : falseVal);
-                case DS4Controls.Options: return (byte)(cState.Options ? trueVal : falseVal);
-                case DS4Controls.L1: return (byte)(cState.L1 ? trueVal : falseVal);
-                case DS4Controls.R1: return (byte)(cState.R1 ? trueVal : falseVal);
-                case DS4Controls.L3: return (byte)(cState.L3 ? trueVal : falseVal);
-                case DS4Controls.R3: return (byte)(cState.R3 ? trueVal : falseVal);
-                case DS4Controls.DpadUp: return (byte)(cState.DpadUp ? trueVal : falseVal);
-                case DS4Controls.DpadDown: return (byte)(cState.DpadDown ? trueVal : falseVal);
-                case DS4Controls.DpadLeft: return (byte)(cState.DpadLeft ? trueVal : falseVal);
-                case DS4Controls.DpadRight: return (byte)(cState.DpadRight ? trueVal : falseVal);
-                case DS4Controls.PS: return (byte)(cState.PS ? trueVal : falseVal);
-                case DS4Controls.Cross: return (byte)(cState.Cross ? trueVal : falseVal);
-                case DS4Controls.Square: return (byte)(cState.Square ? trueVal : falseVal);
-                case DS4Controls.Triangle: return (byte)(cState.Triangle ? trueVal : falseVal);
-                case DS4Controls.Circle: return (byte)(cState.Circle ? trueVal : falseVal);
-                case DS4Controls.TouchLeft: return (byte)(tp != null && tp.leftDown ? trueVal : falseVal);
-                case DS4Controls.TouchRight: return (byte)(tp != null && tp.rightDown ? trueVal : falseVal);
-                case DS4Controls.TouchMulti: return (byte)(tp != null && tp.multiDown ? trueVal : falseVal);
-                case DS4Controls.TouchUpper: return (byte)(tp != null && tp.upperDown ? trueVal : falseVal);
-                case DS4Controls.L2: if (alt) return (byte)(127.5f + cState.L2 / 2f); else return (byte)(127.5f - cState.L2 / 2f);
-                case DS4Controls.R2: if (alt) return (byte)(127.5f + cState.R2 / 2f); else return (byte)(127.5f - cState.R2 / 2f);
-                case DS4Controls.SwipeUp: if (alt) return (byte)(tp != null ? 127.5f + tp.swipeUpB / 2f : 0); else return (byte)(tp != null ? 127.5f - tp.swipeUpB / 2f : 0);
-                case DS4Controls.SwipeDown: if (alt) return (byte)(tp != null ? 127.5f + tp.swipeDownB / 2f : 0); else return (byte)(tp != null ? 127.5f - tp.swipeDownB / 2f : 0);
-                case DS4Controls.SwipeLeft: if (alt) return (byte)(tp != null ? 127.5f + tp.swipeLeftB / 2f : 0); else return (byte)(tp != null ? 127.5f - tp.swipeLeftB / 2f : 0);
-                case DS4Controls.SwipeRight: if (alt) return (byte)(tp != null ? 127.5f + tp.swipeRightB / 2f : 0); else return (byte)(tp != null ? 127.5f - tp.swipeRightB / 2f : 0);
-                case DS4Controls.GyroXPos: if (eState.GyroX > SXD * 7500)
-                        if (alt) return (byte)Math.Min(255, 127 + eState.GyroX / 62); else return (byte)Math.Max(0, 127 - eState.GyroX / 62);
-                    else return falseVal;
-                case DS4Controls.GyroXNeg: if (eState.GyroX < -SXD * 7500)
-                        if (alt) return (byte)Math.Min(255, 127 + -eState.GyroX / 62); else return (byte)Math.Max(0, 127 - -eState.GyroX / 62);
-                    else return falseVal;
-                case DS4Controls.GyroZPos: if (eState.GyroZ > SZD * 7500)
-                        if (alt) return (byte)Math.Min(255, 127 + eState.GyroZ / 62); else return (byte)Math.Max(0, 127 - eState.GyroZ / 62);
-                    else return falseVal;
-                case DS4Controls.GyroZNeg: if (eState.GyroZ < -SZD * 7500)
-                        if (alt) return (byte)Math.Min(255, 127 + -eState.GyroZ / 62); else return (byte)Math.Max(0, 127 - -eState.GyroZ / 62);
-                    else return falseVal;
+                case MiControls.Menu: return (byte)(cState.Share ? trueVal : falseVal);
+                case MiControls.Back: return (byte)(cState.Options ? trueVal : falseVal);
+                case MiControls.L1: return (byte)(cState.L1 ? trueVal : falseVal);
+                case MiControls.R1: return (byte)(cState.R1 ? trueVal : falseVal);
+                case MiControls.LS: return (byte)(cState.L3 ? trueVal : falseVal);
+                case MiControls.RS: return (byte)(cState.R3 ? trueVal : falseVal);
+                case MiControls.DpadUp: return (byte)(cState.DpadUp ? trueVal : falseVal);
+                case MiControls.DpadDown: return (byte)(cState.DpadDown ? trueVal : falseVal);
+                case MiControls.DpadLeft: return (byte)(cState.DpadLeft ? trueVal : falseVal);
+                case MiControls.DpadRight: return (byte)(cState.DpadRight ? trueVal : falseVal);
+                case MiControls.HomeSimulated: return (byte)(cState.PS ? trueVal : falseVal);
+                case MiControls.A: return (byte)(cState.Cross ? trueVal : falseVal);
+                case MiControls.X: return (byte)(cState.Square ? trueVal : falseVal);
+                case MiControls.Y: return (byte)(cState.Triangle ? trueVal : falseVal);
+                case MiControls.B: return (byte)(cState.Circle ? trueVal : falseVal);
+                //case MiControls.TouchLeft: return (byte)(tp != null && tp.leftDown ? trueVal : falseVal);
+                //case MiControls.TouchRight: return (byte)(tp != null && tp.rightDown ? trueVal : falseVal);
+                //case MiControls.TouchMulti: return (byte)(tp != null && tp.multiDown ? trueVal : falseVal);
+                //case MiControls.TouchUpper: return (byte)(tp != null && tp.upperDown ? trueVal : falseVal);
+                case MiControls.LT: if (alt) return (byte)(127.5f + cState.L2 / 2f); else return (byte)(127.5f - cState.L2 / 2f);
+                case MiControls.RT: if (alt) return (byte)(127.5f + cState.R2 / 2f); else return (byte)(127.5f - cState.R2 / 2f);
+                //case MiControls.SwipeUp: if (alt) return (byte)(tp != null ? 127.5f + tp.swipeUpB / 2f : 0); else return (byte)(tp != null ? 127.5f - tp.swipeUpB / 2f : 0);
+                //case MiControls.SwipeDown: if (alt) return (byte)(tp != null ? 127.5f + tp.swipeDownB / 2f : 0); else return (byte)(tp != null ? 127.5f - tp.swipeDownB / 2f : 0);
+                //case MiControls.SwipeLeft: if (alt) return (byte)(tp != null ? 127.5f + tp.swipeLeftB / 2f : 0); else return (byte)(tp != null ? 127.5f - tp.swipeLeftB / 2f : 0);
+                //case MiControls.SwipeRight: if (alt) return (byte)(tp != null ? 127.5f + tp.swipeRightB / 2f : 0); else return (byte)(tp != null ? 127.5f - tp.swipeRightB / 2f : 0);
+                //case MiControls.GyroXPos: if (eState.GyroX > SXD * 7500)
+                //        if (alt) return (byte)Math.Min(255, 127 + eState.GyroX / 62); else return (byte)Math.Max(0, 127 - eState.GyroX / 62);
+                //    else return falseVal;
+                //case MiControls.GyroXNeg: if (eState.GyroX < -SXD * 7500)
+                //        if (alt) return (byte)Math.Min(255, 127 + -eState.GyroX / 62); else return (byte)Math.Max(0, 127 - -eState.GyroX / 62);
+                //    else return falseVal;
+                //case MiControls.GyroZPos: if (eState.GyroZ > SZD * 7500)
+                //        if (alt) return (byte)Math.Min(255, 127 + eState.GyroZ / 62); else return (byte)Math.Max(0, 127 - eState.GyroZ / 62);
+                //    else return falseVal;
+                //case MiControls.GyroZNeg: if (eState.GyroZ < -SZD * 7500)
+                //        if (alt) return (byte)Math.Min(255, 127 + -eState.GyroZ / 62); else return (byte)Math.Max(0, 127 - -eState.GyroZ / 62);
+                //    else return falseVal;
             }            
             if (!alt)
             {
                 switch (control)
                 {
-                    case DS4Controls.LXNeg: return cState.LX;
-                    case DS4Controls.LYNeg: return cState.LY;
-                    case DS4Controls.RXNeg: return cState.RX;
-                    case DS4Controls.RYNeg: return cState.RY;
-                    case DS4Controls.LXPos: return (byte)(255 - cState.LX);
-                    case DS4Controls.LYPos: return (byte)(255 - cState.LY);
-                    case DS4Controls.RXPos: return (byte)(255 - cState.RX);
-                    case DS4Controls.RYPos: return (byte)(255 - cState.RY);
+                    case MiControls.LXNeg: return cState.LX;
+                    case MiControls.LYNeg: return cState.LY;
+                    case MiControls.RXNeg: return cState.RX;
+                    case MiControls.RYNeg: return cState.RY;
+                    case MiControls.LXPos: return (byte)(255 - cState.LX);
+                    case MiControls.LYPos: return (byte)(255 - cState.LY);
+                    case MiControls.RXPos: return (byte)(255 - cState.RX);
+                    case MiControls.RYPos: return (byte)(255 - cState.RY);
                 }
             }
             else
             {
                 switch (control)
                 {
-                    case DS4Controls.LXNeg: return (byte)(255 - cState.LX);
-                    case DS4Controls.LYNeg: return (byte)(255 - cState.LY);
-                    case DS4Controls.RXNeg: return (byte)(255 - cState.RX);
-                    case DS4Controls.RYNeg: return (byte)(255 - cState.RY);
-                    case DS4Controls.LXPos: return cState.LX;
-                    case DS4Controls.LYPos: return cState.LY;
-                    case DS4Controls.RXPos: return cState.RX;
-                    case DS4Controls.RYPos: return cState.RY;
+                    case MiControls.LXNeg: return (byte)(255 - cState.LX);
+                    case MiControls.LYNeg: return (byte)(255 - cState.LY);
+                    case MiControls.RXNeg: return (byte)(255 - cState.RX);
+                    case MiControls.RYNeg: return (byte)(255 - cState.RY);
+                    case MiControls.LXPos: return cState.LX;
+                    case MiControls.LYPos: return cState.LY;
+                    case MiControls.RXPos: return cState.RX;
+                    case MiControls.RYPos: return cState.RY;
                 }
             }
             return 0;
@@ -2018,35 +2018,35 @@ namespace DS4Windows
         //Returns false for any bool, 
         //if control is one of the xy axis returns 127
         //if its a trigger returns 0
-        public static void resetToDefaultValue(DS4Controls control, DS4State cState)
+        public static void resetToDefaultValue(MiControls control, DS4State cState)
         {
             switch (control)
             {
-                case DS4Controls.Share: cState.Share = false; break;
-                case DS4Controls.Options: cState.Options = false; break;
-                case DS4Controls.L1: cState.L1 = false; break;
-                case DS4Controls.R1: cState.R1 = false; break;
-                case DS4Controls.L3: cState.L3 = false; break;
-                case DS4Controls.R3: cState.R3 = false; break;
-                case DS4Controls.DpadUp: cState.DpadUp = false; break;
-                case DS4Controls.DpadDown: cState.DpadDown = false; break;
-                case DS4Controls.DpadLeft: cState.DpadLeft = false; break;
-                case DS4Controls.DpadRight: cState.DpadRight = false; break;
-                case DS4Controls.PS: cState.PS = false; break;
-                case DS4Controls.Cross: cState.Cross = false; break;
-                case DS4Controls.Square: cState.Square = false; break;
-                case DS4Controls.Triangle: cState.Triangle = false; break;
-                case DS4Controls.Circle: cState.Circle = false; break;
-                case DS4Controls.LXNeg: cState.LX = 127; break;
-                case DS4Controls.LYNeg: cState.LY = 127; break;
-                case DS4Controls.RXNeg: cState.RX = 127; break;
-                case DS4Controls.RYNeg: cState.RY = 127; break;
-                case DS4Controls.LXPos: cState.LX = 127; break;
-                case DS4Controls.LYPos: cState.LY = 127; break;
-                case DS4Controls.RXPos: cState.RX = 127; break;
-                case DS4Controls.RYPos: cState.RY = 127; break;
-                case DS4Controls.L2: cState.L2 = 0; break;
-                case DS4Controls.R2: cState.R2 = 0; break;
+                case MiControls.Menu: cState.Share = false; break;
+                case MiControls.Back: cState.Options = false; break;
+                case MiControls.L1: cState.L1 = false; break;
+                case MiControls.R1: cState.R1 = false; break;
+                case MiControls.LS: cState.L3 = false; break;
+                case MiControls.RS: cState.R3 = false; break;
+                case MiControls.DpadUp: cState.DpadUp = false; break;
+                case MiControls.DpadDown: cState.DpadDown = false; break;
+                case MiControls.DpadLeft: cState.DpadLeft = false; break;
+                case MiControls.DpadRight: cState.DpadRight = false; break;
+                case MiControls.HomeSimulated: cState.PS = false; break;
+                case MiControls.A: cState.Cross = false; break;
+                case MiControls.X: cState.Square = false; break;
+                case MiControls.Y: cState.Triangle = false; break;
+                case MiControls.B: cState.Circle = false; break;
+                case MiControls.LXNeg: cState.LX = 127; break;
+                case MiControls.LYNeg: cState.LY = 127; break;
+                case MiControls.RXNeg: cState.RX = 127; break;
+                case MiControls.RYNeg: cState.RY = 127; break;
+                case MiControls.LXPos: cState.LX = 127; break;
+                case MiControls.LYPos: cState.LY = 127; break;
+                case MiControls.RXPos: cState.RX = 127; break;
+                case MiControls.RYPos: cState.RY = 127; break;
+                case MiControls.LT: cState.L2 = 0; break;
+                case MiControls.RT: cState.R2 = 0; break;
             }
         }
     }

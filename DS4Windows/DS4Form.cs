@@ -47,7 +47,7 @@ namespace DS4Windows
         public bool mAllowVisible;
         bool contextclose;
         string logFile = Global.appdatapath + @"\DS4Service.log";
-        StreamWriter logWriter;
+        //StreamWriter logWriter;
         //bool outputlog = false;
 
         [DllImport("user32.dll")]
@@ -401,7 +401,7 @@ namespace DS4Windows
                 case PowerModes.Resume:
                     if (btnStartStop.Text == Properties.Resources.StartText && wasrunning)
                     {
-                        DS4LightBar.shuttingdown = false;
+                        //DS4LightBar.shuttingdown = false;
                         wasrunning = false;
                         btnStartStop_Clicked();
                     }
@@ -409,7 +409,7 @@ namespace DS4Windows
                 case PowerModes.Suspend:
                     if (btnStartStop.Text == Properties.Resources.StopText)
                     {
-                        DS4LightBar.shuttingdown = true;
+                        //DS4LightBar.shuttingdown = true;
                         btnStartStop_Clicked();
                         wasrunning = true;
                     }
@@ -768,8 +768,8 @@ namespace DS4Windows
             bool nocontrollers = true;
             for (Int32 Index = 0; Index < Pads.Length; Index++)
             {
-                Pads[Index].Text = Program.rootHub.getDS4MacAddress(Index);
-                DS4Device d = Program.rootHub.DS4Controllers[Index];
+                Pads[Index].Text = Program.rootHub.getMiMacAddress(Index);
+                MiDevice d = Program.rootHub.MiControllers[Index];
                 if (d != null && Global.QuickCharge && d.ConnectionType == ConnectionType.BT && d.Charging)
                 {
                     d.DisconnectBT();
@@ -818,8 +818,8 @@ namespace DS4Windows
         private void pBStatus_MouseClick(object sender, MouseEventArgs e)
         {
             int i = Int32.Parse(((PictureBox)sender).Tag.ToString());
-            if (e.Button == System.Windows.Forms.MouseButtons.Right && Program.rootHub.getDS4Status(i) == "BT" && !Program.rootHub.DS4Controllers[i].Charging)
-                Program.rootHub.DS4Controllers[i].DisconnectBT();
+            if (e.Button == System.Windows.Forms.MouseButtons.Right && Program.rootHub.getDS4Status(i) == "BT" && !Program.rootHub.MiControllers[i].Charging)
+                Program.rootHub.MiControllers[i].DisconnectBT();
         }
 
         private void Enable_Controls(int device, bool on)
@@ -1510,7 +1510,7 @@ namespace DS4Windows
             // shutdown.
             {
                 systemShutdown = false;
-                DS4LightBar.shuttingdown = true;
+                //DS4LightBar.shuttingdown = true;
             }
             if (oldsize == new System.Drawing.Size(0, 0))
             {
@@ -1590,9 +1590,9 @@ namespace DS4Windows
         {
             Label lb = (Label)sender;
             int i = Int32.Parse(lb.Tag.ToString());
-            if (Program.rootHub.DS4Controllers[i] != null && Program.rootHub.DS4Controllers[i].ConnectionType == ConnectionType.BT)
+            if (Program.rootHub.MiControllers[i] != null && Program.rootHub.MiControllers[i].ConnectionType == ConnectionType.BT)
             {
-                double latency = Program.rootHub.DS4Controllers[i].Latency;
+                double latency = Program.rootHub.MiControllers[i].Latency;
                 toolTip1.Hide(Pads[i]);
                 toolTip1.Show(Properties.Resources.InputDelay.Replace("*number*", latency.ToString()), lb, lb.Size.Width, 0);
             }

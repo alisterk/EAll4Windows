@@ -357,8 +357,8 @@ namespace DS4Windows
                 bnEmptyColor.BackColor = advColorDialog.Color;
                 pBGraident.Refresh();
             }
-            if (device < 4)
-                DS4LightBar.forcelight[device] = false;
+            //if (device < 4)
+            //    DS4LightBar.forcelight[device] = false;
         }
 
         private void bnFullColor_Click(object sender, EventArgs e)
@@ -370,8 +370,8 @@ namespace DS4Windows
                 bnFullColor.BackColor = advColorDialog.Color;
                 pBGraident.Refresh();
             }
-            if (device < 4)
-                DS4LightBar.forcelight[device] = false;
+            //if (device < 4)
+            //  DS4LightBar.forcelight[device] = false;
         }
 
         private void pBGraident_Paint(object sender, PaintEventArgs e)
@@ -395,9 +395,9 @@ namespace DS4Windows
             {
                 Color color = (Color)sender;
                 DS4Color dcolor = new DS4Color { red = color.R, green = color.G, blue = color.B };
-                DS4LightBar.forcedColor[device] = dcolor;
-                DS4LightBar.forcedFlash[device] = 0;
-                DS4LightBar.forcelight[device] = true;
+                //DS4LightBar.forcedColor[device] = dcolor;
+                //DS4LightBar.forcedFlash[device] = 0;
+                //DS4LightBar.forcelight[device] = true;
             }
         }
 

@@ -12,7 +12,7 @@ namespace DS4Windows
     public class ControlService
     {
         public X360Device x360Bus;
-        public DS4Device[] DS4Controllers = new DS4Device[4];
+        public MiDevice[] MiControllers = new MiDevice[4];
         public Mouse[] touchPad = new Mouse[4];
         private bool running = false;
         private DS4State[] MappedState = new DS4State[4];
@@ -24,7 +24,7 @@ namespace DS4Windows
         public bool eastertime = false;
         private int eCode = 0;
         bool[] buttonsdown = { false, false, false, false };
-        List<DS4Controls> dcs = new List<DS4Controls>();
+        List<MiControls> dcs = new List<MiControls>();
         bool[] held = new bool[4];
         int[] oldmouse = new int[4] { -1, -1, -1, -1 };
         SoundPlayer sp = new SoundPlayer();
@@ -41,7 +41,7 @@ namespace DS4Windows
             sp.Stream = Properties.Resources.EE;
             x360Bus = new X360Device();
             AddtoDS4List();
-            for (int i = 0; i < DS4Controllers.Length; i++)
+            for (int i = 0; i < MiControllers.Length; i++)
             {
                 processingData[i] = new X360Data();
                 MappedState[i] = new DS4State();
@@ -53,41 +53,38 @@ namespace DS4Windows
 
         void AddtoDS4List()
         {
-            dcs.Add(DS4Controls.Cross);
-            dcs.Add(DS4Controls.Cross);
-            dcs.Add(DS4Controls.Circle);
-            dcs.Add(DS4Controls.Square);
-            dcs.Add(DS4Controls.Triangle);
-            dcs.Add(DS4Controls.Options);
-            dcs.Add(DS4Controls.Share);
-            dcs.Add(DS4Controls.DpadUp);
-            dcs.Add(DS4Controls.DpadDown);
-            dcs.Add(DS4Controls.DpadLeft);
-            dcs.Add(DS4Controls.DpadRight);
-            dcs.Add(DS4Controls.PS);
-            dcs.Add(DS4Controls.L1);
-            dcs.Add(DS4Controls.R1);
-            dcs.Add(DS4Controls.L2);
-            dcs.Add(DS4Controls.R2);
-            dcs.Add(DS4Controls.L3);
-            dcs.Add(DS4Controls.R3);
-            dcs.Add(DS4Controls.LXPos);
-            dcs.Add(DS4Controls.LXNeg);
-            dcs.Add(DS4Controls.LYPos);
-            dcs.Add(DS4Controls.LYNeg);
-            dcs.Add(DS4Controls.RXPos);
-            dcs.Add(DS4Controls.RXNeg);
-            dcs.Add(DS4Controls.RYPos);
-            dcs.Add(DS4Controls.RYNeg);
-            dcs.Add(DS4Controls.SwipeUp);
-            dcs.Add(DS4Controls.SwipeDown);
-            dcs.Add(DS4Controls.SwipeLeft);
-            dcs.Add(DS4Controls.SwipeRight);
+            dcs.Add(MiControls.A);
+            dcs.Add(MiControls.B);
+            dcs.Add(MiControls.X);
+            dcs.Add(MiControls.Y);
+            dcs.Add(MiControls.Back);
+            dcs.Add(MiControls.Menu);
+            dcs.Add(MiControls.HomeSimulated);
+            dcs.Add(MiControls.DpadUp);
+            dcs.Add(MiControls.DpadDown);
+            dcs.Add(MiControls.DpadLeft);
+            dcs.Add(MiControls.DpadRight);
+            dcs.Add(MiControls.L1);
+            dcs.Add(MiControls.R1);
+            dcs.Add(MiControls.LT);
+            dcs.Add(MiControls.RT);
+            dcs.Add(MiControls.LT);
+            dcs.Add(MiControls.RT);
+            dcs.Add(MiControls.LXPos);
+            dcs.Add(MiControls.LXNeg);
+            dcs.Add(MiControls.LYPos);
+            dcs.Add(MiControls.LYNeg);
+            dcs.Add(MiControls.RXPos);
+            dcs.Add(MiControls.RXNeg);
+            dcs.Add(MiControls.RYPos);
+            dcs.Add(MiControls.RYNeg);
+            dcs.Add(MiControls.LS);
+            dcs.Add(MiControls.RS);
         }
 
-        private async void WarnExclusiveModeFailure(DS4Device device)
+        private async void WarnExclusiveModeFailure(MiDevice device)
         {
-            if (DS4Devices.isExclusiveMode && !device.IsExclusive)
+            if (MiDevices.isExclusiveMode && !device.IsExclusive)
             {
                 await System.Threading.Tasks.Task.Delay(5);
                 String message = Properties.Resources.CouldNotOpenDS4.Replace("*Mac address*", device.MacAddress) + " " + Properties.Resources.QuitOtherPrograms;
@@ -101,33 +98,33 @@ namespace DS4Windows
             {
                 if (showlog)
                 LogDebug(Properties.Resources.Starting);
-                DS4Devices.isExclusiveMode = Global.UseExclusiveMode;
+                MiDevices.isExclusiveMode = Global.UseExclusiveMode;
                 if (showlog)
                 {
                     LogDebug(Properties.Resources.SearchingController);
-                    LogDebug(DS4Devices.isExclusiveMode ?  Properties.Resources.UsingExclusive: Properties.Resources.UsingShared);
+                    LogDebug(MiDevices.isExclusiveMode ?  Properties.Resources.UsingExclusive: Properties.Resources.UsingShared);
                 }
                 try
                 {
-                    DS4Devices.findControllers();
-                    IEnumerable<DS4Device> devices = DS4Devices.getDS4Controllers();
+                    MiDevices.findControllers();
+                    IEnumerable<MiDevice> devices = MiDevices.getMiControllers();
                     int ind = 0;
-                    DS4LightBar.defualtLight = false;
-                    foreach (DS4Device device in devices)
+                    //!DS4LightBar.defualtLight = false;
+                    foreach (MiDevice device in devices)
                     {
                         if (showlog)
                             LogDebug(Properties.Resources.FoundController + device.MacAddress + " (" + device.ConnectionType + ")");
                         WarnExclusiveModeFailure(device);
-                        DS4Controllers[ind] = device;
-                        device.Removal -= DS4Devices.On_Removal;
-                        device.Removal += this.On_DS4Removal;
-                        device.Removal += DS4Devices.On_Removal;
-                        touchPad[ind] = new Mouse(ind, device);
-                        device.LightBarColor = Global.MainColor[ind];
+                        MiControllers[ind] = device;
+                        device.Removal -= MiDevices.On_Removal;
+                        device.Removal += this.On_MiRemoval;
+                        device.Removal += MiDevices.On_Removal;
+                        //!touchPad[ind] = new Mouse(ind, device);
+                        //!device.LightBarColor = Global.MainColor[ind];
                         if (!Global.DinputOnly[ind])
                             x360Bus.Plugin(ind);
                         device.Report += this.On_Report;
-                        TouchPadOn(ind, device);
+                        //!TouchPadOn(ind, device);
                         //string filename = Global.ProfilePath[ind];
                         ind++;
                         if (showlog)
@@ -166,24 +163,24 @@ namespace DS4Windows
                 if (showlog)
                     LogDebug(Properties.Resources.StoppingX360);
                 bool anyUnplugged = false;                
-                for (int i = 0; i < DS4Controllers.Length; i++)
+                for (int i = 0; i < MiControllers.Length; i++)
                 {
-                    if (DS4Controllers[i] != null)
+                    if (MiControllers[i] != null)
                     {
-                        if (Global.DCBTatStop && !DS4Controllers[i].Charging && showlog)
-                            DS4Controllers[i].DisconnectBT();
-                        else
-                        {
-                            DS4LightBar.forcelight[i] = false;
-                            DS4LightBar.forcedFlash[i] = 0;
-                            DS4LightBar.defualtLight = true;
-                            DS4LightBar.updateLightBar(DS4Controllers[i], i, CurrentState[i], ExposedState[i], touchPad[i]);
-                            System.Threading.Thread.Sleep(50);
-                        }
+                        if (Global.DCBTatStop && !MiControllers[i].Charging && showlog)
+                            MiControllers[i].DisconnectBT();
+                        //!else
+                        //{
+                        //    DS4LightBar.forcelight[i] = false;
+                        //    DS4LightBar.forcedFlash[i] = 0;
+                        //    DS4LightBar.defualtLight = true;
+                        //    DS4LightBar.updateLightBar(MiControllers[i], i, CurrentState[i], ExposedState[i], touchPad[i]);
+                        //    System.Threading.Thread.Sleep(50);
+                        //}
                         CurrentState[i].Battery = PreviousState[i].Battery = 0; // Reset for the next connection's initial status change.
                         x360Bus.Unplug(i);
                         anyUnplugged = true;
-                        DS4Controllers[i] = null;
+                        MiControllers[i] = null;
                         touchPad[i] = null;
                     }
                 }
@@ -193,7 +190,7 @@ namespace DS4Windows
                 x360Bus.Stop();
                 if (showlog)
                     LogDebug(Properties.Resources.StoppingDS4);
-                DS4Devices.stopControllers();
+                MiDevices.stopControllers();
                 if (showlog)
                     LogDebug(Properties.Resources.StoppedDS4Windows);
                 Global.ControllerStatusChanged(this);                
@@ -205,35 +202,35 @@ namespace DS4Windows
         {
             if (running)
             {
-                DS4Devices.findControllers();
-                IEnumerable<DS4Device> devices = DS4Devices.getDS4Controllers();
-                foreach (DS4Device device in devices)
+                MiDevices.findControllers();
+                IEnumerable<MiDevice> devices = MiDevices.getMiControllers();
+                foreach (MiDevice device in devices)
                 {
                     if (device.IsDisconnecting)
                         continue;
                     if (((Func<bool>)delegate
                     {
-                        for (Int32 Index = 0; Index < DS4Controllers.Length; Index++)
-                            if (DS4Controllers[Index] != null && DS4Controllers[Index].MacAddress == device.MacAddress)
+                        for (Int32 Index = 0; Index < MiControllers.Length; Index++)
+                            if (MiControllers[Index] != null && MiControllers[Index].MacAddress == device.MacAddress)
                                 return true;
                         return false;
                     })())
                         continue;
-                    for (Int32 Index = 0; Index < DS4Controllers.Length; Index++)
-                        if (DS4Controllers[Index] == null)
+                    for (Int32 Index = 0; Index < MiControllers.Length; Index++)
+                        if (MiControllers[Index] == null)
                         {
                             LogDebug(Properties.Resources.FoundController + device.MacAddress + " (" + device.ConnectionType + ")");
                             WarnExclusiveModeFailure(device);
-                            DS4Controllers[Index] = device;
-                            device.Removal -= DS4Devices.On_Removal;
-                            device.Removal += this.On_DS4Removal;
-                            device.Removal += DS4Devices.On_Removal;
-                            touchPad[Index] = new Mouse(Index, device);
-                            device.LightBarColor = Global.MainColor[Index];
+                            MiControllers[Index] = device;
+                            device.Removal -= MiDevices.On_Removal;
+                            device.Removal += this.On_MiRemoval;
+                            device.Removal += MiDevices.On_Removal;
+                            //!touchPad[Index] = new Mouse(Index, device);
+                            //device.LightBarColor = Global.MainColor[Index];
                             device.Report += this.On_Report;
                             if (!Global.DinputOnly[Index])
                                 x360Bus.Plugin(Index);
-                            TouchPadOn(Index, device);
+                            //!TouchPadOn(Index, device);
                             //string filename = Path.GetFileName(Global.ProfilePath[Index]);
                             if (System.IO.File.Exists(Global.appdatapath + "\\Profiles\\" + Global.ProfilePath[Index] + ".xml"))
                             {
@@ -255,21 +252,21 @@ namespace DS4Windows
             return true;
         }
 
-        public void TouchPadOn(int ind, DS4Device device)
-        {
-            ITouchpadBehaviour tPad = touchPad[ind];
-            device.Touchpad.TouchButtonDown += tPad.touchButtonDown;
-            device.Touchpad.TouchButtonUp += tPad.touchButtonUp;
-            device.Touchpad.TouchesBegan += tPad.touchesBegan;
-            device.Touchpad.TouchesMoved += tPad.touchesMoved;
-            device.Touchpad.TouchesEnded += tPad.touchesEnded;
-            device.Touchpad.TouchUnchanged += tPad.touchUnchanged;
-            //LogDebug("Touchpad mode for " + device.MacAddress + " is now " + tmode.ToString());
-            //Log.LogToTray("Touchpad mode for " + device.MacAddress + " is now " + tmode.ToString());
-            Global.ControllerStatusChanged(this);
-        }
+        //public void TouchPadOn(int ind, MiDevice device)
+        //{
+        //    ITouchpadBehaviour tPad = touchPad[ind];
+        //    device.Touchpad.TouchButtonDown += tPad.touchButtonDown;
+        //    device.Touchpad.TouchButtonUp += tPad.touchButtonUp;
+        //    device.Touchpad.TouchesBegan += tPad.touchesBegan;
+        //    device.Touchpad.TouchesMoved += tPad.touchesMoved;
+        //    device.Touchpad.TouchesEnded += tPad.touchesEnded;
+        //    device.Touchpad.TouchUnchanged += tPad.touchUnchanged;
+        //    //LogDebug("Touchpad mode for " + device.MacAddress + " is now " + tmode.ToString());
+        //    //Log.LogToTray("Touchpad mode for " + device.MacAddress + " is now " + tmode.ToString());
+        //    Global.ControllerStatusChanged(this);
+        //}
 
-        public void TimeoutConnection(DS4Device d)
+        public void TimeoutConnection(MiDevice d)
         {
             try
             {
@@ -295,11 +292,11 @@ namespace DS4Windows
             }
         }
 
-        public string getDS4ControllerInfo(int index)
+        public string getMiControllerInfo(int index)
         {
-            if (DS4Controllers[index] != null)
+            if (MiControllers[index] != null)
             {
-                DS4Device d = DS4Controllers[index];
+                MiDevice d = MiControllers[index];
                 if (!d.IsAlive())
                     //return "Connecting..."; // awaiting the first battery charge indication
                 {
@@ -310,17 +307,17 @@ namespace DS4Windows
                     return Properties.Resources.Connecting;
                 }
                 String battery;
-                if (d.Charging)
-                {
-                    if (d.Battery >= 100)
+                //if (d.Charging)
+                //{
+                    //if (d.Battery >= 100)
                         battery = Properties.Resources.Charged;
-                    else
-                        battery = Properties.Resources.Charging.Replace("*number*", d.Battery.ToString());
-                }
-                else
-                {
-                    battery = Properties.Resources.Battery.Replace("*number*", d.Battery.ToString());
-                }
+                    //else
+                    //    battery = Properties.Resources.Charging.Replace("*number*", d.Battery.ToString());
+                //}
+                //else
+                //{
+                //    battery = Properties.Resources.Battery.Replace("*number*", d.Battery.ToString());
+                //}
                 return d.MacAddress + " (" + d.ConnectionType + "), " + battery;
                 //return d.MacAddress + " (" + d.ConnectionType + "), Battery is " + battery + ", Touchpad in " + modeSwitcher[index].ToString();
             }
@@ -328,11 +325,11 @@ namespace DS4Windows
                 return String.Empty;
         }
 
-        public string getDS4MacAddress(int index)
+        public string getMiMacAddress(int index)
         {
-            if (DS4Controllers[index] != null)
+            if (MiControllers[index] != null)
             {
-                DS4Device d = DS4Controllers[index];
+                MiDevice d = MiControllers[index];
                 if (!d.IsAlive())
                 //return "Connecting..."; // awaiting the first battery charge indication
                 {
@@ -350,9 +347,9 @@ namespace DS4Windows
 
         public string getShortDS4ControllerInfo(int index)
         {
-            if (DS4Controllers[index] != null)
+            if (MiControllers[index] != null)
             {
-                DS4Device d = DS4Controllers[index];
+                MiDevice d = MiControllers[index];
                 String battery;
                 if (!d.IsAlive())
                     battery = "...";
@@ -375,9 +372,9 @@ namespace DS4Windows
 
         public string getDS4Battery(int index)
         {
-            if (DS4Controllers[index] != null)
+            if (MiControllers[index] != null)
             {
-                DS4Device d = DS4Controllers[index];
+                MiDevice d = MiControllers[index];
                 String battery;
                 if (!d.IsAlive())
                     battery = "...";
@@ -400,9 +397,9 @@ namespace DS4Windows
 
         public string getDS4Status(int index)
         {
-            if (DS4Controllers[index] != null)
+            if (MiControllers[index] != null)
             {
-                DS4Device d = DS4Controllers[index];
+                MiDevice d = MiControllers[index];
                 return d.ConnectionType+"";
             }
             else
@@ -412,12 +409,12 @@ namespace DS4Windows
 
         private int XINPUT_UNPLUG_SETTLE_TIME = 250; // Inhibit races that occur with the asynchronous teardown of ScpVBus -> X360 driver instance.
         //Called when DS4 is disconnected or timed out
-        protected virtual void On_DS4Removal(object sender, EventArgs e)
+        protected virtual void On_MiRemoval(object sender, EventArgs e)
         {
-            DS4Device device = (DS4Device)sender;
+            MiDevice device = (MiDevice)sender;
             int ind = -1;
-            for (int i = 0; i < DS4Controllers.Length; i++)
-                if (DS4Controllers[i] != null && device.MacAddress == DS4Controllers[i].MacAddress)
+            for (int i = 0; i < MiControllers.Length; i++)
+                if (MiControllers[i] != null && device.MacAddress == MiControllers[i].MacAddress)
                     ind = i;
             if (ind != -1)
             {
@@ -426,7 +423,7 @@ namespace DS4Windows
                 LogDebug(Properties.Resources.ControllerWasRemoved.Replace("*Mac address*", device.MacAddress));
                 Log.LogToTray(Properties.Resources.ControllerWasRemoved.Replace("*Mac address*", device.MacAddress));
                 System.Threading.Thread.Sleep(XINPUT_UNPLUG_SETTLE_TIME);
-                DS4Controllers[ind] = null;
+                MiControllers[ind] = null;
                 touchPad[ind] = null;
                 Global.ControllerStatusChanged(this);
             }
@@ -436,11 +433,11 @@ namespace DS4Windows
         protected virtual void On_Report(object sender, EventArgs e)
         {
 
-            DS4Device device = (DS4Device)sender;
+            MiDevice device = (MiDevice)sender;
 
             int ind = -1;
-            for (int i = 0; i < DS4Controllers.Length; i++)
-                if (device == DS4Controllers[i])
+            for (int i = 0; i < MiControllers.Length; i++)
+                if (device == MiControllers[i])
                     ind = i;
 
             if (ind != -1)
@@ -481,7 +478,7 @@ namespace DS4Windows
                     DoExtras(ind);
 
                 // Update the GUI/whatever.
-                DS4LightBar.updateLightBar(device, ind, cState, ExposedState[ind], touchPad[ind]);
+                //DS4LightBar.updateLightBar(device, ind, cState, ExposedState[ind], touchPad[ind]);
 
                 x360Bus.Parse(cState, processingData[ind].Report, ind);
                 // We push the translated Xinput state, and simultaneously we
@@ -513,17 +510,17 @@ namespace DS4Windows
                 if (Global.FlashWhenLate)
                 {
                     DS4Color color = new DS4Color { red = 50, green = 0, blue = 0 };
-                    DS4LightBar.forcedColor[ind] = color;
-                    DS4LightBar.forcedFlash[ind] = 2;
-                    DS4LightBar.forcelight[ind] = true;
+                    //DS4LightBar.forcedColor[ind] = color;
+                    //DS4LightBar.forcedFlash[ind] = 2;
+                    //DS4LightBar.forcelight[ind] = true;
                 }
             }
             else
             {
                 lag[ind] = false;
                 LogDebug(Properties.Resources.LatencyNotOverTen.Replace("*number*", (ind + 1).ToString()));
-                DS4LightBar.forcelight[ind] = false;
-                DS4LightBar.forcedFlash[ind] = 0;
+                //DS4LightBar.forcelight[ind] = false;
+                //DS4LightBar.forcedFlash[ind] = 0;
             }
         }
         
@@ -532,8 +529,8 @@ namespace DS4Windows
             DS4State cState = CurrentState[ind];
             DS4StateExposed eState = ExposedState[ind];
             Mouse tp = touchPad[ind];
-            DS4Controls helddown = DS4Controls.None;
-            foreach (KeyValuePair<DS4Controls, string> p in Global.getCustomExtras(ind))
+            MiControls helddown = MiControls.None;
+            foreach (KeyValuePair<MiControls, string> p in Global.getCustomExtras(ind))
             {
                 if (Mapping.getBoolMapping(p.Key, cState, eState, tp))
                 {
@@ -541,7 +538,7 @@ namespace DS4Windows
                     break;
                 }
             }
-            if (helddown != DS4Controls.None)
+            if (helddown != MiControls.None)
             {
                 string p = Global.getCustomExtras(ind)[helddown];
                 string[] extraS = p.Split(',');
@@ -560,9 +557,9 @@ namespace DS4Windows
                     if (extras[2] == 1)
                     {
                         DS4Color color = new DS4Color { red = (byte)extras[3], green = (byte)extras[4], blue = (byte)extras[5] };
-                        DS4LightBar.forcedColor[ind] = color;
-                        DS4LightBar.forcedFlash[ind] = (byte)extras[6];
-                        DS4LightBar.forcelight[ind] = true;
+                        //DS4LightBar.forcedColor[ind] = color;
+                        //DS4LightBar.forcedFlash[ind] = (byte)extras[6];
+                        //DS4LightBar.forcelight[ind] = true;
                     }
                     if (extras[7] == 1)
                     {
@@ -575,8 +572,8 @@ namespace DS4Windows
             }
             else if (held[ind])
             {
-                DS4LightBar.forcelight[ind] = false;
-                DS4LightBar.forcedFlash[ind] = 0;                
+                //DS4LightBar.forcelight[ind] = false;
+                //DS4LightBar.forcedFlash[ind] = 0;                
                 Global.ButtonMouseSensitivity[ind] = oldmouse[ind];
                 oldmouse[ind] = -1;
                 setRumble(0, 0, ind);
@@ -593,7 +590,7 @@ namespace DS4Windows
             Mouse tp = touchPad[ind];
 
             bool pb = false;
-            foreach (DS4Controls dc in dcs)
+            foreach (MiControls dc in dcs)
             {
                 if (Mapping.getBoolMapping(dc, cState, eState, tp))
                 {
@@ -667,75 +664,75 @@ namespace DS4Windows
             DS4State cState = CurrentState[ind];
             DS4StateExposed eState = ExposedState[ind];
             Mouse tp = touchPad[ind];
-            if (DS4Controllers[ind] != null)
-                if (Mapping.getBoolMapping(DS4Controls.Cross, cState, eState, tp)) return "Cross";
-                else if (Mapping.getBoolMapping(DS4Controls.Circle, cState, eState, tp)) return "Circle";
-                else if (Mapping.getBoolMapping(DS4Controls.Triangle, cState, eState, tp)) return "Triangle";
-                else if (Mapping.getBoolMapping(DS4Controls.Square, cState, eState, tp)) return "Square";
-                else if (Mapping.getBoolMapping(DS4Controls.L1, cState, eState, tp)) return "L1";
-                else if (Mapping.getBoolMapping(DS4Controls.R1, cState, eState, tp)) return "R1";
-                else if (Mapping.getBoolMapping(DS4Controls.L2, cState, eState, tp)) return "L2";
-                else if (Mapping.getBoolMapping(DS4Controls.R2, cState, eState, tp)) return "R2";
-                else if (Mapping.getBoolMapping(DS4Controls.L3, cState, eState, tp)) return "L3";
-                else if (Mapping.getBoolMapping(DS4Controls.R3, cState, eState, tp)) return "R3";
-                else if (Mapping.getBoolMapping(DS4Controls.DpadUp, cState, eState, tp)) return "Up";
-                else if (Mapping.getBoolMapping(DS4Controls.DpadDown, cState, eState, tp)) return "Down";
-                else if (Mapping.getBoolMapping(DS4Controls.DpadLeft, cState, eState, tp)) return "Left";
-                else if (Mapping.getBoolMapping(DS4Controls.DpadRight, cState, eState, tp)) return "Right";
-                else if (Mapping.getBoolMapping(DS4Controls.Share, cState, eState, tp)) return "Share";
-                else if (Mapping.getBoolMapping(DS4Controls.Options, cState, eState, tp)) return "Options";
-                else if (Mapping.getBoolMapping(DS4Controls.PS, cState, eState, tp)) return "PS";
-                else if (Mapping.getBoolMapping(DS4Controls.LXPos, cState, eState, tp)) return "LS Right";
-                else if (Mapping.getBoolMapping(DS4Controls.LXNeg, cState, eState, tp)) return "LS Left";
-                else if (Mapping.getBoolMapping(DS4Controls.LYPos, cState, eState, tp)) return "LS Down";
-                else if (Mapping.getBoolMapping(DS4Controls.LYNeg, cState, eState, tp)) return "LS Up";
-                else if (Mapping.getBoolMapping(DS4Controls.RXPos, cState, eState, tp)) return "RS Right";
-                else if (Mapping.getBoolMapping(DS4Controls.RXNeg, cState, eState, tp)) return "RS Left";
-                else if (Mapping.getBoolMapping(DS4Controls.RYPos, cState, eState, tp)) return "RS Down";
-                else if (Mapping.getBoolMapping(DS4Controls.RYNeg, cState, eState, tp)) return "RS Up";
-                else if (Mapping.getBoolMapping(DS4Controls.TouchLeft, cState, eState, tp)) return "Touch Left";
-                else if (Mapping.getBoolMapping(DS4Controls.TouchRight, cState, eState, tp)) return "Touch Right";
-                else if (Mapping.getBoolMapping(DS4Controls.TouchMulti, cState, eState, tp)) return "Touch Multi";
-                else if (Mapping.getBoolMapping(DS4Controls.TouchUpper, cState, eState, tp)) return "Touch Upper";
+            if (MiControllers[ind] != null)
+                if (Mapping.getBoolMapping(MiControls.A, cState, eState, tp)) return "Cross";
+                else if (Mapping.getBoolMapping(MiControls.B, cState, eState, tp)) return "Circle";
+                else if (Mapping.getBoolMapping(MiControls.Y, cState, eState, tp)) return "Triangle";
+                else if (Mapping.getBoolMapping(MiControls.X, cState, eState, tp)) return "Square";
+                else if (Mapping.getBoolMapping(MiControls.L1, cState, eState, tp)) return "L1";
+                else if (Mapping.getBoolMapping(MiControls.R1, cState, eState, tp)) return "R1";
+                else if (Mapping.getBoolMapping(MiControls.LT, cState, eState, tp)) return "L2";
+                else if (Mapping.getBoolMapping(MiControls.RT, cState, eState, tp)) return "R2";
+                else if (Mapping.getBoolMapping(MiControls.LS, cState, eState, tp)) return "L3";
+                else if (Mapping.getBoolMapping(MiControls.RS, cState, eState, tp)) return "R3";
+                else if (Mapping.getBoolMapping(MiControls.DpadUp, cState, eState, tp)) return "Up";
+                else if (Mapping.getBoolMapping(MiControls.DpadDown, cState, eState, tp)) return "Down";
+                else if (Mapping.getBoolMapping(MiControls.DpadLeft, cState, eState, tp)) return "Left";
+                else if (Mapping.getBoolMapping(MiControls.DpadRight, cState, eState, tp)) return "Right";
+                else if (Mapping.getBoolMapping(MiControls.Menu, cState, eState, tp)) return "Share";
+                else if (Mapping.getBoolMapping(MiControls.Back, cState, eState, tp)) return "Options";
+                else if (Mapping.getBoolMapping(MiControls.HomeSimulated, cState, eState, tp)) return "PS";
+                else if (Mapping.getBoolMapping(MiControls.LXPos, cState, eState, tp)) return "LS Right";
+                else if (Mapping.getBoolMapping(MiControls.LXNeg, cState, eState, tp)) return "LS Left";
+                else if (Mapping.getBoolMapping(MiControls.LYPos, cState, eState, tp)) return "LS Down";
+                else if (Mapping.getBoolMapping(MiControls.LYNeg, cState, eState, tp)) return "LS Up";
+                else if (Mapping.getBoolMapping(MiControls.RXPos, cState, eState, tp)) return "RS Right";
+                else if (Mapping.getBoolMapping(MiControls.RXNeg, cState, eState, tp)) return "RS Left";
+                else if (Mapping.getBoolMapping(MiControls.RYPos, cState, eState, tp)) return "RS Down";
+                else if (Mapping.getBoolMapping(MiControls.RYNeg, cState, eState, tp)) return "RS Up";
+                //else if (Mapping.getBoolMapping(MiControls.TouchLeft, cState, eState, tp)) return "Touch Left";
+                //else if (Mapping.getBoolMapping(MiControls.TouchRight, cState, eState, tp)) return "Touch Right";
+                //else if (Mapping.getBoolMapping(MiControls.TouchMulti, cState, eState, tp)) return "Touch Multi";
+                //else if (Mapping.getBoolMapping(MiControls.TouchUpper, cState, eState, tp)) return "Touch Upper";
             return "nothing";
         }
 
-        public DS4Controls GetInputkeysDS4(int ind)
+        public MiControls GetInputkeysDS4(int ind)
         {
             DS4State cState = CurrentState[ind];
             DS4StateExposed eState = ExposedState[ind];
             Mouse tp = touchPad[ind];
-            if (DS4Controllers[ind] != null)
-                if (Mapping.getBoolMapping(DS4Controls.Cross, cState, eState, tp)) return DS4Controls.Cross;
-                else if (Mapping.getBoolMapping(DS4Controls.Circle, cState, eState, tp)) return DS4Controls.Circle;
-                else if (Mapping.getBoolMapping(DS4Controls.Triangle, cState, eState, tp)) return DS4Controls.Triangle;
-                else if (Mapping.getBoolMapping(DS4Controls.Square, cState, eState, tp)) return DS4Controls.Square;
-                else if (Mapping.getBoolMapping(DS4Controls.L1, cState, eState, tp)) return DS4Controls.L1;
-                else if (Mapping.getBoolMapping(DS4Controls.R1, cState, eState, tp)) return DS4Controls.R1;
-                else if (Mapping.getBoolMapping(DS4Controls.L2, cState, eState, tp)) return DS4Controls.L2;
-                else if (Mapping.getBoolMapping(DS4Controls.R2, cState, eState, tp)) return DS4Controls.R2;
-                else if (Mapping.getBoolMapping(DS4Controls.L3, cState, eState, tp)) return DS4Controls.L3;
-                else if (Mapping.getBoolMapping(DS4Controls.R3, cState, eState, tp)) return DS4Controls.R3;
-                else if (Mapping.getBoolMapping(DS4Controls.DpadUp, cState, eState, tp)) return DS4Controls.DpadUp;
-                else if (Mapping.getBoolMapping(DS4Controls.DpadDown, cState, eState, tp)) return DS4Controls.DpadDown;
-                else if (Mapping.getBoolMapping(DS4Controls.DpadLeft, cState, eState, tp)) return DS4Controls.DpadLeft;
-                else if (Mapping.getBoolMapping(DS4Controls.DpadRight, cState, eState, tp)) return DS4Controls.DpadRight;
-                else if (Mapping.getBoolMapping(DS4Controls.Share, cState, eState, tp)) return DS4Controls.Share;
-                else if (Mapping.getBoolMapping(DS4Controls.Options, cState, eState, tp)) return DS4Controls.Options;
-                else if (Mapping.getBoolMapping(DS4Controls.PS, cState, eState, tp)) return DS4Controls.PS;
-                else if (Mapping.getBoolMapping(DS4Controls.LXPos, cState, eState, tp)) return DS4Controls.LXPos;
-                else if (Mapping.getBoolMapping(DS4Controls.LXNeg, cState, eState, tp)) return DS4Controls.LXNeg;
-                else if (Mapping.getBoolMapping(DS4Controls.LYPos, cState, eState, tp)) return DS4Controls.LYPos;
-                else if (Mapping.getBoolMapping(DS4Controls.LYNeg, cState, eState, tp)) return DS4Controls.LYNeg;
-                else if (Mapping.getBoolMapping(DS4Controls.RXPos, cState, eState, tp)) return DS4Controls.RXPos;
-                else if (Mapping.getBoolMapping(DS4Controls.RXNeg, cState, eState, tp)) return DS4Controls.RXNeg;
-                else if (Mapping.getBoolMapping(DS4Controls.RYPos, cState, eState, tp)) return DS4Controls.RYPos;
-                else if (Mapping.getBoolMapping(DS4Controls.RYNeg, cState, eState, tp)) return DS4Controls.RYNeg;
-                else if (Mapping.getBoolMapping(DS4Controls.TouchLeft, cState, eState, tp)) return DS4Controls.TouchLeft;
-                else if (Mapping.getBoolMapping(DS4Controls.TouchRight, cState, eState, tp)) return DS4Controls.TouchRight;
-                else if (Mapping.getBoolMapping(DS4Controls.TouchMulti, cState, eState, tp)) return DS4Controls.TouchMulti;
-                else if (Mapping.getBoolMapping(DS4Controls.TouchUpper, cState, eState, tp)) return DS4Controls.TouchUpper;
-            return DS4Controls.None;
+            if (MiControllers[ind] != null)
+                if (Mapping.getBoolMapping(MiControls.A, cState, eState, tp)) return MiControls.A;
+                else if (Mapping.getBoolMapping(MiControls.B, cState, eState, tp)) return MiControls.B;
+                else if (Mapping.getBoolMapping(MiControls.Y, cState, eState, tp)) return MiControls.Y;
+                else if (Mapping.getBoolMapping(MiControls.X, cState, eState, tp)) return MiControls.X;
+                else if (Mapping.getBoolMapping(MiControls.L1, cState, eState, tp)) return MiControls.L1;
+                else if (Mapping.getBoolMapping(MiControls.R1, cState, eState, tp)) return MiControls.R1;
+                else if (Mapping.getBoolMapping(MiControls.LT, cState, eState, tp)) return MiControls.LT;
+                else if (Mapping.getBoolMapping(MiControls.RT, cState, eState, tp)) return MiControls.RT;
+                else if (Mapping.getBoolMapping(MiControls.LS, cState, eState, tp)) return MiControls.LS;
+                else if (Mapping.getBoolMapping(MiControls.RS, cState, eState, tp)) return MiControls.RS;
+                else if (Mapping.getBoolMapping(MiControls.DpadUp, cState, eState, tp)) return MiControls.DpadUp;
+                else if (Mapping.getBoolMapping(MiControls.DpadDown, cState, eState, tp)) return MiControls.DpadDown;
+                else if (Mapping.getBoolMapping(MiControls.DpadLeft, cState, eState, tp)) return MiControls.DpadLeft;
+                else if (Mapping.getBoolMapping(MiControls.DpadRight, cState, eState, tp)) return MiControls.DpadRight;
+                else if (Mapping.getBoolMapping(MiControls.Menu, cState, eState, tp)) return MiControls.Menu;
+                else if (Mapping.getBoolMapping(MiControls.Back, cState, eState, tp)) return MiControls.Back;
+                else if (Mapping.getBoolMapping(MiControls.HomeSimulated, cState, eState, tp)) return MiControls.HomeSimulated;
+                else if (Mapping.getBoolMapping(MiControls.LXPos, cState, eState, tp)) return MiControls.LXPos;
+                else if (Mapping.getBoolMapping(MiControls.LXNeg, cState, eState, tp)) return MiControls.LXNeg;
+                else if (Mapping.getBoolMapping(MiControls.LYPos, cState, eState, tp)) return MiControls.LYPos;
+                else if (Mapping.getBoolMapping(MiControls.LYNeg, cState, eState, tp)) return MiControls.LYNeg;
+                else if (Mapping.getBoolMapping(MiControls.RXPos, cState, eState, tp)) return MiControls.RXPos;
+                else if (Mapping.getBoolMapping(MiControls.RXNeg, cState, eState, tp)) return MiControls.RXNeg;
+                else if (Mapping.getBoolMapping(MiControls.RYPos, cState, eState, tp)) return MiControls.RYPos;
+                else if (Mapping.getBoolMapping(MiControls.RYNeg, cState, eState, tp)) return MiControls.RYNeg;
+                //else if (Mapping.getBoolMapping(MiControls.TouchLeft, cState, eState, tp)) return MiControls.TouchLeft;
+                //else if (Mapping.getBoolMapping(MiControls.TouchRight, cState, eState, tp)) return MiControls.TouchRight;
+                //else if (Mapping.getBoolMapping(MiControls.TouchMulti, cState, eState, tp)) return MiControls.TouchMulti;
+                //else if (Mapping.getBoolMapping(MiControls.TouchUpper, cState, eState, tp)) return MiControls.TouchUpper;
+            return MiControls.None;
         }
 
         public bool[] touchreleased = { true, true, true, true }, touchslid = { false, false, false, false };
@@ -783,9 +780,9 @@ namespace DS4Windows
         {
             DS4State cState = CurrentState[ind];
             string slidedir = "none";
-            if (DS4Controllers[ind] != null)
+            if (MiControllers[ind] != null)
                 if (cState.Touch2)
-                    if (DS4Controllers[ind] != null)
+                    if (MiControllers[ind] != null)
                         if (touchPad[ind].slideright && !touchslid[ind])
                         {
                             slidedir = "right";
@@ -830,8 +827,8 @@ namespace DS4Windows
             if (heavyBoosted > 255)
                 heavyBoosted = 255;
             if (deviceNum < 4)
-                if (DS4Controllers[deviceNum] != null)
-                    DS4Controllers[deviceNum].setRumble((byte)lightBoosted, (byte)heavyBoosted);
+                if (MiControllers[deviceNum] != null)
+                    MiControllers[deviceNum].setRumble((byte)lightBoosted, (byte)heavyBoosted);
         }
 
         public DS4State getDS4State(int ind)

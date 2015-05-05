@@ -62,10 +62,10 @@
     <StartupObject>DS4Windows.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>5F2A5A97E42A73158D79996F7F3BE738271F5047</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>323D54121F2B048833B6BD932A5B00B1E78C8641</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>DS4Tool_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>DS4Windows_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -82,6 +82,12 @@
   <PropertyGroup />
   <PropertyGroup />
   <PropertyGroup />
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>MySignKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -106,7 +112,7 @@
     <Compile Include="DS4Windows\Alreadyrunning.Designer.cs">
       <DependentUpon>Alreadyrunning.cs</DependentUpon>
     </Compile>
-    <Compile Include="DS4Control\ControlSerivce.cs" />
+    <Compile Include="DS4Control\ControlService.cs" />
     <Compile Include="DS4Control\DS4LightBar.cs" />
     <Compile Include="DS4Control\InputMethods.cs" />
     <Compile Include="DS4Control\ITouchpadBehaviour.cs" />
@@ -472,6 +478,8 @@
     </None>
     <None Include="DS4Windows\app.config" />
     <None Include="DS4Windows\DS4Tool_TemporaryKey.pfx" />
+    <None Include="DS4Windows_TemporaryKey.pfx" />
+    <None Include="MySignKey.snk" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

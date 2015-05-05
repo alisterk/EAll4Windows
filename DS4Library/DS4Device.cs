@@ -42,6 +42,12 @@ namespace DS4Windows
             else
                 return false;
         }
+        public override int GetHashCode()
+        {
+            var bytes = new byte[] {0, red, green, blue};
+            return BitConverter.ToInt32(bytes, 0);
+        }
+
         public override string ToString()
         {
             return ("Red: " + red + " Green: " + green + " Blue: " + blue);
@@ -71,7 +77,7 @@ namespace DS4Windows
         }
     }
     
-    public class DS4Device
+    public class MiDevice
     {
         private const int BT_OUTPUT_REPORT_LENGTH = 78;
         private const int BT_INPUT_REPORT_LENGTH = 547;
@@ -80,21 +86,21 @@ namespace DS4Windows
         private DS4State cState = new DS4State();
         private DS4State pState = new DS4State();
         private ConnectionType conType;
-        private byte[] accel = new byte[6];
-        private byte[] gyro = new byte[6];
+        //private byte[] accel = new byte[6];
+        //private byte[] gyro = new byte[6];
         private byte[] inputReport;
         private byte[] btInputReport = null;
         private byte[] outputReportBuffer, outputReport;
-        private readonly DS4Touchpad touchpad = null;
+        //private readonly DS4Touchpad touchpad = null;
         private byte rightLightFastRumble;
         private byte leftHeavySlowRumble;
-        private DS4Color ligtBarColor;
-        private byte ledFlashOn, ledFlashOff;
+        //private DS4Color ligtBarColor;
+        //private byte ledFlashOn, ledFlashOff;
         private Thread ds4Input, ds4Output;
-        private int battery;
+        //private int battery;
         public DateTime lastActive = DateTime.UtcNow;
         public DateTime firstActive = DateTime.UtcNow;
-        private bool charging;
+        //private bool charging;
         public event EventHandler<EventArgs> Report = null;
         public event EventHandler<EventArgs> Removal = null;
 
@@ -107,8 +113,13 @@ namespace DS4Windows
         public ConnectionType ConnectionType { get { return conType; } }
         public int IdleTimeout { get; set; } // behavior only active when > 0
 
-        public int Battery { get { return battery; } }
-        public bool Charging { get { return charging; } }
+        public int Battery { get { 
+            //return battery;
+            return 100;
+        } }
+        public bool Charging { get { 
+            //return charging;
+            return true; } }
 
         public byte RightLightFastRumble
         {
@@ -130,50 +141,50 @@ namespace DS4Windows
             }
         }
 
-        public DS4Color LightBarColor
-        {
-            get { return ligtBarColor; }
-            set
-            {
-                if (ligtBarColor.red != value.red || ligtBarColor.green != value.green || ligtBarColor.blue != value.blue)
-                {
-                    ligtBarColor = value;
-                }
-            }
-        }
+        //public DS4Color LightBarColor
+        //{
+        //    get { return ligtBarColor; }
+        //    set
+        //    {
+        //        if (ligtBarColor.red != value.red || ligtBarColor.green != value.green || ligtBarColor.blue != value.blue)
+        //        {
+        //            ligtBarColor = value;
+        //        }
+        //    }
+        //}
 
-        public byte LightBarOnDuration
-        {
-            get { return ledFlashOn; }
-            set
-            {
-                if (ledFlashOn != value)
-                {
-                    ledFlashOn = value;
-                }
-            }
-        }
+        //public byte LightBarOnDuration
+        //{
+        //    get { return ledFlashOn; }
+        //    set
+        //    {
+        //        if (ledFlashOn != value)
+        //        {
+        //            ledFlashOn = value;
+        //        }
+        //    }
+        //}
         
-        public byte LightBarOffDuration
-        {
-            get { return ledFlashOff; }
-            set
-            {
-                if (ledFlashOff != value)
-                {
-                    ledFlashOff = value;
-                }
-            }
-        }
+        //public byte LightBarOffDuration
+        //{
+        //    get { return ledFlashOff; }
+        //    set
+        //    {
+        //        if (ledFlashOff != value)
+        //        {
+        //            ledFlashOff = value;
+        //        }
+        //    }
+        //}
 
-        public DS4Touchpad Touchpad { get { return touchpad; } }
+        //public DS4Touchpad Touchpad { get { return touchpad; } }
 
         public static ConnectionType HidConnectionType(HidDevice hidDevice)
         {
             return hidDevice.Capabilities.InputReportByteLength == 64 ? ConnectionType.USB : ConnectionType.BT;
         }
 
-        public DS4Device(HidDevice hidDevice)
+        public MiDevice(HidDevice hidDevice)
         {            
             hDevice = hidDevice;
             conType = HidConnectionType(hDevice);
@@ -191,7 +202,7 @@ namespace DS4Windows
                 outputReport = new byte[BT_OUTPUT_REPORT_LENGTH];
                 outputReportBuffer = new byte[BT_OUTPUT_REPORT_LENGTH];
             }
-            touchpad = new DS4Touchpad();
+            //touchpad = new DS4Touchpad();
         }
 
         public void StartUpdate()
@@ -199,10 +210,10 @@ namespace DS4Windows
             if (ds4Input == null)
             {
                 Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> start");
-                sendOutputReport(true); // initialize the output report
-                ds4Output = new Thread(performDs4Output);
-                ds4Output.Name = "DS4 Output thread: " + Mac;
-                ds4Output.Start();
+                //sendOutputReport(true); // initialize the output report
+                //ds4Output = new Thread(performDs4Output);
+                //ds4Output.Name = "DS4 Output thread: " + Mac;
+                //ds4Output.Start();
                 ds4Input = new Thread(performDs4Input);
                 ds4Input.Name = "DS4 Input thread: " + Mac;
                 ds4Input.Start();
@@ -339,8 +350,8 @@ namespace DS4Windows
                     else
                     {
                         Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> disconnect due to read failure: " + Marshal.GetLastWin32Error());
-                        sendOutputReport(true); // Kick Windows into noticing the disconnection.
-                        StopOutputUpdate();
+                        //sendOutputReport(true); // Kick Windows into noticing the disconnection.
+                        //StopOutputUpdate();
                         IsDisconnecting = true;
                         if (Removal != null)
                             Removal(this, EventArgs.Empty);
@@ -368,7 +379,7 @@ namespace DS4Windows
 	                continue;
 	            }
                 DateTime utcNow = System.DateTime.UtcNow; // timestamp with UTC in case system time zone changes
-                resetHapticState();
+                //resetHapticState();
                 cState.ReportTimeStamp = utcNow;
                 cState.LX = inputReport[1];
                 cState.LY = inputReport[2];
@@ -419,40 +430,40 @@ namespace DS4Windows
                 cState.TouchButton = (inputReport[7] & (1 << 2 - 1)) != 0;
                 cState.FrameCounter = (byte)(inputReport[7] >> 2);
 
-                // Store Gyro and Accel values
-                Array.Copy(inputReport, 14, accel, 0, 6);
-                Array.Copy(inputReport, 20, gyro, 0, 6);
+                //// Store Gyro and Accel values
+                //Array.Copy(inputReport, 14, accel, 0, 6);
+                //Array.Copy(inputReport, 20, gyro, 0, 6);
 
 
-                try
-                {
-                charging = (inputReport[30] & 0x10) != 0;
-                battery = (inputReport[30] & 0x0f) * 10;
-                cState.Battery = (byte)battery;
-                    if (inputReport[30] != priorInputReport30)
-                    {
-                        priorInputReport30 = inputReport[30];
-                        Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> power subsystem octet: 0x" + inputReport[30].ToString("x02"));
-                    }
-                }
-                catch { currerror = "Index out of bounds: battery"; }
+                //try
+                //{
+                //    charging = (inputReport[30] & 0x10) != 0;
+                //    battery = (inputReport[30] & 0x0f) * 10;
+                //    cState.Battery = (byte)battery;
+                //    if (inputReport[30] != priorInputReport30)
+                //    {
+                //        priorInputReport30 = inputReport[30];
+                //        Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> power subsystem octet: 0x" + inputReport[30].ToString("x02"));
+                //    }
+                //}
+                //catch { currerror = "Index out of bounds: battery"; }
                 // XXX DS4State mapping needs fixup, turn touches into an array[4] of structs.  And include the touchpad details there instead.
-                try
-                {
-                    for (int touches = inputReport[-1 + DS4Touchpad.TOUCHPAD_DATA_OFFSET - 1], touchOffset = 0; touches > 0; touches--, touchOffset += 9)
-                    {
-                        cState.TouchPacketCounter = inputReport[-1 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset];
-                        cState.Touch1 = (inputReport[0 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] >> 7) != 0 ? false : true; // >= 1 touch detected
-                        cState.Touch1Identifier = (byte)(inputReport[0 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] & 0x7f);
-                        cState.Touch2 = (inputReport[4 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] >> 7) != 0 ? false : true; // 2 touches detected
-                        cState.Touch2Identifier = (byte)(inputReport[4 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] & 0x7f);
-                        cState.TouchLeft = (inputReport[1 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] + ((inputReport[2 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] & 0xF) * 255) >= 1920 * 2 / 5) ? false : true;
-                        cState.TouchRight = (inputReport[1 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] + ((inputReport[2 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] & 0xF) * 255) < 1920 * 2 / 5) ? false : true;
-                        // Even when idling there is still a touch packet indicating no touch 1 or 2
-                        touchpad.handleTouchpad(inputReport, cState, touchOffset);
-                    }
-                }
-                catch { currerror = "Index out of bounds: touchpad"; }
+                //try
+                //{
+                //    for (int touches = inputReport[-1 + DS4Touchpad.TOUCHPAD_DATA_OFFSET - 1], touchOffset = 0; touches > 0; touches--, touchOffset += 9)
+                //    {
+                //        cState.TouchPacketCounter = inputReport[-1 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset];
+                //        cState.Touch1 = (inputReport[0 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] >> 7) != 0 ? false : true; // >= 1 touch detected
+                //        cState.Touch1Identifier = (byte)(inputReport[0 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] & 0x7f);
+                //        cState.Touch2 = (inputReport[4 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] >> 7) != 0 ? false : true; // 2 touches detected
+                //        cState.Touch2Identifier = (byte)(inputReport[4 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] & 0x7f);
+                //        cState.TouchLeft = (inputReport[1 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] + ((inputReport[2 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] & 0xF) * 255) >= 1920 * 2 / 5) ? false : true;
+                //        cState.TouchRight = (inputReport[1 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] + ((inputReport[2 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] & 0xF) * 255) < 1920 * 2 / 5) ? false : true;
+                //        // Even when idling there is still a touch packet indicating no touch 1 or 2
+                //        touchpad.handleTouchpad(inputReport, cState, touchOffset);
+                //    }
+                //}
+                //catch { currerror = "Index out of bounds: touchpad"; }
                 
                 /* Debug output of incoming HID data:
                 if (cState.L2 == 0xff && cState.R2 == 0xff)
@@ -462,27 +473,27 @@ namespace DS4Windows
                         Console.Write(" " + inputReport[i].ToString("x2"));
                     Console.WriteLine();
                 } */
-                if (!isNonSixaxisIdle())
-                    lastActive = utcNow;
-                if (conType == ConnectionType.BT)
-                {
-                    bool shouldDisconnect = false;
-                    if (IdleTimeout > 0)
-                    {
-                        if (isNonSixaxisIdle())
-                        {
-                            DateTime timeout = lastActive + TimeSpan.FromSeconds(IdleTimeout);
-                            if (!Charging)
-                                shouldDisconnect = utcNow >= timeout;
-                        }
-                    }
-                    if (shouldDisconnect && DisconnectBT())
-                        return; // all done
-                }
+                //if (!isNonSixaxisIdle())
+                //    lastActive = utcNow;
+                //if (conType == ConnectionType.BT)
+                //{
+                //    bool shouldDisconnect = false;
+                //    if (IdleTimeout > 0)
+                //    {
+                //        if (isNonSixaxisIdle())
+                //        {
+                //            DateTime timeout = lastActive + TimeSpan.FromSeconds(IdleTimeout);
+                //            if (!Charging)
+                //                shouldDisconnect = utcNow >= timeout;
+                //        }
+                //    }
+                //    if (shouldDisconnect && DisconnectBT())
+                //        return; // all done
+                //}
                 // XXX fix initialization ordering so the null checks all go away
                 if (Report != null)
                     Report(this, EventArgs.Empty);
-                sendOutputReport(false);
+                //sendOutputReport(false);
                 if (!string.IsNullOrEmpty(error))
                     error = string.Empty;
                 if (!string.IsNullOrEmpty(currerror))
@@ -495,67 +506,67 @@ namespace DS4Windows
         {
             hDevice.flush_Queue();
         }
-        private void sendOutputReport(bool synchronous)
-        {
-            setTestRumble();
-            setHapticState();
-            if (conType == ConnectionType.BT)
-            {
-                outputReportBuffer[0] = 0x11;
-                outputReportBuffer[1] = 0x80;
-                outputReportBuffer[3] = 0xff;
-                outputReportBuffer[6] = rightLightFastRumble; //fast motor
-                outputReportBuffer[7] = leftHeavySlowRumble; //slow motor
-                outputReportBuffer[8] = LightBarColor.red; //red
-                outputReportBuffer[9] = LightBarColor.green; //green
-                outputReportBuffer[10] = LightBarColor.blue; //blue
-                outputReportBuffer[11] = ledFlashOn; //flash on duration
-                outputReportBuffer[12] = ledFlashOff; //flash off duration
-            }
-            else
-            {
-                outputReportBuffer[0] = 0x05;
-                outputReportBuffer[1] = 0xff;
-                outputReportBuffer[4] = rightLightFastRumble; //fast motor
-                outputReportBuffer[5] = leftHeavySlowRumble; //slow  motor
-                outputReportBuffer[6] = LightBarColor.red; //red
-                outputReportBuffer[7] = LightBarColor.green; //green
-                outputReportBuffer[8] = LightBarColor.blue; //blue
-                outputReportBuffer[9] = ledFlashOn; //flash on duration
-                outputReportBuffer[10] = ledFlashOff; //flash off duration
-            }
-            lock (outputReport)
-            {
-                if (synchronous)
-                {
-                    outputReportBuffer.CopyTo(outputReport, 0);
-                    try
-                    {
-                        if (!writeOutput())
-                        {
-                            Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> encountered synchronous write failure: " + Marshal.GetLastWin32Error());
-                            ds4Output.Abort();
-                            ds4Output.Join();
-                        }
-                    }
-                    catch
-                    {
-                        // If it's dead already, don't worry about it.
-                    }
-                }
-                else
-                {
-                    bool output = false;
-                    for (int i = 0; !output && i < outputReport.Length; i++)
-                        output = outputReport[i] != outputReportBuffer[i];
-                    if (output)
-                    {
-                        outputReportBuffer.CopyTo(outputReport, 0);
-                        Monitor.Pulse(outputReport);
-                    }
-                }
-            }
-        }
+        //private void sendOutputReport(bool synchronous)
+        //{
+        //    //setTestRumble();
+        //    //setHapticState();
+        //    if (conType == ConnectionType.BT)
+        //    {
+        //        outputReportBuffer[0] = 0x11;
+        //        outputReportBuffer[1] = 0x80;
+        //        outputReportBuffer[3] = 0xff;
+        //        outputReportBuffer[6] = rightLightFastRumble; //fast motor
+        //        outputReportBuffer[7] = leftHeavySlowRumble; //slow motor
+        //        outputReportBuffer[8] = LightBarColor.red; //red
+        //        outputReportBuffer[9] = LightBarColor.green; //green
+        //        outputReportBuffer[10] = LightBarColor.blue; //blue
+        //        outputReportBuffer[11] = ledFlashOn; //flash on duration
+        //        outputReportBuffer[12] = ledFlashOff; //flash off duration
+        //    }
+        //    else
+        //    {
+        //        outputReportBuffer[0] = 0x05;
+        //        outputReportBuffer[1] = 0xff;
+        //        outputReportBuffer[4] = rightLightFastRumble; //fast motor
+        //        outputReportBuffer[5] = leftHeavySlowRumble; //slow  motor
+        //        outputReportBuffer[6] = LightBarColor.red; //red
+        //        outputReportBuffer[7] = LightBarColor.green; //green
+        //        outputReportBuffer[8] = LightBarColor.blue; //blue
+        //        outputReportBuffer[9] = ledFlashOn; //flash on duration
+        //        outputReportBuffer[10] = ledFlashOff; //flash off duration
+        //    }
+        //    lock (outputReport)
+        //    {
+        //        if (synchronous)
+        //        {
+        //            outputReportBuffer.CopyTo(outputReport, 0);
+        //            try
+        //            {
+        //                if (!writeOutput())
+        //                {
+        //                    Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> encountered synchronous write failure: " + Marshal.GetLastWin32Error());
+        //                    ds4Output.Abort();
+        //                    ds4Output.Join();
+        //                }
+        //            }
+        //            catch
+        //            {
+        //                // If it's dead already, don't worry about it.
+        //            }
+        //        }
+        //        else
+        //        {
+        //            bool output = false;
+        //            for (int i = 0; !output && i < outputReport.Length; i++)
+        //                output = outputReport[i] != outputReportBuffer[i];
+        //            if (output)
+        //            {
+        //                outputReportBuffer.CopyTo(outputReport, 0);
+        //                Monitor.Pulse(outputReport);
+        //            }
+        //        }
+        //    }
+        //}
 
         public bool DisconnectBT()
         {
@@ -611,15 +622,15 @@ namespace DS4Windows
             testRumble.RumbleMotorsExplicitlyOff = rightLightFastMotor == 0 && leftHeavySlowMotor == 0;
         }
 
-        private void setTestRumble()
-        {
-            if (testRumble.IsRumbleSet())
-            {
-                pushHapticState(testRumble);
-                if (testRumble.RumbleMotorsExplicitlyOff)
-                    testRumble.RumbleMotorsExplicitlyOff = false;
-            }
-        }
+        //private void setTestRumble()
+        //{
+        //    if (testRumble.IsRumbleSet())
+        //    {
+        //        pushHapticState(testRumble);
+        //        if (testRumble.RumbleMotorsExplicitlyOff)
+        //            testRumble.RumbleMotorsExplicitlyOff = false;
+        //    }
+        //}
 
         public DS4State getCurrentState()
         {
@@ -634,8 +645,8 @@ namespace DS4Windows
         public void getExposedState(DS4StateExposed expState, DS4State state)
         {
             cState.CopyTo(state);
-            expState.Accel = accel;
-            expState.Gyro = gyro;
+            //expState.Accel = accel;
+            //expState.Gyro = gyro;
         }
 
         public void getCurrentState(DS4State state)
@@ -669,53 +680,53 @@ namespace DS4Windows
             return true;
         }
 
-        private DS4HapticState[] hapticState = new DS4HapticState[1];
-        private int hapticStackIndex = 0;
-        private void resetHapticState()
-        {
-            hapticStackIndex = 0;
-        }
+        //private DS4HapticState[] hapticState = new DS4HapticState[1];
+        //private int hapticStackIndex = 0;
+        //private void resetHapticState()
+        //{
+        //    hapticStackIndex = 0;
+        //}
 
         // Use the "most recently set" haptic state for each of light bar/motor.
-        private void setHapticState()
-        {
-            int i = 0;
-            DS4Color lightBarColor = LightBarColor;
-            byte lightBarFlashDurationOn = LightBarOnDuration, lightBarFlashDurationOff = LightBarOffDuration;
-            byte rumbleMotorStrengthLeftHeavySlow = LeftHeavySlowRumble, rumbleMotorStrengthRightLightFast = rightLightFastRumble;
-            foreach (DS4HapticState haptic in hapticState)
-            {
-                if (i++ == hapticStackIndex)
-                    break; // rest haven't been used this time
-                if (haptic.IsLightBarSet())
-                {
-                    lightBarColor = haptic.LightBarColor;
-                    lightBarFlashDurationOn = haptic.LightBarFlashDurationOn;
-                    lightBarFlashDurationOff = haptic.LightBarFlashDurationOff;
-                }
-                if (haptic.IsRumbleSet())
-                {
-                    rumbleMotorStrengthLeftHeavySlow = haptic.RumbleMotorStrengthLeftHeavySlow;
-                    rumbleMotorStrengthRightLightFast = haptic.RumbleMotorStrengthRightLightFast;
-                }
-            }
-            LightBarColor = lightBarColor;
-            LightBarOnDuration = lightBarFlashDurationOn;
-            LightBarOffDuration = lightBarFlashDurationOff;
-            LeftHeavySlowRumble = rumbleMotorStrengthLeftHeavySlow;
-            RightLightFastRumble = rumbleMotorStrengthRightLightFast;
-        }
+        //private void setHapticState()
+        //{
+        //    int i = 0;
+        //    DS4Color lightBarColor = LightBarColor;
+        //    byte lightBarFlashDurationOn = LightBarOnDuration, lightBarFlashDurationOff = LightBarOffDuration;
+        //    byte rumbleMotorStrengthLeftHeavySlow = LeftHeavySlowRumble, rumbleMotorStrengthRightLightFast = rightLightFastRumble;
+        //    foreach (DS4HapticState haptic in hapticState)
+        //    {
+        //        if (i++ == hapticStackIndex)
+        //            break; // rest haven't been used this time
+        //        if (haptic.IsLightBarSet())
+        //        {
+        //            lightBarColor = haptic.LightBarColor;
+        //            lightBarFlashDurationOn = haptic.LightBarFlashDurationOn;
+        //            lightBarFlashDurationOff = haptic.LightBarFlashDurationOff;
+        //        }
+        //        if (haptic.IsRumbleSet())
+        //        {
+        //            rumbleMotorStrengthLeftHeavySlow = haptic.RumbleMotorStrengthLeftHeavySlow;
+        //            rumbleMotorStrengthRightLightFast = haptic.RumbleMotorStrengthRightLightFast;
+        //        }
+        //    }
+        //    LightBarColor = lightBarColor;
+        //    LightBarOnDuration = lightBarFlashDurationOn;
+        //    LightBarOffDuration = lightBarFlashDurationOff;
+        //    LeftHeavySlowRumble = rumbleMotorStrengthLeftHeavySlow;
+        //    RightLightFastRumble = rumbleMotorStrengthRightLightFast;
+        //}
 
-        public void pushHapticState(DS4HapticState hs)
-        {
-            if (hapticStackIndex == hapticState.Length)
-            {
-                DS4HapticState[] newHaptics = new DS4HapticState[hapticState.Length + 1];
-                Array.Copy(hapticState, newHaptics, hapticState.Length);
-                hapticState = newHaptics;
-            }
-            hapticState[hapticStackIndex++] = hs;
-        }
+        //public void pushHapticState(DS4HapticState hs)
+        //{
+        //    if (hapticStackIndex == hapticState.Length)
+        //    {
+        //        DS4HapticState[] newHaptics = new DS4HapticState[hapticState.Length + 1];
+        //        Array.Copy(hapticState, newHaptics, hapticState.Length);
+        //        hapticState = newHaptics;
+        //    }
+        //    hapticState[hapticStackIndex++] = hs;
+        //}
 
         override
         public String ToString()

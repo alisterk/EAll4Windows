@@ -410,8 +410,8 @@ namespace DS4Windows
                 tBGreenBar.Value = advColorDialog.Color.G;
                 tBBlueBar.Value = advColorDialog.Color.B;
             }
-            if (device < 4)
-                DS4LightBar.forcelight[device] = false;
+            //if (device < 4)
+            //    DS4LightBar.forcelight[device] = false;
         }
 
         private void advColorDialog_OnUpdateColor(object sender, EventArgs e)
@@ -420,9 +420,9 @@ namespace DS4Windows
             {
                 Color color = (Color)sender;
                 DS4Color dcolor = new DS4Color { red = color.R, green = color.G, blue = color.B };
-                DS4LightBar.forcedColor[device] = dcolor;
-                DS4LightBar.forcedFlash[device] = 0;
-                DS4LightBar.forcelight[device] = true;
+                //DS4LightBar.forcedColor[device] = dcolor;
+                //DS4LightBar.forcedFlash[device] = 0;
+                //DS4LightBar.forcelight[device] = true;
             }
         }
 

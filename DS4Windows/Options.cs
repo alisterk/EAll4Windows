@@ -284,7 +284,7 @@ namespace DS4Windows
             // MEMS gyro data is all calibrated to roughly -1G..1G for values -0x2000..0x1fff
             // Enough additional acceleration and we are no longer mostly measuring Earth's gravity...
             // We should try to indicate setpoints of the calibration when exposing this measurement....
-            if (Program.rootHub.DS4Controllers[(int)nUDSixaxis.Value - 1] == null)
+            if (Program.rootHub.MiControllers[(int)nUDSixaxis.Value - 1] == null)
             {
                 tPController.Enabled = false;
                 lbInputDelay.Text = Properties.Resources.InputDelay.Replace("*number*", Properties.Resources.NA);
@@ -391,7 +391,7 @@ namespace DS4Windows
                     lbR2Track.ForeColor = Color.Black;
 
 
-                double latency = Program.rootHub.DS4Controllers[(int)nUDSixaxis.Value - 1].Latency;
+                double latency = Program.rootHub.MiControllers[(int)nUDSixaxis.Value - 1].Latency;
                 lbInputDelay.Text = Properties.Resources.InputDelay.Replace("*number*", latency.ToString());
                 if (latency > 10)
                     pBDelayTracker.BackColor = Color.Red;
@@ -704,8 +704,8 @@ namespace DS4Windows
                 tBGreenBar.Value = advColorDialog.Color.G;
                 tBBlueBar.Value = advColorDialog.Color.B;
             }
-            if (device < 4)
-                DS4LightBar.forcelight[device] = false;
+            //if (device < 4)
+            //    DS4LightBar.forcelight[device] = false;
         }
         private void lowColorChooserButton_Click(object sender, EventArgs e)
         {
@@ -718,8 +718,8 @@ namespace DS4Windows
                 tBLowGreenBar.Value = advColorDialog.Color.G;
                 tBLowBlueBar.Value = advColorDialog.Color.B;
             }
-            if (device < 4)
-                DS4LightBar.forcelight[device] = false;
+            //if (device < 4)
+            //    DS4LightBar.forcelight[device] = false;
         }
 
 
@@ -731,8 +731,8 @@ namespace DS4Windows
             {
                 btnChargingColor.BackColor = advColorDialog.Color;
             }
-            if (device < 4)
-                DS4LightBar.forcelight[device] = false;
+            //if (device < 4)
+            //    DS4LightBar.forcelight[device] = false;
             Global.ChargingColor[device] = new DS4Color(btnChargingColor.BackColor);
         }
         private void advColorDialog_OnUpdateColor(object sender, EventArgs e)
@@ -741,9 +741,9 @@ namespace DS4Windows
             {
                 Color color = (Color)sender;
                 DS4Color dcolor = new DS4Color { red = color.R, green = color.G, blue = color.B };
-                DS4LightBar.forcedColor[device] = dcolor;
-                DS4LightBar.forcedFlash[device] = 0;
-                DS4LightBar.forcelight[device] = true;
+                //DS4LightBar.forcedColor[device] = dcolor;
+                //DS4LightBar.forcedFlash[device] = 0;
+                //DS4LightBar.forcelight[device] = true;
             }
         }
         int bgc = 255; //Color of the form background, If greyscale color
@@ -909,7 +909,7 @@ namespace DS4Windows
 
         private void btnRumbleHeavyTest_Click(object sender, EventArgs e)
         {
-            DS4Device d = Program.rootHub.DS4Controllers[(int)nUDSixaxis.Value - 1];
+            MiDevice d = Program.rootHub.MiControllers[(int)nUDSixaxis.Value - 1];
             if (d != null)
                 if (((Button)sender).Text == Properties.Resources.TestHText)
                 {
@@ -925,7 +925,7 @@ namespace DS4Windows
 
         private void btnRumbleLightTest_Click(object sender, EventArgs e)
         {
-            DS4Device d = Program.rootHub.DS4Controllers[(int)nUDSixaxis.Value - 1];
+            MiDevice d = Program.rootHub.MiControllers[(int)nUDSixaxis.Value - 1];
             if (d != null)
                 if (((Button)sender).Text == Properties.Resources.TestLText)
                 {
@@ -2115,8 +2115,8 @@ namespace DS4Windows
                     btnFlashColor.BackColor = pBController.BackColor;
                 Global.FlashColor[device] = new DS4Color(advColorDialog.Color);
             }
-            if (device < 4)
-                DS4LightBar.forcelight[device] = false;
+            //if (device < 4)
+            //    DS4LightBar.forcelight[device] = false;
         }
 
         private void pBController_BackColorChanged(object sender, EventArgs e)

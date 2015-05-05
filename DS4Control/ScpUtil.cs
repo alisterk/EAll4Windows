@@ -13,7 +13,16 @@ namespace DS4Windows
     [Flags]
     public enum DS4KeyType : byte { None = 0, ScanCode = 1, Toggle = 2, Unbound = 4, Macro = 8, HoldMacro = 16, RepeatMacro = 32 }; //Increment by exponents of 2*, starting at 2^0
     public enum Ds3PadId : byte { None = 0xFF, One = 0x00, Two = 0x01, Three = 0x02, Four = 0x03, All = 0x04 };
-    public enum DS4Controls : byte { None, LXNeg, LXPos, LYNeg, LYPos, RXNeg, RXPos, RYNeg, RYPos, L1, L2, L3, R1, R2, R3, Square, Triangle, Circle, Cross, DpadUp, DpadRight, DpadDown, DpadLeft, PS, TouchLeft, TouchUpper, TouchMulti, TouchRight, Share, Options, GyroXPos, GyroXNeg, GyroZPos, GyroZNeg, SwipeLeft, SwipeRight, SwipeUp, SwipeDown };
+    //!public enum DS4Controls : byte { None, LXNeg, LXPos, LYNeg, LYPos, RXNeg, RXPos, RYNeg, RYPos, L1, L2, L3, R1, R2, R3, Square, Triangle, Circle, Cross, DpadUp, DpadRight, DpadDown, DpadLeft, PS, TouchLeft, TouchUpper, TouchMulti, TouchRight, Share, Options, GyroXPos, GyroXNeg, GyroZPos, GyroZNeg, SwipeLeft, SwipeRight, SwipeUp, SwipeDown };
+    public enum MiControls : byte { None
+        , LXNeg, LXPos, LYNeg, LYPos, RXNeg, RXPos, RYNeg, RYPos
+        , L1, L2, LT
+        , R1, R2, RT
+        , A, B, X, Y
+        , DpadUp, DpadRight, DpadDown, DpadLeft
+        , Back, Menu
+        , LS, RS
+        , HomeSimulated};
     public enum X360Controls : byte { None, LXNeg, LXPos, LYNeg, LYPos, RXNeg, RXPos, RYNeg, RYPos, LB, LT, LS, RB, RT, RS, X, Y, B, A, DpadUp, DpadRight, DpadDown, DpadLeft, Guide, Back, Start, LeftMouse, RightMouse, MiddleMouse, FourthMouse, FifthMouse, WUP, WDOWN, MouseUp, MouseDown, MouseLeft, MouseRight, Unbound };
 
     public class DebugEventArgs : EventArgs
@@ -190,7 +199,7 @@ namespace DS4Windows
         public static int FormWidth
         {
             set { m_Config.formWidth = value; }
-             get { return m_Config.formWidth;}
+            get { return m_Config.formWidth; }
         }
         public static int FormHeight
         {
@@ -211,7 +220,7 @@ namespace DS4Windows
         //controller/profile specfic values
         public static int[] ButtonMouseSensitivity
         {
-            get {return m_Config.buttonMouseSensitivity;}
+            get { return m_Config.buttonMouseSensitivity; }
         }
 
         public static byte[] RumbleBoost
@@ -233,18 +242,18 @@ namespace DS4Windows
         public static byte[] TouchSensitivity
         {
             get { return m_Config.touchSensitivity; }
-        }   
+        }
         public static byte[] FlashType
         {
-           get {  return m_Config.flashType;}
+            get { return m_Config.flashType; }
         }
         public static int[] FlashAt
         {
-           get { return m_Config.flashAt;}
+            get { return m_Config.flashAt; }
         }
         public static bool[] LedAsBatteryIndicator
         {
-           get {  return m_Config.ledAsBattery;}
+            get { return m_Config.ledAsBattery; }
         }
         public static int[] ChargingType
         {
@@ -272,12 +281,12 @@ namespace DS4Windows
         }
         public static DS4Color[] ChargingColor
         {
-            get { return  m_Config.m_ChargingLeds;}
+            get { return m_Config.m_ChargingLeds; }
         }
 
-        public static  DS4Color[]  FlashColor
+        public static DS4Color[] FlashColor
         {
-           get { return  m_Config.m_FlashLeds;}
+            get { return m_Config.m_FlashLeds; }
         }
         public static DS4Color[] ShiftColor
         {
@@ -285,7 +294,7 @@ namespace DS4Windows
         }
         public static bool[] ShiftColorOn
         {
-           get{ return m_Config.shiftColorOn; }
+            get { return m_Config.shiftColorOn; }
         }
         public static byte[] TapSensitivity
         {
@@ -297,17 +306,17 @@ namespace DS4Windows
         }
         public static int[] ScrollSensitivity
         {
-            get{ return m_Config.scrollSensitivity;}
+            get { return m_Config.scrollSensitivity; }
         }
         public static bool[] LowerRCOn
         {
-           get{  return m_Config.lowerRCOn;}
+            get { return m_Config.lowerRCOn; }
         }
         public static bool[] TouchpadJitterCompensation
         {
             get { return m_Config.touchpadJitterCompensation; }
         }
-       
+
 
         public static byte[] L2Deadzone
         {
@@ -315,43 +324,43 @@ namespace DS4Windows
         }
         public static byte[] R2Deadzone
         {
-            get { return m_Config.r2Deadzone;}
+            get { return m_Config.r2Deadzone; }
         }
         public static double[] SXDeadzone
         {
-            get { return m_Config.SXDeadzone;}
+            get { return m_Config.SXDeadzone; }
         }
         public static double[] SZDeadzone
         {
-            get { return m_Config.SZDeadzone;}
+            get { return m_Config.SZDeadzone; }
         }
         public static int[] LSDeadzone
         {
-            get { return m_Config.LSDeadzone;}
+            get { return m_Config.LSDeadzone; }
         }
         public static int[] RSDeadzone
         {
-            get { return m_Config.RSDeadzone;}
+            get { return m_Config.RSDeadzone; }
         }
         public static int[] LSCurve
         {
-            get { return m_Config.lsCurve;}
+            get { return m_Config.lsCurve; }
         }
         public static int[] RSCurve
         {
-            get { return m_Config.rsCurve;}
+            get { return m_Config.rsCurve; }
         }
         public static bool[] MouseAccel
         {
-            get { return m_Config.mouseAccel;}
+            get { return m_Config.mouseAccel; }
         }
-        public static int[] ShiftModifier 
+        public static int[] ShiftModifier
         {
-            get { return m_Config.shiftModifier;}
+            get { return m_Config.shiftModifier; }
         }
         public static string[] LaunchProgram
         {
-            get { return m_Config.launchProgram;}
+            get { return m_Config.launchProgram; }
         }
         public static string[] ProfilePath
         {
@@ -399,23 +408,23 @@ namespace DS4Windows
         }
 
 
-        public static X360Controls getCustomButton(int device, DS4Controls controlName)
+        public static X360Controls getCustomButton(int device, MiControls controlName)
         {
             return m_Config.GetCustomButton(device, controlName);
         }
-        public static ushort getCustomKey(int device, DS4Controls controlName)
+        public static ushort getCustomKey(int device, MiControls controlName)
         {
             return m_Config.GetCustomKey(device, controlName);
         }
-        public static string getCustomMacro(int device, DS4Controls controlName)
+        public static string getCustomMacro(int device, MiControls controlName)
         {
             return m_Config.GetCustomMacro(device, controlName);
         }
-        public static string getCustomExtras(int device, DS4Controls controlName)
+        public static string getCustomExtras(int device, MiControls controlName)
         {
             return m_Config.GetCustomExtras(device, controlName);
         }
-        public static DS4KeyType getCustomKeyType(int device, DS4Controls controlName)
+        public static DS4KeyType getCustomKeyType(int device, MiControls controlName)
         {
             return m_Config.GetCustomKeyType(device, controlName);
         }
@@ -428,44 +437,44 @@ namespace DS4Windows
         {
             return m_Config.customMapExtras[device].Count > 0;
         }
-        public static Dictionary<DS4Controls, X360Controls> getCustomButtons(int device)
+        public static Dictionary<MiControls, X360Controls> getCustomButtons(int device)
         {
             return m_Config.customMapButtons[device];
         }
-        public static Dictionary<DS4Controls, ushort> getCustomKeys(int device)
+        public static Dictionary<MiControls, ushort> getCustomKeys(int device)
         {
             return m_Config.customMapKeys[device];
         }
-        public static Dictionary<DS4Controls, string> getCustomMacros(int device)
+        public static Dictionary<MiControls, string> getCustomMacros(int device)
         {
             return m_Config.customMapMacros[device];
         }
-        public static Dictionary<DS4Controls, string> getCustomExtras(int device)
+        public static Dictionary<MiControls, string> getCustomExtras(int device)
         {
             return m_Config.customMapExtras[device];
         }
-        public static Dictionary<DS4Controls, DS4KeyType> getCustomKeyTypes(int device)
+        public static Dictionary<MiControls, DS4KeyType> getCustomKeyTypes(int device)
         {
             return m_Config.customMapKeyTypes[device];
         }
 
-        public static X360Controls getShiftCustomButton(int device, DS4Controls controlName)
+        public static X360Controls getShiftCustomButton(int device, MiControls controlName)
         {
             return m_Config.GetShiftCustomButton(device, controlName);
         }
-        public static ushort getShiftCustomKey(int device, DS4Controls controlName)
+        public static ushort getShiftCustomKey(int device, MiControls controlName)
         {
             return m_Config.GetShiftCustomKey(device, controlName);
         }
-        public static string getShiftCustomMacro(int device, DS4Controls controlName)
+        public static string getShiftCustomMacro(int device, MiControls controlName)
         {
             return m_Config.GetShiftCustomMacro(device, controlName);
         }
-        public static string getShiftCustomExtras(int device, DS4Controls controlName)
+        public static string getShiftCustomExtras(int device, MiControls controlName)
         {
             return m_Config.GetShiftCustomExtras(device, controlName);
         }
-        public static DS4KeyType getShiftCustomKeyType(int device, DS4Controls controlName)
+        public static DS4KeyType getShiftCustomKeyType(int device, MiControls controlName)
         {
             return m_Config.GetShiftCustomKeyType(device, controlName);
         }
@@ -478,23 +487,23 @@ namespace DS4Windows
         {
             return m_Config.shiftCustomMapExtras[device].Count > 0;
         }
-        public static Dictionary<DS4Controls, X360Controls> getShiftCustomButtons(int device)
+        public static Dictionary<MiControls, X360Controls> getShiftCustomButtons(int device)
         {
             return m_Config.shiftCustomMapButtons[device];
         }
-        public static Dictionary<DS4Controls, ushort> getShiftCustomKeys(int device)
+        public static Dictionary<MiControls, ushort> getShiftCustomKeys(int device)
         {
             return m_Config.shiftCustomMapKeys[device];
         }
-        public static Dictionary<DS4Controls, string> getShiftCustomMacros(int device)
+        public static Dictionary<MiControls, string> getShiftCustomMacros(int device)
         {
             return m_Config.shiftCustomMapMacros[device];
         }
-        public static Dictionary<DS4Controls, string> getShiftCustomExtras(int device)
+        public static Dictionary<MiControls, string> getShiftCustomExtras(int device)
         {
             return m_Config.shiftCustomMapExtras[device];
         }
-        public static Dictionary<DS4Controls, DS4KeyType> getShiftCustomKeyTypes(int device)
+        public static Dictionary<MiControls, DS4KeyType> getShiftCustomKeyTypes(int device)
         {
             return m_Config.shiftCustomMapKeyTypes[device];
         }
@@ -535,7 +544,7 @@ namespace DS4Windows
             else if (r < 0)
                 r = 0;
             r /= 100f;
-            return (byte)Math.Round((b1 * (1 - r) + b2 *r),0);
+            return (byte)Math.Round((b1 * (1 - r) + b2 * r), 0);
         }
         public static DS4Color getTransitionedColor(DS4Color c1, DS4Color c2, double ratio)
         {//;
@@ -560,7 +569,7 @@ namespace DS4Windows
             float sr = sat2 - sat1;
             Color csR;
             if (bri1 == 0)
-                csR = HuetoRGB(hue2,sat2,bri2 - br*ratio);
+                csR = HuetoRGB(hue2, sat2, bri2 - br * ratio);
             else
                 csR = HuetoRGB(hue2 - hr * ratio, sat2 - sr * ratio, bri2 - br * ratio);
             return csR;
@@ -568,24 +577,24 @@ namespace DS4Windows
 
         public static Color HuetoRGB(float hue, float sat, float bri)
         {
-            float C = (1-Math.Abs(2*bri)-1)* sat;
+            float C = (1 - Math.Abs(2 * bri) - 1) * sat;
             float X = C * (1 - Math.Abs((hue / 60) % 2 - 1));
             float m = bri - C / 2;
             float R, G, B;
             if (0 <= hue && hue < 60)
-            {   R = C; G = X; B = 0;}
+            { R = C; G = X; B = 0; }
             else if (60 <= hue && hue < 120)
-            {R = X; G = C; B = 0; }
+            { R = X; G = C; B = 0; }
             else if (120 <= hue && hue < 180)
             { R = 0; G = C; B = X; }
             else if (180 <= hue && hue < 240)
             { R = 0; G = X; B = C; }
             else if (240 <= hue && hue < 300)
-                { R = X; G = 0; B = C; }
+            { R = X; G = 0; B = C; }
             else if (300 <= hue && hue < 360)
-                { R = C; G = 0; B = X; }
+            { R = C; G = 0; B = X; }
             else
-                { R = 255; G = 0; B = 0; }
+            { R = 255; G = 0; B = 0; }
             R += m; G += m; B += m;
             R *= 255; G *= 255; B *= 255;
             return Color.FromArgb((int)R, (int)G, (int)B);
@@ -686,17 +695,17 @@ namespace DS4Windows
         public int firstXinputPort = 1;
         public bool closeMini = false;
         public List<SpecialAction> actions = new List<SpecialAction>();
-        public Dictionary<DS4Controls, DS4KeyType>[] customMapKeyTypes = { null, null, null, null, null };
-        public Dictionary<DS4Controls, UInt16>[] customMapKeys = { null, null, null, null, null };
-        public Dictionary<DS4Controls, String>[] customMapMacros = { null, null, null, null, null };
-        public Dictionary<DS4Controls, X360Controls>[] customMapButtons = { null, null, null, null, null };
-        public Dictionary<DS4Controls, String>[] customMapExtras = { null, null, null, null, null };
+        public Dictionary<MiControls, DS4KeyType>[] customMapKeyTypes = { null, null, null, null, null };
+        public Dictionary<MiControls, UInt16>[] customMapKeys = { null, null, null, null, null };
+        public Dictionary<MiControls, String>[] customMapMacros = { null, null, null, null, null };
+        public Dictionary<MiControls, X360Controls>[] customMapButtons = { null, null, null, null, null };
+        public Dictionary<MiControls, String>[] customMapExtras = { null, null, null, null, null };
 
-        public Dictionary<DS4Controls, DS4KeyType>[] shiftCustomMapKeyTypes = { null, null, null, null, null };
-        public Dictionary<DS4Controls, UInt16>[] shiftCustomMapKeys = { null, null, null, null, null };
-        public Dictionary<DS4Controls, String>[] shiftCustomMapMacros = { null, null, null, null, null };
-        public Dictionary<DS4Controls, X360Controls>[] shiftCustomMapButtons = { null, null, null, null, null };
-        public Dictionary<DS4Controls, String>[] shiftCustomMapExtras = { null, null, null, null, null };
+        public Dictionary<MiControls, DS4KeyType>[] shiftCustomMapKeyTypes = { null, null, null, null, null };
+        public Dictionary<MiControls, UInt16>[] shiftCustomMapKeys = { null, null, null, null, null };
+        public Dictionary<MiControls, String>[] shiftCustomMapMacros = { null, null, null, null, null };
+        public Dictionary<MiControls, X360Controls>[] shiftCustomMapButtons = { null, null, null, null, null };
+        public Dictionary<MiControls, String>[] shiftCustomMapExtras = { null, null, null, null, null };
         public List<String>[] profileActions = { null, null, null, null, null };
         public bool downloadLang = true;
         public bool flashWhenLate = true;
@@ -704,47 +713,47 @@ namespace DS4Windows
         {
             for (int i = 0; i < 5; i++)
             {
-                customMapKeyTypes[i] = new Dictionary<DS4Controls, DS4KeyType>();
-                customMapKeys[i] = new Dictionary<DS4Controls, UInt16>();
-                customMapMacros[i] = new Dictionary<DS4Controls, String>();
-                customMapButtons[i] = new Dictionary<DS4Controls, X360Controls>();
-                customMapExtras[i] = new Dictionary<DS4Controls, string>();
+                customMapKeyTypes[i] = new Dictionary<MiControls, DS4KeyType>();
+                customMapKeys[i] = new Dictionary<MiControls, UInt16>();
+                customMapMacros[i] = new Dictionary<MiControls, String>();
+                customMapButtons[i] = new Dictionary<MiControls, X360Controls>();
+                customMapExtras[i] = new Dictionary<MiControls, string>();
 
-                shiftCustomMapKeyTypes[i] = new Dictionary<DS4Controls, DS4KeyType>();
-                shiftCustomMapKeys[i] = new Dictionary<DS4Controls, UInt16>();
-                shiftCustomMapMacros[i] = new Dictionary<DS4Controls, String>();
-                shiftCustomMapButtons[i] = new Dictionary<DS4Controls, X360Controls>();
-                shiftCustomMapExtras[i] = new Dictionary<DS4Controls, string>();
+                shiftCustomMapKeyTypes[i] = new Dictionary<MiControls, DS4KeyType>();
+                shiftCustomMapKeys[i] = new Dictionary<MiControls, UInt16>();
+                shiftCustomMapMacros[i] = new Dictionary<MiControls, String>();
+                shiftCustomMapButtons[i] = new Dictionary<MiControls, X360Controls>();
+                shiftCustomMapExtras[i] = new Dictionary<MiControls, string>();
                 profileActions[i] = new List<string>();
                 profileActions[i].Add("Disconnect Controller");
             }
         }
 
-        public X360Controls GetCustomButton(int device, DS4Controls controlName)
+        public X360Controls GetCustomButton(int device, MiControls controlName)
         {
             if (customMapButtons[device].ContainsKey(controlName))
                 return customMapButtons[device][controlName];
             else return X360Controls.None;
         }
-        public UInt16 GetCustomKey(int device, DS4Controls controlName)
+        public UInt16 GetCustomKey(int device, MiControls controlName)
         {
             if (customMapKeys[device].ContainsKey(controlName))
                 return customMapKeys[device][controlName];
             else return 0;
         }
-        public string GetCustomMacro(int device, DS4Controls controlName)
+        public string GetCustomMacro(int device, MiControls controlName)
         {
             if (customMapMacros[device].ContainsKey(controlName))
                 return customMapMacros[device][controlName];
             else return "0";
         }
-        public string GetCustomExtras(int device, DS4Controls controlName)
+        public string GetCustomExtras(int device, MiControls controlName)
         {
             if (customMapExtras[device].ContainsKey(controlName))
                 return customMapExtras[device][controlName];
             else return "0";
         }
-        public DS4KeyType GetCustomKeyType(int device, DS4Controls controlName)
+        public DS4KeyType GetCustomKeyType(int device, MiControls controlName)
         {
             try
             {
@@ -755,31 +764,31 @@ namespace DS4Windows
             catch { return 0; }
         }
 
-        public X360Controls GetShiftCustomButton(int device, DS4Controls controlName)
+        public X360Controls GetShiftCustomButton(int device, MiControls controlName)
         {
             if (shiftCustomMapButtons[device].ContainsKey(controlName))
                 return shiftCustomMapButtons[device][controlName];
             else return X360Controls.None;
         }
-        public UInt16 GetShiftCustomKey(int device, DS4Controls controlName)
+        public UInt16 GetShiftCustomKey(int device, MiControls controlName)
         {
             if (shiftCustomMapKeys[device].ContainsKey(controlName))
                 return shiftCustomMapKeys[device][controlName];
             else return 0;
         }
-        public string GetShiftCustomMacro(int device, DS4Controls controlName)
+        public string GetShiftCustomMacro(int device, MiControls controlName)
         {
             if (shiftCustomMapMacros[device].ContainsKey(controlName))
                 return shiftCustomMapMacros[device][controlName];
             else return "0";
         }
-        public string GetShiftCustomExtras(int device, DS4Controls controlName)
+        public string GetShiftCustomExtras(int device, MiControls controlName)
         {
             if (customMapExtras[device].ContainsKey(controlName))
                 return customMapExtras[device][controlName];
             else return "0";
         }
-        public DS4KeyType GetShiftCustomKeyType(int device, DS4Controls controlName)
+        public DS4KeyType GetShiftCustomKeyType(int device, MiControls controlName)
         {
             try
             {
@@ -815,7 +824,7 @@ namespace DS4Windows
                 XmlNode xmlFlushHIDQueue = m_Xdoc.CreateNode(XmlNodeType.Element, "flushHIDQueue", null); xmlFlushHIDQueue.InnerText = flushHIDQueue[device].ToString(); Node.AppendChild(xmlFlushHIDQueue);
                 XmlNode xmlIdleDisconnectTimeout = m_Xdoc.CreateNode(XmlNodeType.Element, "idleDisconnectTimeout", null); xmlIdleDisconnectTimeout.InnerText = idleDisconnectTimeout[device].ToString(); Node.AppendChild(xmlIdleDisconnectTimeout);
                 XmlNode xmlColor = m_Xdoc.CreateNode(XmlNodeType.Element, "Color", null);
-                xmlColor.InnerText = m_Leds[device].red.ToString() + "," + m_Leds[device].green.ToString() + "," + m_Leds[device].blue.ToString(); 
+                xmlColor.InnerText = m_Leds[device].red.ToString() + "," + m_Leds[device].green.ToString() + "," + m_Leds[device].blue.ToString();
                 Node.AppendChild(xmlColor);
                 XmlNode xmlRumbleBoost = m_Xdoc.CreateNode(XmlNodeType.Element, "RumbleBoost", null); xmlRumbleBoost.InnerText = rumble[device].ToString(); Node.AppendChild(xmlRumbleBoost);
                 XmlNode xmlLedAsBatteryIndicator = m_Xdoc.CreateNode(XmlNodeType.Element, "ledAsBatteryIndicator", null); xmlLedAsBatteryIndicator.InnerText = ledAsBattery[device].ToString(); Node.AppendChild(xmlLedAsBatteryIndicator);
@@ -1054,135 +1063,135 @@ namespace DS4Windows
             catch { Saved = false; }
             return Saved;
         }
-        private DS4Controls getDS4ControlsByName(string key)
+        private MiControls getDS4ControlsByName(string key)
         {
             switch (key)
             {
-                case "bnShare": return DS4Controls.Share;
-                case "bnL3": return DS4Controls.L3;
-                case "bnR3": return DS4Controls.R3;
-                case "bnOptions": return DS4Controls.Options;
-                case "bnUp": return DS4Controls.DpadUp;
-                case "bnRight": return DS4Controls.DpadRight;
-                case "bnDown": return DS4Controls.DpadDown;
-                case "bnLeft": return DS4Controls.DpadLeft;
+                case "bnShare": return MiControls.Menu;
+                case "bnL3": return MiControls.LS;
+                case "bnR3": return MiControls.RS;
+                case "bnOptions": return MiControls.Back;
+                case "bnUp": return MiControls.DpadUp;
+                case "bnRight": return MiControls.DpadRight;
+                case "bnDown": return MiControls.DpadDown;
+                case "bnLeft": return MiControls.DpadLeft;
 
-                case "bnL1": return DS4Controls.L1;
-                case "bnR1": return DS4Controls.R1;
-                case "bnTriangle": return DS4Controls.Triangle;
-                case "bnCircle": return DS4Controls.Circle;
-                case "bnCross": return DS4Controls.Cross;
-                case "bnSquare": return DS4Controls.Square;
+                case "bnL1": return MiControls.L1;
+                case "bnR1": return MiControls.R1;
+                case "bnTriangle": return MiControls.Y;
+                case "bnCircle": return MiControls.B;
+                case "bnCross": return MiControls.A;
+                case "bnSquare": return MiControls.X;
 
-                case "bnPS": return DS4Controls.PS;
-                case "bnLSLeft": return DS4Controls.LXNeg;
-                case "bnLSUp": return DS4Controls.LYNeg;
-                case "bnRSLeft": return DS4Controls.RXNeg;
-                case "bnRSUp": return DS4Controls.RYNeg;
+                case "bnPS": return MiControls.HomeSimulated;
+                case "bnLSLeft": return MiControls.LXNeg;
+                case "bnLSUp": return MiControls.LYNeg;
+                case "bnRSLeft": return MiControls.RXNeg;
+                case "bnRSUp": return MiControls.RYNeg;
 
-                case "bnLSRight": return DS4Controls.LXPos;
-                case "bnLSDown": return DS4Controls.LYPos;
-                case "bnRSRight": return DS4Controls.RXPos;
-                case "bnRSDown": return DS4Controls.RYPos;
-                case "bnL2": return DS4Controls.L2;
-                case "bnR2": return DS4Controls.R2;
+                case "bnLSRight": return MiControls.LXPos;
+                case "bnLSDown": return MiControls.LYPos;
+                case "bnRSRight": return MiControls.RXPos;
+                case "bnRSDown": return MiControls.RYPos;
+                case "bnL2": return MiControls.LT;
+                case "bnR2": return MiControls.RT;
 
-                case "bnTouchLeft": return DS4Controls.TouchLeft;
-                case "bnTouchMulti": return DS4Controls.TouchMulti;
-                case "bnTouchUpper": return DS4Controls.TouchUpper;
-                case "bnTouchRight": return DS4Controls.TouchRight;
-                case "bnGyroXP": return DS4Controls.GyroXPos;
-                case "bnGyroXN": return DS4Controls.GyroXNeg;
-                case "bnGyroZP": return DS4Controls.GyroZPos;
-                case "bnGyroZN": return DS4Controls.GyroZNeg;
+                //case "bnTouchLeft": return MiControls.TouchLeft;
+                //case "bnTouchMulti": return MiControls.TouchMulti;
+                //case "bnTouchUpper": return MiControls.TouchUpper;
+                //case "bnTouchRight": return MiControls.TouchRight;
+                //case "bnGyroXP": return MiControls.GyroXPos;
+                //case "bnGyroXN": return MiControls.GyroXNeg;
+                //case "bnGyroZP": return MiControls.GyroZPos;
+                //case "bnGyroZN": return MiControls.GyroZNeg;
 
-                case "bnSwipeUp": return DS4Controls.SwipeUp;
-                case "bnSwipeDown": return DS4Controls.SwipeDown;
-                case "bnSwipeLeft": return DS4Controls.SwipeLeft;
-                case "bnSwipeRight": return DS4Controls.SwipeRight;
+                //case "bnSwipeUp": return MiControls.SwipeUp;
+                //case "bnSwipeDown": return MiControls.SwipeDown;
+                //case "bnSwipeLeft": return MiControls.SwipeLeft;
+                //case "bnSwipeRight": return MiControls.SwipeRight;
 
                 #region OldShiftname
-                case "sbnShare": return DS4Controls.Share;
-                case "sbnL3": return DS4Controls.L3;
-                case "sbnR3": return DS4Controls.R3;
-                case "sbnOptions": return DS4Controls.Options;
-                case "sbnUp": return DS4Controls.DpadUp;
-                case "sbnRight": return DS4Controls.DpadRight;
-                case "sbnDown": return DS4Controls.DpadDown;
-                case "sbnLeft": return DS4Controls.DpadLeft;
+                case "sbnShare": return MiControls.Menu;
+                case "sbnL3": return MiControls.LS;
+                case "sbnR3": return MiControls.RS;
+                case "sbnOptions": return MiControls.Back;
+                case "sbnUp": return MiControls.DpadUp;
+                case "sbnRight": return MiControls.DpadRight;
+                case "sbnDown": return MiControls.DpadDown;
+                case "sbnLeft": return MiControls.DpadLeft;
 
-                case "sbnL1": return DS4Controls.L1;
-                case "sbnR1": return DS4Controls.R1;
-                case "sbnTriangle": return DS4Controls.Triangle;
-                case "sbnCircle": return DS4Controls.Circle;
-                case "sbnCross": return DS4Controls.Cross;
-                case "sbnSquare": return DS4Controls.Square;
+                case "sbnL1": return MiControls.L1;
+                case "sbnR1": return MiControls.R1;
+                case "sbnTriangle": return MiControls.Y;
+                case "sbnCircle": return MiControls.B;
+                case "sbnCross": return MiControls.A;
+                case "sbnSquare": return MiControls.X;
 
-                case "sbnPS": return DS4Controls.PS;
-                case "sbnLSLeft": return DS4Controls.LXNeg;
-                case "sbnLSUp": return DS4Controls.LYNeg;
-                case "sbnRSLeft": return DS4Controls.RXNeg;
-                case "sbnRSUp": return DS4Controls.RYNeg;
+                case "sbnPS": return MiControls.HomeSimulated;
+                case "sbnLSLeft": return MiControls.LXNeg;
+                case "sbnLSUp": return MiControls.LYNeg;
+                case "sbnRSLeft": return MiControls.RXNeg;
+                case "sbnRSUp": return MiControls.RYNeg;
 
-                case "sbnLSRight": return DS4Controls.LXPos;
-                case "sbnLSDown": return DS4Controls.LYPos;
-                case "sbnRSRight": return DS4Controls.RXPos;
-                case "sbnRSDown": return DS4Controls.RYPos;
-                case "sbnL2": return DS4Controls.L2;
-                case "sbnR2": return DS4Controls.R2;
+                case "sbnLSRight": return MiControls.LXPos;
+                case "sbnLSDown": return MiControls.LYPos;
+                case "sbnRSRight": return MiControls.RXPos;
+                case "sbnRSDown": return MiControls.RYPos;
+                case "sbnL2": return MiControls.LT;
+                case "sbnR2": return MiControls.RT;
 
-                case "sbnTouchLeft": return DS4Controls.TouchLeft;
-                case "sbnTouchMulti": return DS4Controls.TouchMulti;
-                case "sbnTouchUpper": return DS4Controls.TouchUpper;
-                case "sbnTouchRight": return DS4Controls.TouchRight;
-                case "sbnGsyroXP": return DS4Controls.GyroXPos;
-                case "sbnGyroXN": return DS4Controls.GyroXNeg;
-                case "sbnGyroZP": return DS4Controls.GyroZPos;
-                case "sbnGyroZN": return DS4Controls.GyroZNeg;
-#endregion
+                //case "sbnTouchLeft": return MiControls.TouchLeft;
+                //case "sbnTouchMulti": return MiControls.TouchMulti;
+                //case "sbnTouchUpper": return MiControls.TouchUpper;
+                //case "sbnTouchRight": return MiControls.TouchRight;
+                //case "sbnGsyroXP": return MiControls.GyroXPos;
+                //case "sbnGyroXN": return MiControls.GyroXNeg;
+                //case "sbnGyroZP": return MiControls.GyroZPos;
+                //case "sbnGyroZN": return MiControls.GyroZNeg;
+                #endregion
 
-                case "bnShiftShare": return DS4Controls.Share;
-                case "bnShiftL3": return DS4Controls.L3;
-                case "bnShiftR3": return DS4Controls.R3;
-                case "bnShiftOptions": return DS4Controls.Options;
-                case "bnShiftUp": return DS4Controls.DpadUp;
-                case "bnShiftRight": return DS4Controls.DpadRight;
-                case "bnShiftDown": return DS4Controls.DpadDown;
-                case "bnShiftLeft": return DS4Controls.DpadLeft;
+                case "bnShiftShare": return MiControls.Menu;
+                case "bnShiftL3": return MiControls.LS;
+                case "bnShiftR3": return MiControls.RS;
+                case "bnShiftOptions": return MiControls.Back;
+                case "bnShiftUp": return MiControls.DpadUp;
+                case "bnShiftRight": return MiControls.DpadRight;
+                case "bnShiftDown": return MiControls.DpadDown;
+                case "bnShiftLeft": return MiControls.DpadLeft;
 
-                case "bnShiftL1": return DS4Controls.L1;
-                case "bnShiftR1": return DS4Controls.R1;
-                case "bnShiftTriangle": return DS4Controls.Triangle;
-                case "bnShiftCircle": return DS4Controls.Circle;
-                case "bnShiftCross": return DS4Controls.Cross;
-                case "bnShiftSquare": return DS4Controls.Square;
+                case "bnShiftL1": return MiControls.L1;
+                case "bnShiftR1": return MiControls.R1;
+                case "bnShiftTriangle": return MiControls.Y;
+                case "bnShiftCircle": return MiControls.B;
+                case "bnShiftCross": return MiControls.A;
+                case "bnShiftSquare": return MiControls.X;
 
-                case "bnShiftPS": return DS4Controls.PS;
-                case "bnShiftLSLeft": return DS4Controls.LXNeg;
-                case "bnShiftLSUp": return DS4Controls.LYNeg;
-                case "bnShiftRSLeft": return DS4Controls.RXNeg;
-                case "bnShiftRSUp": return DS4Controls.RYNeg;
+                case "bnShiftPS": return MiControls.HomeSimulated;
+                case "bnShiftLSLeft": return MiControls.LXNeg;
+                case "bnShiftLSUp": return MiControls.LYNeg;
+                case "bnShiftRSLeft": return MiControls.RXNeg;
+                case "bnShiftRSUp": return MiControls.RYNeg;
 
-                case "bnShiftLSRight": return DS4Controls.LXPos;
-                case "bnShiftLSDown": return DS4Controls.LYPos;
-                case "bnShiftRSRight": return DS4Controls.RXPos;
-                case "bnShiftRSDown": return DS4Controls.RYPos;
-                case "bnShiftL2": return DS4Controls.L2;
-                case "bnShiftR2": return DS4Controls.R2;
+                case "bnShiftLSRight": return MiControls.LXPos;
+                case "bnShiftLSDown": return MiControls.LYPos;
+                case "bnShiftRSRight": return MiControls.RXPos;
+                case "bnShiftRSDown": return MiControls.RYPos;
+                case "bnShiftL2": return MiControls.LT;
+                case "bnShiftR2": return MiControls.RT;
 
-                case "bnShiftTouchLeft": return DS4Controls.TouchLeft;
-                case "bnShiftTouchMulti": return DS4Controls.TouchMulti;
-                case "bnShiftTouchUpper": return DS4Controls.TouchUpper;
-                case "bnShiftTouchRight": return DS4Controls.TouchRight;
-                case "bnShiftGyroXP": return DS4Controls.GyroXPos;
-                case "bnShiftGyroXN": return DS4Controls.GyroXNeg;
-                case "bnShiftGyroZP": return DS4Controls.GyroZPos;
-                case "bnShiftGyroZN": return DS4Controls.GyroZNeg;
+                //case "bnShiftTouchLeft": return MiControls.TouchLeft;
+                //case "bnShiftTouchMulti": return MiControls.TouchMulti;
+                //case "bnShiftTouchUpper": return MiControls.TouchUpper;
+                //case "bnShiftTouchRight": return MiControls.TouchRight;
+                //case "bnShiftGyroXP": return MiControls.GyroXPos;
+                //case "bnShiftGyroXN": return MiControls.GyroXNeg;
+                //case "bnShiftGyroZP": return MiControls.GyroZPos;
+                //case "bnShiftGyroZN": return MiControls.GyroZNeg;
 
-                case "bnShiftSwipeUp": return DS4Controls.SwipeUp;
-                case "bnShiftSwipeDown": return DS4Controls.SwipeDown;
-                case "bnShiftSwipeLeft": return DS4Controls.SwipeLeft;
-                case "bnShiftSwipeRight": return DS4Controls.SwipeRight;
+                //case "bnShiftSwipeUp": return MiControls.SwipeUp;
+                //case "bnShiftSwipeDown": return MiControls.SwipeDown;
+                //case "bnShiftSwipeLeft": return MiControls.SwipeLeft;
+                //case "bnShiftSwipeRight": return MiControls.SwipeRight;
             }
             return 0;
         }
@@ -1240,16 +1249,16 @@ namespace DS4Windows
         public Boolean LoadProfile(int device, System.Windows.Forms.Control[] buttons, System.Windows.Forms.Control[] shiftbuttons, bool launchprogram, ControlService control, string propath = "")
         {
             Boolean Loaded = true;
-            Dictionary<DS4Controls, DS4KeyType> customMapKeyTypes = new Dictionary<DS4Controls, DS4KeyType>();
-            Dictionary<DS4Controls, UInt16> customMapKeys = new Dictionary<DS4Controls, UInt16>();
-            Dictionary<DS4Controls, X360Controls> customMapButtons = new Dictionary<DS4Controls, X360Controls>();
-            Dictionary<DS4Controls, String> customMapMacros = new Dictionary<DS4Controls, String>();
-            Dictionary<DS4Controls, String> customMapExtras = new Dictionary<DS4Controls, String>();
-            Dictionary<DS4Controls, DS4KeyType> shiftCustomMapKeyTypes = new Dictionary<DS4Controls, DS4KeyType>();
-            Dictionary<DS4Controls, UInt16> shiftCustomMapKeys = new Dictionary<DS4Controls, UInt16>();
-            Dictionary<DS4Controls, X360Controls> shiftCustomMapButtons = new Dictionary<DS4Controls, X360Controls>();
-            Dictionary<DS4Controls, String> shiftCustomMapMacros = new Dictionary<DS4Controls, String>();
-            Dictionary<DS4Controls, String> shiftCustomMapExtras = new Dictionary<DS4Controls, String>();
+            Dictionary<MiControls, DS4KeyType> customMapKeyTypes = new Dictionary<MiControls, DS4KeyType>();
+            Dictionary<MiControls, UInt16> customMapKeys = new Dictionary<MiControls, UInt16>();
+            Dictionary<MiControls, X360Controls> customMapButtons = new Dictionary<MiControls, X360Controls>();
+            Dictionary<MiControls, String> customMapMacros = new Dictionary<MiControls, String>();
+            Dictionary<MiControls, String> customMapExtras = new Dictionary<MiControls, String>();
+            Dictionary<MiControls, DS4KeyType> shiftCustomMapKeyTypes = new Dictionary<MiControls, DS4KeyType>();
+            Dictionary<MiControls, UInt16> shiftCustomMapKeys = new Dictionary<MiControls, UInt16>();
+            Dictionary<MiControls, X360Controls> shiftCustomMapButtons = new Dictionary<MiControls, X360Controls>();
+            Dictionary<MiControls, String> shiftCustomMapMacros = new Dictionary<MiControls, String>();
+            Dictionary<MiControls, String> shiftCustomMapExtras = new Dictionary<MiControls, String>();
             string rootname = "DS4Windows";
             Boolean missingSetting = false;
             string profilepath;
@@ -1267,12 +1276,12 @@ namespace DS4Windows
                     rootname = "ScpControl";
                     missingSetting = true;
                 }
-                if (device < 4)
-                {
-                    DS4LightBar.forcelight[device] = false;
-                    DS4LightBar.forcedFlash[device] = 0;
-                }
-                try { Item = m_Xdoc.SelectSingleNode("/"+ rootname + "/flushHIDQueue"); Boolean.TryParse(Item.InnerText, out flushHIDQueue[device]); }
+                //if (device < 4)
+                //{
+                //    DS4LightBar.forcelight[device] = false;
+                //    DS4LightBar.forcedFlash[device] = 0;
+                //}
+                try { Item = m_Xdoc.SelectSingleNode("/" + rootname + "/flushHIDQueue"); Boolean.TryParse(Item.InnerText, out flushHIDQueue[device]); }
                 catch { missingSetting = true; }//rootname = }
 
                 try { Item = m_Xdoc.SelectSingleNode("/" + rootname + "/idleDisconnectTimeout"); Int32.TryParse(Item.InnerText, out idleDisconnectTimeout[device]); }
@@ -1438,13 +1447,13 @@ namespace DS4Windows
                     if (device < 4)
                     {
                         if (dinputOnly[device] == true) control.x360Bus.Unplug(device);
-                        else if (control.DS4Controllers[device] != null && control.DS4Controllers[device].IsAlive()) control.x360Bus.Plugin(device);
+                        else if (control.MiControllers[device] != null && control.MiControllers[device].IsAlive()) control.x360Bus.Plugin(device);
                     }
                 }
                 catch { missingSetting = true; }
                 try
                 {
-                    Item = m_Xdoc.SelectSingleNode("/" + rootname + "/StartTouchpadOff"); 
+                    Item = m_Xdoc.SelectSingleNode("/" + rootname + "/StartTouchpadOff");
                     Boolean.TryParse(Item.InnerText, out startTouchpadOff[device]);
                     if (startTouchpadOff[device] == true) control.StartTPOff(device);
                 }
@@ -1458,12 +1467,13 @@ namespace DS4Windows
                 catch { missingSetting = true; }
                 try
                 {
-                    Item = m_Xdoc.SelectSingleNode("/" + rootname + "/ProfileActions"); 
+                    Item = m_Xdoc.SelectSingleNode("/" + rootname + "/ProfileActions");
                     profileActions[device].Clear();
                     if (!string.IsNullOrEmpty(Item.InnerText))
-                        profileActions[device].AddRange(Item.InnerText.Split('/')); }
+                        profileActions[device].AddRange(Item.InnerText.Split('/'));
+                }
                 catch { profileActions[device].Clear(); missingSetting = true; }
-               
+
                 DS4KeyType keyType;
                 UInt16 wvk;
                 if (buttons == null)
@@ -1550,9 +1560,9 @@ namespace DS4Windows
                 else
                 {
                     LoadButtons(buttons, "Control", customMapKeyTypes, customMapKeys, customMapButtons, customMapMacros, customMapExtras);
-                    LoadButtons(shiftbuttons, "ShiftControl", shiftCustomMapKeyTypes, shiftCustomMapKeys, shiftCustomMapButtons, shiftCustomMapMacros, shiftCustomMapExtras);                    
+                    LoadButtons(shiftbuttons, "ShiftControl", shiftCustomMapKeyTypes, shiftCustomMapKeys, shiftCustomMapButtons, shiftCustomMapMacros, shiftCustomMapExtras);
                 }
-            }            
+            }
             //catch { Loaded = false; }
             if (Loaded)
             {
@@ -1575,8 +1585,8 @@ namespace DS4Windows
             return Loaded;
         }
 
-        public void LoadButtons(System.Windows.Forms.Control[] buttons, string control, Dictionary<DS4Controls, DS4KeyType> customMapKeyTypes,
-           Dictionary<DS4Controls, UInt16> customMapKeys, Dictionary<DS4Controls, X360Controls> customMapButtons, Dictionary<DS4Controls, String> customMapMacros, Dictionary<DS4Controls, String> customMapExtras)
+        public void LoadButtons(System.Windows.Forms.Control[] buttons, string control, Dictionary<MiControls, DS4KeyType> customMapKeyTypes,
+           Dictionary<MiControls, UInt16> customMapKeys, Dictionary<MiControls, X360Controls> customMapButtons, Dictionary<MiControls, String> customMapMacros, Dictionary<MiControls, String> customMapExtras)
         {
             XmlNode Item;
             DS4KeyType keyType;
@@ -1742,7 +1752,7 @@ namespace DS4Windows
             catch { }
             if (missingSetting)
                 Save();
-            return Loaded; 
+            return Loaded;
         }
         public bool Save()
         {
@@ -1784,7 +1794,7 @@ namespace DS4Windows
             XmlNode xmlFirstXinputPort = m_Xdoc.CreateNode(XmlNodeType.Element, "FirstXinputPort", null); xmlFirstXinputPort.InnerText = firstXinputPort.ToString(); Node.AppendChild(xmlFirstXinputPort);
             XmlNode xmlCloseMini = m_Xdoc.CreateNode(XmlNodeType.Element, "CloseMinimizes", null); xmlCloseMini.InnerText = closeMini.ToString(); Node.AppendChild(xmlCloseMini);
             XmlNode xmlDownloadLang = m_Xdoc.CreateNode(XmlNodeType.Element, "DownloadLang", null); xmlDownloadLang.InnerText = downloadLang.ToString(); Node.AppendChild(xmlDownloadLang);
-            XmlNode xmlFlashWhenLate = m_Xdoc.CreateNode(XmlNodeType.Element, "FlashWhenLate", null); xmlFlashWhenLate.InnerText = flashWhenLate.ToString(); Node.AppendChild(xmlFlashWhenLate);            
+            XmlNode xmlFlashWhenLate = m_Xdoc.CreateNode(XmlNodeType.Element, "FlashWhenLate", null); xmlFlashWhenLate.InnerText = flashWhenLate.ToString(); Node.AppendChild(xmlFlashWhenLate);
 
             m_Xdoc.AppendChild(Node);
 
@@ -1984,12 +1994,12 @@ namespace DS4Windows
     public class SpecialAction
     {
         public string name;
-        public List<DS4Controls> trigger = new List<DS4Controls>();
+        public List<MiControls> trigger = new List<MiControls>();
         public string type;
         public string controls;
         public List<int> macro = new List<int>();
         public string details;
-        public List<DS4Controls> uTrigger = new List<DS4Controls>();
+        public List<MiControls> uTrigger = new List<MiControls>();
         public string ucontrols;
         public double delayTime = 0;
         public string extra;
@@ -2003,7 +2013,7 @@ namespace DS4Windows
             delayTime = delay;
             string[] ctrls = controls.Split('/');
             foreach (string s in ctrls)
-                trigger.Add(getDS4ControlsByName(s));
+                trigger.Add(getMiControlsByName(s));
             if (type == "Macro")
             {
                 string[] macs = details.Split('/');
@@ -2026,7 +2036,7 @@ namespace DS4Windows
                     this.ucontrols = exts[1];
                     string[] uctrls = exts[1].Split('/');
                     foreach (string s in uctrls)
-                        uTrigger.Add(getDS4ControlsByName(s));
+                        uTrigger.Add(getMiControlsByName(s));
                 }
                 if (details.Contains("Scan Code"))
                     keyType |= DS4KeyType.ScanCode;
@@ -2045,57 +2055,57 @@ namespace DS4Windows
                 this.ucontrols = extras;
                 string[] uctrls = extras.Split('/');
                 foreach (string s in uctrls)
-                    uTrigger.Add(getDS4ControlsByName(s));
+                    uTrigger.Add(getMiControlsByName(s));
             }
         }
 
-        private DS4Controls getDS4ControlsByName(string key)
+        private MiControls getMiControlsByName(string key)
         {
             switch (key)
             {
-                case "Share": return DS4Controls.Share;
-                case "L3": return DS4Controls.L3;
-                case "R3": return DS4Controls.R3;
-                case "Options": return DS4Controls.Options;
-                case "Up": return DS4Controls.DpadUp;
-                case "Right": return DS4Controls.DpadRight;
-                case "Down": return DS4Controls.DpadDown;
-                case "Left": return DS4Controls.DpadLeft;
+                case "Back": return MiControls.Back;
+                case "LT": return MiControls.LT;
+                case "RT": return MiControls.RT;
+                case "Menu": return MiControls.Menu;
+                case "Up": return MiControls.DpadUp;
+                case "Right": return MiControls.DpadRight;
+                case "Down": return MiControls.DpadDown;
+                case "Left": return MiControls.DpadLeft;
 
-                case "L1": return DS4Controls.L1;
-                case "R1": return DS4Controls.R1;
-                case "Triangle": return DS4Controls.Triangle;
-                case "Circle": return DS4Controls.Circle;
-                case "Cross": return DS4Controls.Cross;
-                case "Square": return DS4Controls.Square;
+                case "L1": return MiControls.L1;
+                case "R1": return MiControls.R1;
+                case "A": return MiControls.A;
+                case "B": return MiControls.B;
+                case "X": return MiControls.X;
+                case "Y": return MiControls.Y;
 
-                case "PS": return DS4Controls.PS;
-                case "Left Stick Left": return DS4Controls.LXNeg;
-                case "Left Stick Up": return DS4Controls.LYNeg;
-                case "Right Stick Left": return DS4Controls.RXNeg;
-                case "Right Stick Up": return DS4Controls.RYNeg;
+                case "HomeSimulated": return MiControls.HomeSimulated;
+                case "Left Stick Left": return MiControls.LXNeg;
+                case "Left Stick Up": return MiControls.LYNeg;
+                case "Right Stick Left": return MiControls.RXNeg;
+                case "Right Stick Up": return MiControls.RYNeg;
 
-                case "Left Stick Right": return DS4Controls.LXPos;
-                case "Left Stick Down": return DS4Controls.LYPos;
-                case "Right Stick Right": return DS4Controls.RXPos;
-                case "Right Stick Down": return DS4Controls.RYPos;
-                case "L2": return DS4Controls.L2;
-                case "R2": return DS4Controls.R2;
+                case "Left Stick Right": return MiControls.LXPos;
+                case "Left Stick Down": return MiControls.LYPos;
+                case "Right Stick Right": return MiControls.RXPos;
+                case "Right Stick Down": return MiControls.RYPos;
+                case "LS": return MiControls.LS;
+                case "RS": return MiControls.RS;
 
-                case "Left Touch": return DS4Controls.TouchLeft;
-                case "Multitouch": return DS4Controls.TouchMulti;
-                case "Upper Touch": return DS4Controls.TouchUpper;
-                case "Right Touch": return DS4Controls.TouchRight;
+                //case "Left Touch": return MiControls.TouchLeft;
+                //case "Multitouch": return MiControls.TouchMulti;
+                //case "Upper Touch": return MiControls.TouchUpper;
+                //case "Right Touch": return MiControls.TouchRight;
 
-                case "Swipe Up": return DS4Controls.SwipeUp;
-                case "Swipe Down": return DS4Controls.SwipeDown;
-                case "Swipe Left": return DS4Controls.SwipeLeft;
-                case "Swipe Right": return DS4Controls.SwipeRight;
+                //case "Swipe Up": return MiControls.SwipeUp;
+                //case "Swipe Down": return MiControls.SwipeDown;
+                //case "Swipe Left": return MiControls.SwipeLeft;
+                //case "Swipe Right": return MiControls.SwipeRight;
 
-                case "Tilt Up": return DS4Controls.GyroZNeg;
-                case "Tilt Down": return DS4Controls.GyroZPos;
-                case "Tilt Left": return DS4Controls.GyroXPos;
-                case "Tilt Right": return DS4Controls.GyroXNeg;
+                //case "Tilt Up": return MiControls.GyroZNeg;
+                //case "Tilt Down": return MiControls.GyroZPos;
+                //case "Tilt Left": return MiControls.GyroXPos;
+                //case "Tilt Right": return MiControls.GyroXNeg;
             }
             return 0;
         }

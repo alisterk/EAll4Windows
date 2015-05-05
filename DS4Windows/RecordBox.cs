@@ -26,7 +26,7 @@ namespace DS4Windows
         KBM360 kbm;
         DS4State cState;
         public bool saved = false;
-        List<DS4Controls> dcs = new List<DS4Controls>();
+        List<MiControls> dcs = new List<MiControls>();
         public RecordBox(KBM360 op)
         {
             kbm = op;
@@ -36,7 +36,7 @@ namespace DS4Windows
                 cBStyle.SelectedIndex = 1;
             else
                 cBStyle.SelectedIndex = 0;
-            AddtoDS4List();
+            AddtoMiList();
             ds4.Tick += ds4_Tick;
             ds4.Interval = 1;
             if (kbm.macrostag.Count > 0)
@@ -55,7 +55,7 @@ namespace DS4Windows
                 cBStyle.SelectedIndex = 1;
             else
                 cBStyle.SelectedIndex = 0;
-            AddtoDS4List();
+            AddtoMiList();
             ds4.Tick += ds4_Tick;
             ds4.Interval = 1;
             lbRecordTip.Visible = false;
@@ -69,34 +69,36 @@ namespace DS4Windows
             }
         }
 
-        void AddtoDS4List()
+        void AddtoMiList()
         {
-            dcs.Add(DS4Controls.Cross);
-            dcs.Add(DS4Controls.Cross);
-            dcs.Add(DS4Controls.Circle);
-            dcs.Add(DS4Controls.Square);
-            dcs.Add(DS4Controls.Triangle);
-            dcs.Add(DS4Controls.Options);
-            dcs.Add(DS4Controls.Share);
-            dcs.Add(DS4Controls.DpadUp);
-            dcs.Add(DS4Controls.DpadDown);
-            dcs.Add(DS4Controls.DpadLeft);
-            dcs.Add(DS4Controls.DpadRight);
-            dcs.Add(DS4Controls.PS);
-            dcs.Add(DS4Controls.L1);
-            dcs.Add(DS4Controls.R1);
-            dcs.Add(DS4Controls.L2);
-            dcs.Add(DS4Controls.R2);
-            dcs.Add(DS4Controls.L3);
-            dcs.Add(DS4Controls.R3);
-            dcs.Add(DS4Controls.LXPos);
-            dcs.Add(DS4Controls.LXNeg);
-            dcs.Add(DS4Controls.LYPos);
-            dcs.Add(DS4Controls.LYNeg);
-            dcs.Add(DS4Controls.RXPos);
-            dcs.Add(DS4Controls.RXNeg);
-            dcs.Add(DS4Controls.RYPos);
-            dcs.Add(DS4Controls.RYNeg);
+            dcs.Add(MiControls.A);
+            dcs.Add(MiControls.B);
+            dcs.Add(MiControls.X);
+            dcs.Add(MiControls.Y);
+            dcs.Add(MiControls.Back);
+            dcs.Add(MiControls.Menu);
+            dcs.Add(MiControls.HomeSimulated);
+            dcs.Add(MiControls.DpadUp);
+            dcs.Add(MiControls.DpadDown);
+            dcs.Add(MiControls.DpadLeft);
+            dcs.Add(MiControls.DpadRight);
+            dcs.Add(MiControls.L1);
+            dcs.Add(MiControls.R1);
+            dcs.Add(MiControls.LT);
+            dcs.Add(MiControls.RT);
+            dcs.Add(MiControls.LT);
+            dcs.Add(MiControls.RT);
+            dcs.Add(MiControls.LXPos);
+            dcs.Add(MiControls.LXNeg);
+            dcs.Add(MiControls.LYPos);
+            dcs.Add(MiControls.LYNeg);
+            dcs.Add(MiControls.RXPos);
+            dcs.Add(MiControls.RXNeg);
+            dcs.Add(MiControls.RYPos);
+            dcs.Add(MiControls.RYNeg);
+            dcs.Add(MiControls.LS);
+            dcs.Add(MiControls.RS);
+
         }
 
         void AddMacroValue(int value)
@@ -108,11 +110,11 @@ namespace DS4Windows
         }
         void ds4_Tick(object sender, EventArgs e)
         {
-            if (Program.rootHub.DS4Controllers[0] != null)
+            if (Program.rootHub.MiControllers[0] != null)
             {
                 cState = Program.rootHub.getDS4State(0);
                 if (btnRecord.Text == Properties.Resources.StopText)
-                    foreach (DS4Controls dc in dcs)
+                    foreach (MiControls dc in dcs)
                         if (Mapping.getBoolMapping(dc, cState, null, null))
                         {
                             int value = DS4ControltoInt(dc);
@@ -125,7 +127,7 @@ namespace DS4Windows
                             if (macros.Count == 0)
                             {
                                 AddMacroValue(value);
-                                lVMacros.Items.Add(DS4ControltoX360(dc), 0);
+                                lVMacros.Items.Add(MiControltoX360(dc), 0);
                                 if (cBRecordDelays.Checked)
                                 {
                                     sw.Reset();
@@ -142,7 +144,7 @@ namespace DS4Windows
                                     sw.Start();
                                 }
                                 AddMacroValue(value);
-                                lVMacros.Items.Add(DS4ControltoX360(dc), 0);
+                                lVMacros.Items.Add(MiControltoX360(dc), 0);
                             }
                             lVMacros.Items[lVMacros.Items.Count - 1].EnsureVisible();
                         }
@@ -170,7 +172,7 @@ namespace DS4Windows
                                         sw.Start();
                                     }
                                     AddMacroValue(value);
-                                    lVMacros.Items.Add(DS4ControltoX360(dc), 1);
+                                    lVMacros.Items.Add(MiControltoX360(dc), 1);
                                     lVMacros.Items[lVMacros.Items.Count - 1].EnsureVisible();
                                 }
                             }
@@ -178,68 +180,68 @@ namespace DS4Windows
             }
         }
         
-        public static int DS4ControltoInt(DS4Controls ctrl)
+        public static int DS4ControltoInt(MiControls ctrl)
         {
             switch (ctrl)
             {
-                case DS4Controls.Cross: return 261;
-                case DS4Controls.Circle: return 262; 
-                case DS4Controls.Square: return 263; 
-                case DS4Controls.Triangle: return 264; 
-                case DS4Controls.Options: return 265; 
-                case DS4Controls.Share: return 266; 
-                case DS4Controls.DpadUp: return 267; 
-                case DS4Controls.DpadDown: return 268; 
-                case DS4Controls.DpadLeft: return 269; 
-                case DS4Controls.DpadRight: return 270; 
-                case DS4Controls.PS: return 271; 
-                case DS4Controls.L1: return 272; 
-                case DS4Controls.R1: return 273; 
-                case DS4Controls.L2: return 274; 
-                case DS4Controls.R2: return 275; 
-                case DS4Controls.L3: return 276;
-                case DS4Controls.R3: return 277;
-                case DS4Controls.LXPos: return 278;
-                case DS4Controls.LXNeg: return 279;
-                case DS4Controls.LYPos: return 280;
-                case DS4Controls.LYNeg: return 281;
-                case DS4Controls.RXPos: return 282;
-                case DS4Controls.RXNeg: return 283;
-                case DS4Controls.RYPos: return 284;
-                case DS4Controls.RYNeg: return 285;
+                case MiControls.A: return 261;
+                case MiControls.B: return 262; 
+                case MiControls.X: return 263; 
+                case MiControls.Y: return 264; 
+                case MiControls.Back: return 265; 
+                case MiControls.Menu: return 266; 
+                case MiControls.DpadUp: return 267; 
+                case MiControls.DpadDown: return 268; 
+                case MiControls.DpadLeft: return 269; 
+                case MiControls.DpadRight: return 270; 
+                case MiControls.HomeSimulated: return 271; 
+                case MiControls.L1: return 272; 
+                case MiControls.R1: return 273; 
+                case MiControls.LT: return 274; 
+                case MiControls.RT: return 275; 
+                case MiControls.LS: return 276;
+                case MiControls.RS: return 277;
+                case MiControls.LXPos: return 278;
+                case MiControls.LXNeg: return 279;
+                case MiControls.LYPos: return 280;
+                case MiControls.LYNeg: return 281;
+                case MiControls.RXPos: return 282;
+                case MiControls.RXNeg: return 283;
+                case MiControls.RYPos: return 284;
+                case MiControls.RYNeg: return 285;
             }
             return 0;
         }
 
-        public static string DS4ControltoX360(DS4Controls ctrl)
+        public static string MiControltoX360(MiControls ctrl)
         {
             switch (ctrl)
             {
-                case DS4Controls.Cross: return "A Button";
-                case DS4Controls.Circle: return "B Button";
-                case DS4Controls.Square: return "X Button";
-                case DS4Controls.Triangle: return "Y Button";
-                case DS4Controls.Options: return "Start";
-                case DS4Controls.Share: return "Back";
-                case DS4Controls.DpadUp: return "Up Button";
-                case DS4Controls.DpadDown: return "Down Button";
-                case DS4Controls.DpadLeft: return "Left Button";
-                case DS4Controls.DpadRight: return "Right Button";
-                case DS4Controls.PS: return "Guide";
-                case DS4Controls.L1: return "Left Bumper";
-                case DS4Controls.R1: return "Right Bumper";
-                case DS4Controls.L2: return "Left Trigger";
-                case DS4Controls.R2: return "Right Trigger";
-                case DS4Controls.L3: return "Left Stick";
-                case DS4Controls.R3: return "Right Stick";
-                case DS4Controls.LXPos: return "LS Right";
-                case DS4Controls.LXNeg: return "LS Left";
-                case DS4Controls.LYPos: return "LS Down";
-                case DS4Controls.LYNeg: return "LS Up";
-                case DS4Controls.RXPos: return "RS Right";
-                case DS4Controls.RXNeg: return "RS Left";
-                case DS4Controls.RYPos: return "RS Down";
-                case DS4Controls.RYNeg: return "RS Up";
+                case MiControls.A: return "A Button";
+                case MiControls.B: return "B Button";
+                case MiControls.X: return "X Button";
+                case MiControls.Y: return "Y Button";
+                case MiControls.Menu: return "Start";
+                case MiControls.Back: return "Back";
+                case MiControls.DpadUp: return "Up Button";
+                case MiControls.DpadDown: return "Down Button";
+                case MiControls.DpadLeft: return "Left Button";
+                case MiControls.DpadRight: return "Right Button";
+                case MiControls.HomeSimulated: return "Guide";
+                case MiControls.L1: return "Left Bumper";
+                case MiControls.R1: return "Right Bumper";
+                case MiControls.LT: return "Left Trigger";
+                case MiControls.RT: return "Right Trigger";
+                case MiControls.LS: return "Left Stick";
+                case MiControls.RS: return "Right Stick";
+                case MiControls.LXPos: return "LS Right";
+                case MiControls.LXNeg: return "LS Left";
+                case MiControls.LYPos: return "LS Down";
+                case MiControls.LYNeg: return "LS Up";
+                case MiControls.RXPos: return "RS Right";
+                case MiControls.RXNeg: return "RS Left";
+                case MiControls.RYPos: return "RS Down";
+                case MiControls.RYNeg: return "RS Up";
             }
             return "None";
         }
