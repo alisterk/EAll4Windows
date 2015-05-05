@@ -1,4 +1,4 @@
-﻿namespace DS4Windows
+﻿namespace MiWindows
 {
     public class HidDeviceAttributes
     {

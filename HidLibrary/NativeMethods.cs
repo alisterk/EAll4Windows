@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles; 
-namespace DS4Windows
+namespace MiWindows
 {
     internal static class NativeMethods
     {
