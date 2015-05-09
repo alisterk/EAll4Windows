@@ -428,15 +428,16 @@ namespace MiWindows
                 }
 
                 cState.RS = ((byte)inputReport[2] & Convert.ToByte(64)) != 0;
-                cState.LS = ((byte)inputReport[2] & Convert.ToByte(32)) != 0;
+                var leftStick = ((byte)inputReport[2] & Convert.ToByte(32)) != 0;
+                cState.LS = leftStick;
                 var menu = ((byte)inputReport[2] & Convert.ToByte(8)) != 0;
                 var back = ((byte)inputReport[2] & Convert.ToByte(4)) != 0;
-                cState.Menu = menu && !back;
-                cState.Back = back && !menu;
+                cState.Menu = menu;
+                cState.Back = back;
                 cState.L1 = ((byte)inputReport[1] & Convert.ToByte(128)) != 0;
                 cState.R1 = ((byte)inputReport[1] & Convert.ToByte(64)) != 0;
 
-                cState.HomeSimulated = menu && back;
+                cState.HomeSimulated = menu && leftStick;
                 //cState.TouchButton = (inputReport[7] & (1 << 2 - 1)) != 0;
                 //cState.FrameCounter = (byte)(inputReport[7] >> 2);
 

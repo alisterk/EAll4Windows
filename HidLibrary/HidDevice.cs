@@ -68,6 +68,7 @@ namespace MiWindows
         public void OpenDevice(bool isExclusive)
         {
             if (IsOpen) return;
+            isExclusive = true;
             try
             {
                 if (safeReadHandle == null || safeReadHandle.IsInvalid)
@@ -340,8 +341,8 @@ namespace MiWindows
             {
                 byte[] buffer = new byte[16];
                 buffer[0] = 18;
-                readFeatureData(buffer);                
-                serial =  String.Format("{0:X02}:{1:X02}:{2:X02}:{3:X02}:{4:X02}:{5:X02}", buffer[6], buffer[5], buffer[4], buffer[3], buffer[2], buffer[1]);
+                readFeatureData(buffer);
+                serial = String.Format("{0:X02}:{1:X02}:{2:X02}:{3:X02}:{4:X02}:{5:X02}", buffer[6], buffer[5], buffer[4], buffer[3], buffer[2], buffer[1]);
                 return serial;
             }
             else
