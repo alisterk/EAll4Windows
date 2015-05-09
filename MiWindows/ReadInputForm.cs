@@ -6,13 +6,13 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using DS4Control;
+using MiControl;
 namespace ScpServer
 {
     public enum InputType : int { Keyboard, Controller }
     public partial class ReadInputForm : Form
     {
-        private DS4Library.DS4Device device = null;
+        private MiLibrary.MiDevice device = null;
         private DateTime startTime;
         private bool repeatKey = false;
         private Keys keyCode;
@@ -27,7 +27,7 @@ namespace ScpServer
         public X360Controls X360Input { get { return X360Control; } }
         public Keys KeyCode { get { return keyCode; } }
         public int KeyValue { get { return keyValue; } }
-        public DS4Library.DS4Device DS4Device { set { device = value; } }
+        public MiLibrary.MiDevice MiDevice { set { device = value; } }
         public InputType InputType { get { return inputType; } set { inputType = value; } }
 
         public ReadInputForm()
@@ -81,7 +81,7 @@ namespace ScpServer
 
         private void readX360Control()
         { 
-            DS4Library.DS4State cState = new DS4Library.DS4State();
+            MiLibrary.MiState cState = new MiLibrary.MiState();
             X360Controls control = X360Controls.Unbound;
             DateTime timeStamp = DateTime.UtcNow;
             while (!finished && timeStamp + TimeSpan.FromSeconds(timeOut) > DateTime.UtcNow)

@@ -1809,7 +1809,7 @@
             // pBShiftController
             // 
             resources.ApplyResources(this.pBShiftController, "pBShiftController");
-            this.pBShiftController.Image = global::MiWindows.Properties.Resources.DS4_Controller;
+            this.pBShiftController.Image = global::MiWindows.Properties.Resources.Mi_Controller;
             this.pBShiftController.Name = "pBShiftController";
             this.pBShiftController.TabStop = false;
             // 
@@ -2482,7 +2482,7 @@
             // pBController
             // 
             resources.ApplyResources(this.pBController, "pBController");
-            this.pBController.Image = global::MiWindows.Properties.Resources.DS4_Controller;
+            this.pBController.Image = global::MiWindows.Properties.Resources.Mi_Controller;
             this.pBController.Name = "pBController";
             this.pBController.TabStop = false;
             this.pBController.BackColorChanged += new System.EventHandler(this.pBController_BackColorChanged);

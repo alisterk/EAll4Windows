@@ -40,7 +40,7 @@ namespace MiWindows
         {
             sp.Stream = Properties.Resources.EE;
             x360Bus = new X360Device();
-            AddtoDS4List();
+            AddtoMiList();
             for (int i = 0; i < MiControllers.Length; i++)
             {
                 processingData[i] = new X360Data();
@@ -51,7 +51,7 @@ namespace MiWindows
             }
         }
 
-        void AddtoDS4List()
+        void AddtoMiList()
         {
             dcs.Add(MiControls.A);
             dcs.Add(MiControls.B);
@@ -87,7 +87,7 @@ namespace MiWindows
             if (MiDevices.isExclusiveMode && !device.IsExclusive)
             {
                 await System.Threading.Tasks.Task.Delay(5);
-                String message = Properties.Resources.CouldNotOpenDS4.Replace("*Mac address*", device.MacAddress) + " " + Properties.Resources.QuitOtherPrograms;
+                String message = Properties.Resources.CouldNotOpenMi.Replace("*Mac address*", device.MacAddress) + " " + Properties.Resources.QuitOtherPrograms;
                 LogDebug(message, true);
                 Log.LogToTray(message);
             }
@@ -109,7 +109,7 @@ namespace MiWindows
                     MiDevices.findControllers();
                     IEnumerable<MiDevice> devices = MiDevices.getMiControllers();
                     int ind = 0;
-                    //!DS4LightBar.defualtLight = false;
+                    //!MiLightBar.defualtLight = false;
                     foreach (MiDevice device in devices)
                     {
                         if (showlog)
@@ -171,10 +171,10 @@ namespace MiWindows
                             MiControllers[i].DisconnectBT();
                         //!else
                         //{
-                        //    DS4LightBar.forcelight[i] = false;
-                        //    DS4LightBar.forcedFlash[i] = 0;
-                        //    DS4LightBar.defualtLight = true;
-                        //    DS4LightBar.updateLightBar(MiControllers[i], i, CurrentState[i], ExposedState[i], touchPad[i]);
+                        //    MiLightBar.forcelight[i] = false;
+                        //    MiLightBar.forcedFlash[i] = 0;
+                        //    MiLightBar.defualtLight = true;
+                        //    MiLightBar.updateLightBar(MiControllers[i], i, CurrentState[i], ExposedState[i], touchPad[i]);
                         //    System.Threading.Thread.Sleep(50);
                         //}
                         CurrentState[i].Battery = PreviousState[i].Battery = 0; // Reset for the next connection's initial status change.
@@ -189,10 +189,10 @@ namespace MiWindows
                 x360Bus.UnplugAll();
                 x360Bus.Stop();
                 if (showlog)
-                    LogDebug(Properties.Resources.StoppingDS4);
+                    LogDebug(Properties.Resources.StoppingMi);
                 MiDevices.stopControllers();
                 if (showlog)
-                    LogDebug(Properties.Resources.StoppedDS4Windows);
+                    LogDebug(Properties.Resources.StoppedMiWindows);
                 Global.ControllerStatusChanged(this);                
             }
             return true;
@@ -345,7 +345,7 @@ namespace MiWindows
                 return String.Empty;
         }
 
-        public string getShortDS4ControllerInfo(int index)
+        public string getShortMiControllerInfo(int index)
         {
             if (MiControllers[index] != null)
             {
@@ -370,7 +370,7 @@ namespace MiWindows
                 return Properties.Resources.NoneText;
         }
 
-        public string getDS4Battery(int index)
+        public string getMiBattery(int index)
         {
             if (MiControllers[index] != null)
             {
@@ -395,7 +395,7 @@ namespace MiWindows
                 return Properties.Resources.NA;
         }
 
-        public string getDS4Status(int index)
+        public string getMiStatus(int index)
         {
             if (MiControllers[index] != null)
             {
@@ -408,7 +408,7 @@ namespace MiWindows
 
 
         private int XINPUT_UNPLUG_SETTLE_TIME = 250; // Inhibit races that occur with the asynchronous teardown of ScpVBus -> X360 driver instance.
-        //Called when DS4 is disconnected or timed out
+        //Called when Mi is disconnected or timed out
         protected virtual void On_MiRemoval(object sender, EventArgs e)
         {
             MiDevice device = (MiDevice)sender;
@@ -478,7 +478,7 @@ namespace MiWindows
                     DoExtras(ind);
 
                 // Update the GUI/whatever.
-                //DS4LightBar.updateLightBar(device, ind, cState, ExposedState[ind], touchPad[ind]);
+                //MiLightBar.updateLightBar(device, ind, cState, ExposedState[ind], touchPad[ind]);
 
                 x360Bus.Parse(cState, processingData[ind].Report, ind);
                 // We push the translated Xinput state, and simultaneously we
@@ -509,18 +509,18 @@ namespace MiWindows
                 LogDebug(Properties.Resources.LatencyOverTen.Replace("*number*", (ind + 1).ToString()), true);
                 if (Global.FlashWhenLate)
                 {
-                    DS4Color color = new DS4Color { red = 50, green = 0, blue = 0 };
-                    //DS4LightBar.forcedColor[ind] = color;
-                    //DS4LightBar.forcedFlash[ind] = 2;
-                    //DS4LightBar.forcelight[ind] = true;
+                    MiColor color = new MiColor { red = 50, green = 0, blue = 0 };
+                    //MiLightBar.forcedColor[ind] = color;
+                    //MiLightBar.forcedFlash[ind] = 2;
+                    //MiLightBar.forcelight[ind] = true;
                 }
             }
             else
             {
                 lag[ind] = false;
                 LogDebug(Properties.Resources.LatencyNotOverTen.Replace("*number*", (ind + 1).ToString()));
-                //DS4LightBar.forcelight[ind] = false;
-                //DS4LightBar.forcedFlash[ind] = 0;
+                //MiLightBar.forcelight[ind] = false;
+                //MiLightBar.forcedFlash[ind] = 0;
             }
         }
         
@@ -556,10 +556,10 @@ namespace MiWindows
                         setRumble((byte)extras[0], (byte)extras[1], ind);
                     if (extras[2] == 1)
                     {
-                        DS4Color color = new DS4Color { red = (byte)extras[3], green = (byte)extras[4], blue = (byte)extras[5] };
-                        //DS4LightBar.forcedColor[ind] = color;
-                        //DS4LightBar.forcedFlash[ind] = (byte)extras[6];
-                        //DS4LightBar.forcelight[ind] = true;
+                        MiColor color = new MiColor { red = (byte)extras[3], green = (byte)extras[4], blue = (byte)extras[5] };
+                        //MiLightBar.forcedColor[ind] = color;
+                        //MiLightBar.forcedFlash[ind] = (byte)extras[6];
+                        //MiLightBar.forcelight[ind] = true;
                     }
                     if (extras[7] == 1)
                     {
@@ -572,8 +572,8 @@ namespace MiWindows
             }
             else if (held[ind])
             {
-                //DS4LightBar.forcelight[ind] = false;
-                //DS4LightBar.forcedFlash[ind] = 0;                
+                //MiLightBar.forcelight[ind] = false;
+                //MiLightBar.forcedFlash[ind] = 0;                
                 Global.ButtonMouseSensitivity[ind] = oldmouse[ind];
                 oldmouse[ind] = -1;
                 setRumble(0, 0, ind);
@@ -697,7 +697,7 @@ namespace MiWindows
             return "nothing";
         }
 
-        public MiControls GetInputkeysDS4(int ind)
+        public MiControls GetInputkeysMi(int ind)
         {
             MiState cState = CurrentState[ind];
             MiStateExposed eState = ExposedState[ind];
@@ -831,11 +831,11 @@ namespace MiWindows
                     MiControllers[deviceNum].setRumble((byte)lightBoosted, (byte)heavyBoosted);
         }
 
-        public MiState getDS4State(int ind)
+        public MiState getMiState(int ind)
         {
             return CurrentState[ind];
         }
-        public MiState getDS4StateMapped(int ind)
+        public MiState getMiStateMapped(int ind)
         {
             return MappedState[ind];
         }        

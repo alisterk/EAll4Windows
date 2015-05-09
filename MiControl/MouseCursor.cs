@@ -45,7 +45,7 @@ namespace MiWindows
             }
             else if (Global.TouchpadJitterCompensation[deviceNumber])
             {
-                // Often the DS4's internal jitter compensation kicks in and starts hiding changes, ironically creating jitter...
+                // Often the Mi's internal jitter compensation kicks in and starts hiding changes, ironically creating jitter...
                 deltaX = arg.touches[0].deltaX;
                 deltaY = arg.touches[0].deltaY;
                 // allow only very fine, slow motions, when changing direction, even from neutral

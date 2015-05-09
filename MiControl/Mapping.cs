@@ -63,7 +63,7 @@ namespace MiWindows
         //actions
         public static int[] fadetimer = { 0, 0, 0, 0 };
         public static int[] prevFadetimer = { 0, 0, 0, 0 };
-        public static DS4Color[] lastColor = new DS4Color[4];
+        public static MiColor[] lastColor = new MiColor[4];
         public static bool[,] actionDone = new bool[4, 50];
         public static SpecialAction[] untriggeraction = new SpecialAction[4];
         public static DateTime[] nowAction = { DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue };
@@ -308,7 +308,7 @@ namespace MiWindows
             }
         }
 
-        public static int DS4ControltoInt(MiControls ctrl)
+        public static int MiControltoInt(MiControls ctrl)
         {
             switch (ctrl)
             {
@@ -458,7 +458,7 @@ namespace MiWindows
         }
 
         /// <summary>
-        /// Map DS4 Buttons/Axes to other DS4 Buttons/Axes (largely the same as Xinput ones) and to keyboard and mouse buttons.
+        /// Map Mi Buttons/Axes to other Mi Buttons/Axes (largely the same as Xinput ones) and to keyboard and mouse buttons.
         /// </summary>
         public static void MapCustom(int device, MiState cState, MiState MappedState, MiStateExposed eState, Mouse tp, ControlService ctrl)
         {
@@ -516,7 +516,7 @@ namespace MiWindows
                     Global.getShiftCustomKey(device, customKey.Key) == 0 &&
                     Global.getShiftCustomButton(device, customKey.Key) == X360Controls.None))
                 {
-                    DS4KeyType keyType = Global.getCustomKeyType(device, customKey.Key);
+                    MiKeyType keyType = Global.getCustomKeyType(device, customKey.Key);
                     if (getBoolMapping(customKey.Key, cState, eState, tp))
                     {
                         resetToDefaultValue(customKey.Key, MappedState);
@@ -535,18 +535,18 @@ namespace MiWindows
                     Global.getShiftCustomKey(device, customKey.Key) == 0 &&
                     Global.getShiftCustomButton(device, customKey.Key) == X360Controls.None))
                 {
-                    DS4KeyType keyType = Global.getCustomKeyType(device, customKey.Key);
+                    MiKeyType keyType = Global.getCustomKeyType(device, customKey.Key);
                     if (getBoolMapping(customKey.Key, cState, eState, tp))
                     {
                         resetToDefaultValue(customKey.Key, MappedState);
                         SyntheticState.KeyPresses kp;
                         if (!deviceState.keyPresses.TryGetValue(customKey.Value, out kp))
                             deviceState.keyPresses[customKey.Value] = kp = new SyntheticState.KeyPresses();
-                        if (keyType.HasFlag(DS4KeyType.ScanCode))
+                        if (keyType.HasFlag(MiKeyType.ScanCode))
                             kp.current.scanCodeCount++;
                         else
                             kp.current.vkCount++;
-                        if (keyType.HasFlag(DS4KeyType.Toggle))
+                        if (keyType.HasFlag(MiKeyType.Toggle))
                         {
                             if (!pressedonce[customKey.Value])
                             {
@@ -562,8 +562,8 @@ namespace MiWindows
                 }
             }
 
-            //Dictionary<DS4Controls, X360Controls> customButtons = Global.getCustomButtons(device);
-            //foreach (KeyValuePair<DS4Controls, X360Controls> customButton in customButtons)
+            //Dictionary<MiControls, X360Controls> customButtons = Global.getCustomButtons(device);
+            //foreach (KeyValuePair<MiControls, X360Controls> customButton in customButtons)
             List<MiControls> A = new List<MiControls>();
             List<MiControls> B = new List<MiControls>();
             List<MiControls> X = new List<MiControls>();
@@ -596,7 +596,7 @@ namespace MiWindows
                     Global.getShiftCustomKey(device, customButton.Key) == 0 &&
                     Global.getShiftCustomButton(device, customButton.Key) == X360Controls.None))
                 {
-                    DS4KeyType keyType = Global.getCustomKeyType(device, customButton.Key);
+                    MiKeyType keyType = Global.getCustomKeyType(device, customButton.Key);
                     int keyvalue = 0;
                     switch (customButton.Value)
                     {
@@ -606,7 +606,7 @@ namespace MiWindows
                         case X360Controls.FourthMouse: keyvalue = 259; break;
                         case X360Controls.FifthMouse: keyvalue = 260; break;
                     }
-                    if (keyType.HasFlag(DS4KeyType.Toggle))
+                    if (keyType.HasFlag(MiKeyType.Toggle))
                     {
                         if (getBoolMapping(customButton.Key, cState, eState, tp))
                         {
@@ -873,7 +873,7 @@ namespace MiWindows
             SyntheticState deviceState = Mapping.deviceState[device];
             foreach (KeyValuePair<MiControls, string> customKey in Global.getShiftCustomMacros(device)) //with delays
             {
-                DS4KeyType keyType = Global.getShiftCustomKeyType(device, customKey.Key);
+                MiKeyType keyType = Global.getShiftCustomKeyType(device, customKey.Key);
                 if (getBoolMapping(customKey.Key, cState, eState, tp))
                 {
                     resetToDefaultValue(customKey.Key, MappedState);
@@ -886,18 +886,18 @@ namespace MiWindows
             }
             foreach (KeyValuePair<MiControls, ushort> customKey in Global.getShiftCustomKeys(device))
             {
-                DS4KeyType keyType = Global.getShiftCustomKeyType(device, customKey.Key);
+                MiKeyType keyType = Global.getShiftCustomKeyType(device, customKey.Key);
                 if (getBoolMapping(customKey.Key, cState, eState, tp))
                 {
                     resetToDefaultValue(customKey.Key, MappedState);
                     SyntheticState.KeyPresses kp;
                     if (!deviceState.keyPresses.TryGetValue(customKey.Value, out kp))
                         deviceState.keyPresses[customKey.Value] = kp = new SyntheticState.KeyPresses();
-                    if (keyType.HasFlag(DS4KeyType.ScanCode))
+                    if (keyType.HasFlag(MiKeyType.ScanCode))
                         kp.current.scanCodeCount++;
                     else
                         kp.current.vkCount++;
-                    if (keyType.HasFlag(DS4KeyType.Toggle))
+                    if (keyType.HasFlag(MiKeyType.Toggle))
                     {
                         if (!pressedonce[customKey.Value])
                         {
@@ -920,7 +920,7 @@ namespace MiWindows
             int MouseDeltaY = 0;
 
             Dictionary<MiControls, X360Controls> customButtons = Global.getShiftCustomButtons(device);
-            //foreach (KeyValuePair<DS4Controls, X360Controls> customButton in customButtons)
+            //foreach (KeyValuePair<MiControls, X360Controls> customButton in customButtons)
             // resetToDefaultValue(customButton.Key, MappedState); // erase default mappings for things that are remapped
 
             List<MiControls> A = new List<MiControls>();
@@ -951,7 +951,7 @@ namespace MiWindows
             foreach (KeyValuePair<MiControls, X360Controls> customButton in customButtons)
             {
                 resetToDefaultValue(customButton.Key, MappedState); // erase default mappings for things that are remapped
-                DS4KeyType keyType = Global.getShiftCustomKeyType(device, customButton.Key);
+                MiKeyType keyType = Global.getShiftCustomKeyType(device, customButton.Key);
                 int keyvalue = 0;
                 switch (customButton.Value)
                 {
@@ -961,7 +961,7 @@ namespace MiWindows
                     case X360Controls.FourthMouse: keyvalue = 259; break;
                     case X360Controls.FifthMouse: keyvalue = 260; break;
                 }
-                if (keyType.HasFlag(DS4KeyType.Toggle))
+                if (keyType.HasFlag(MiKeyType.Toggle))
                 {
                     if (getBoolMapping(customButton.Key, cState, eState, tp))
                     {
@@ -1210,7 +1210,7 @@ namespace MiWindows
         {
             foreach (string actionname in Global.ProfileActions[device])
             {
-                //DS4KeyType keyType = Global.getShiftCustomKeyType(device, customKey.Key);
+                //MiKeyType keyType = Global.getShiftCustomKeyType(device, customKey.Key);
                 SpecialAction action = Global.GetAction(actionname);
                 int index = Global.GetActionIndexOf(actionname);
                 double time;
@@ -1345,7 +1345,7 @@ namespace MiWindows
                     {
                         if (!actionDone[device, index])
                         {
-                            DS4KeyType keyType = action.keyType;
+                            MiKeyType keyType = action.keyType;
                             actionDone[device, index] = true;
                             foreach (MiControls dc in action.trigger)
                                 resetToDefaultValue(dc, MappedState);
@@ -1367,13 +1367,13 @@ namespace MiWindows
                                 SyntheticState.KeyPresses kp;
                                 if (!deviceState[device].keyPresses.TryGetValue(key, out kp))
                                     deviceState[device].keyPresses[key] = kp = new SyntheticState.KeyPresses();
-                                if (action.keyType.HasFlag(DS4KeyType.ScanCode))
+                                if (action.keyType.HasFlag(MiKeyType.ScanCode))
                                     kp.current.scanCodeCount++;
                                 else
                                     kp.current.vkCount++;
                                 kp.current.repeatCount++;
                             }
-                            else if (action.keyType.HasFlag(DS4KeyType.ScanCode))
+                            else if (action.keyType.HasFlag(MiKeyType.ScanCode))
                                 InputMethods.performSCKeyPress(key);
                             else
                                 InputMethods.performKeyPress(key);
@@ -1387,7 +1387,7 @@ namespace MiWindows
                             untriggerindex[device] = -1;
                             ushort key;
                             ushort.TryParse(action.details, out key);
-                            if (action.keyType.HasFlag(DS4KeyType.ScanCode))
+                            if (action.keyType.HasFlag(MiKeyType.ScanCode))
                                 InputMethods.performSCKeyRelease(key);
                             else
                                 InputMethods.performKeyRelease(key);
@@ -1419,7 +1419,7 @@ namespace MiWindows
                     //    if (bool.Parse(dets[1]) && !actionDone[device, index])
                     //    {
                     //       Log.LogToTray("Controller " + (device + 1) + ": " +
-                    //           ctrl.getDS4Battery(device), true);
+                    //           ctrl.getMiBattery(device), true);
                     //    }
                     //    if (bool.Parse(dets[2]))
                     //    {
@@ -1427,13 +1427,13 @@ namespace MiWindows
                     //        if (!actionDone[device, index])
                     //        {
                     //            lastColor[device] = d.LightBarColor;
-                    //            //DS4LightBar.forcelight[device] = true;
+                    //            //MiLightBar.forcelight[device] = true;
                     //        }
-                    //        DS4Color empty = new DS4Color(byte.Parse(dets[3]), byte.Parse(dets[4]), byte.Parse(dets[5]));
-                    //        DS4Color full = new DS4Color(byte.Parse(dets[6]), byte.Parse(dets[7]), byte.Parse(dets[8]));
-                    //        DS4Color trans = Global.getTransitionedColor(empty, full, d.Battery);
+                    //        MiColor empty = new MiColor(byte.Parse(dets[3]), byte.Parse(dets[4]), byte.Parse(dets[5]));
+                    //        MiColor full = new MiColor(byte.Parse(dets[6]), byte.Parse(dets[7]), byte.Parse(dets[8]));
+                    //        MiColor trans = Global.getTransitionedColor(empty, full, d.Battery);
                     //        //if (fadetimer[device] < 100)
-                    //        //DS4LightBar.forcedColor[device] = Global.getTransitionedColor(lastColor[device], trans, fadetimer[device] += 2);
+                    //        //MiLightBar.forcedColor[device] = Global.getTransitionedColor(lastColor[device], trans, fadetimer[device] += 2);
                     //    }
                     //    actionDone[device, index] = true;
                     //}
@@ -1449,7 +1449,7 @@ namespace MiWindows
                     //        }
                     //        else
                     //            prevFadetimer[device] = fadetimer[device];*/
-                    //        //DS4LightBar.forcelight[device] = false;
+                    //        //MiLightBar.forcelight[device] = false;
                     //        actionDone[device, index] = false;
                     //    }
                     //}
@@ -1499,7 +1499,7 @@ namespace MiWindows
             }
         }
 
-        private static async void PlayMacro(int device, bool[] macrocontrol, string macro, MiControls control, DS4KeyType keyType)
+        private static async void PlayMacro(int device, bool[] macrocontrol, string macro, MiControls control, MiKeyType keyType)
         {
             if (macro.StartsWith("164/9/9/164") || macro.StartsWith("18/9/9/18"))
             {
@@ -1514,7 +1514,7 @@ namespace MiWindows
                 }
                 AltTabSwapping(wait, device);
                 if (control != MiControls.None)
-                    macrodone[DS4ControltoInt(control)] = true;
+                    macrodone[MiControltoInt(control)] = true;
             }
             else
             {
@@ -1533,10 +1533,10 @@ namespace MiWindows
                 for (int i = 0; i < keys.Length; i++)
                     keys[i] = ushort.Parse(skeys[i]);
                 bool[] keydown = new bool[286];
-                if (control == MiControls.None || !macrodone[DS4ControltoInt(control)])
+                if (control == MiControls.None || !macrodone[MiControltoInt(control)])
                 {
                     if (control != MiControls.None)
-                        macrodone[DS4ControltoInt(control)] = true;
+                        macrodone[MiControltoInt(control)] = true;
                     foreach (int i in keys)
                     {
                         if (i >= 300) //ints over 300 used to delay
@@ -1573,7 +1573,7 @@ namespace MiWindows
                             else if (i == 283) macroControl[22] = true;
                             else if (i == 284) macroControl[23] = true;
                             else if (i == 285) macroControl[24] = true;
-                            else if (keyType.HasFlag(DS4KeyType.ScanCode))
+                            else if (keyType.HasFlag(MiKeyType.ScanCode))
                                 InputMethods.performSCKeyPress((ushort)i);
                             else
                                 InputMethods.performKeyPress((ushort)i);
@@ -1611,7 +1611,7 @@ namespace MiWindows
                             else if (i == 283) macroControl[22] = false;
                             else if (i == 284) macroControl[23] = false;
                             else if (i == 285) macroControl[24] = false;
-                            else if (keyType.HasFlag(DS4KeyType.ScanCode))
+                            else if (keyType.HasFlag(MiKeyType.ScanCode))
                                 InputMethods.performSCKeyRelease((ushort)i);
                             else
                                 InputMethods.performKeyRelease((ushort)i);
@@ -1651,16 +1651,16 @@ namespace MiWindows
                             else if (i == 283) macroControl[22] = false;
                             else if (i == 284) macroControl[23] = false;
                             else if (i == 285) macroControl[24] = false;
-                            else if (keyType.HasFlag(DS4KeyType.ScanCode))
+                            else if (keyType.HasFlag(MiKeyType.ScanCode))
                                 InputMethods.performSCKeyRelease(i);
                             else
                                 InputMethods.performKeyRelease(i);
                     }
-                    if (keyType.HasFlag(DS4KeyType.HoldMacro))
+                    if (keyType.HasFlag(MiKeyType.HoldMacro))
                     {
                         await Task.Delay(50);
                         if (control != MiControls.None)
-                            macrodone[DS4ControltoInt(control)] = false;
+                            macrodone[MiControltoInt(control)] = false;
                     }
                 }
             }
@@ -1671,7 +1671,7 @@ namespace MiWindows
             if ((macro.StartsWith("164/9/9/164") || macro.StartsWith("18/9/9/18")) && !altTabDone)
                 AltTabSwappingRelease();
             if (control != MiControls.None)
-                macrodone[DS4ControltoInt(control)] = false;
+                macrodone[MiControltoInt(control)] = false;
         }
         private static void AltTabSwapping(int wait, int device)
         {
@@ -1716,7 +1716,7 @@ namespace MiWindows
 
         private static int getMouseMapping(int device, MiControls control, MiState cState, MiStateExposed eState, int mnum)
         {
-            int controlnum = DS4ControltoInt(control);
+            int controlnum = MiControltoInt(control);
             double SXD = Global.SXDeadzone[device];
             double SZD = Global.SZDeadzone[device];
             int deadzoneL = 3;

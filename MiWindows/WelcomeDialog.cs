@@ -23,7 +23,7 @@ namespace MiWindows
         public WelcomeDialog()
         {
             InitializeComponent();
-            Icon = Properties.Resources.DS4;
+            Icon = Properties.Resources.Mi;
             
         }
 
@@ -42,7 +42,7 @@ namespace MiWindows
             WebClient wb = new WebClient();
             if (!driverinstalling)
             {
-                wb.DownloadFileAsync(new Uri("http://ds4windows.com/Files/Virtual Bus Driver.zip"), exepath + "\\VBus.zip");
+                wb.DownloadFileAsync(new Uri("http://miwindows.com/Files/Virtual Bus Driver.zip"), exepath + "\\VBus.zip");
                 wb.DownloadProgressChanged += wb_DownloadProgressChanged;
                 wb.DownloadFileCompleted += wb_DownloadFileCompleted;
                 driverinstalling = true;

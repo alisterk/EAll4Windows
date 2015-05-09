@@ -201,7 +201,7 @@ namespace MiWindows
             synthesizeMouseButtons();
         }
 
-        public MiState getDS4State()
+        public MiState getMiState()
         {
             return s;
         }

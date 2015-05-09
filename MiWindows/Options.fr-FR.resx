@@ -751,7 +751,7 @@ avec le profil</value>
     <value>247, 41</value>
   </data>
   <data name="lbControlTip.Text" xml:space="preserve">
-    <value>Cliquer sur une touche de la manette pour changer l'action. Utiliser une DS4 pour paramétrer les touches</value>
+    <value>Cliquer sur une touche de la manette pour changer l'action. Utiliser une Mi pour paramétrer les touches</value>
   </data>
   <data name="tPControls.Text" xml:space="preserve">
     <value>Commandes</value>

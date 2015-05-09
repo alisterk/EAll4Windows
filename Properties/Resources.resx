@@ -127,8 +127,8 @@
   <data name="rainbowC" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\rainbowC.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="DS4_Controller" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DS4 Controller.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Mi_Controller" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Mi Controller.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LeftTouch" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\LeftTouch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -296,13 +296,13 @@
     <value>Controller *Mac address* was removed or lost connection</value>
   </data>
   <data name="CopyComplete" xml:space="preserve">
-    <value>Copy complete, please relaunch DS4Windows and remove settings from Program Directory</value>
+    <value>Copy complete, please relaunch MiWindows and remove settings from Program Directory</value>
   </data>
   <data name="CopyFullColor" xml:space="preserve">
     <value>Click to copy the full color</value>
   </data>
-  <data name="CouldNotOpenDS4" xml:space="preserve">
-    <value>Warning: Could not open DS4 *Mac address* exclusively.</value>
+  <data name="CouldNotOpenMi" xml:space="preserve">
+    <value>Warning: Could not open Mi *Mac address* exclusively.</value>
   </data>
   <data name="Day" xml:space="preserve">
     <value>day</value>
@@ -325,11 +325,11 @@
   <data name="DownloadVersion" xml:space="preserve">
     <value>Download Version *number* now?</value>
   </data>
-  <data name="DS4Update" xml:space="preserve">
-    <value>DS4Windows Update Available!</value>
+  <data name="MiUpdate" xml:space="preserve">
+    <value>MiWindows Update Available!</value>
   </data>
-  <data name="DS4WindowsCannotEditHere" xml:space="preserve">
-    <value>DS4Windows cannot edit settings here, This will now close</value>
+  <data name="MiWindowsCannotEditHere" xml:space="preserve">
+    <value>MiWindows cannot edit settings here, This will now close</value>
   </data>
   <data name="EditProfile" xml:space="preserve">
     <value>Edit</value>
@@ -361,8 +361,8 @@
   <data name="Hours" xml:space="preserve">
     <value>hours</value>
   </data>
-  <data name="IfRemovingDS4Windows" xml:space="preserve">
-    <value>If removing DS4Windows, You can delete the settings following the profile folder link</value>
+  <data name="IfRemovingMiWindows" xml:space="preserve">
+    <value>If removing MiWindows, You can delete the settings following the profile folder link</value>
   </data>
   <data name="InstallComplete" xml:space="preserve">
     <value>Install Complete</value>
@@ -413,7 +413,7 @@
     <value>Profile Folder Moved to program folder</value>
   </data>
   <data name="QuitOtherPrograms" xml:space="preserve">
-    <value>You must quit other applications like Steam, Uplay before activating the 'Hide DS4 Controller' option."</value>
+    <value>You must quit other applications like Steam, Uplay before activating the 'Hide Mi Controller' option."</value>
   </data>
   <data name="SaveRecordedMacro" xml:space="preserve">
     <value>Save Recorded Macro?</value>
@@ -430,11 +430,11 @@
   <data name="StartText" xml:space="preserve">
     <value>Start</value>
   </data>
-  <data name="StoppedDS4Tool" xml:space="preserve">
-    <value>Stopped DS4 Tool</value>
+  <data name="StoppedMiTool" xml:space="preserve">
+    <value>Stopped Mi Tool</value>
   </data>
-  <data name="StoppingDS4" xml:space="preserve">
-    <value>Stopping DS4 Controllers</value>
+  <data name="StoppingMi" xml:space="preserve">
+    <value>Stopping Mi Controllers</value>
   </data>
   <data name="StoppingX360" xml:space="preserve">
     <value>Stopping X360 Controllers</value>
@@ -509,13 +509,13 @@
     <value>Record</value>
   </data>
   <data name="Step1" xml:space="preserve">
-    <value>Step 1: Install the DS4 Driver</value>
+    <value>Step 1: Install the Mi Driver</value>
   </data>
   <data name="UpText" xml:space="preserve">
     <value>Up</value>
   </data>
   <data name="DinputOnly" xml:space="preserve">
-    <value>Turn off X360 input and only use the DS4's native input, hide ds4 must be off (Wired Only)</value>
+    <value>Turn off X360 input and only use the Mi's native input, hide mi must be off (Wired Only)</value>
   </data>
   <data name="InstallDriver" xml:space="preserve">
     <value>Install Drivers here</value>
@@ -535,11 +535,11 @@
   <data name="Installing" xml:space="preserve">
     <value>Installing...</value>
   </data>
-  <data name="DS4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DS4.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Mi" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Mi.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="DS4W" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DS4W.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="MiW" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MiW.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="InstallFailed" xml:space="preserve">
     <value>Install Failed, Please Retry</value>
@@ -575,7 +575,7 @@
     <value>Test</value>
   </data>
   <data name="CannotMoveFiles" xml:space="preserve">
-    <value>Cannot move files to new location, Please rename the DS4Tool folder to "DS4Windows"</value>
+    <value>Cannot move files to new location, Please rename the MiTool folder to "MiWindows"</value>
   </data>
   <data name="XinputPorts" xml:space="preserve">
     <value>Use higher ports if you get conflicts in other emulating X360 programs, such as SCP's tool</value>
@@ -596,7 +596,7 @@
     <value>Set Unload Trigger</value>
   </data>
   <data name="CloseMinimize" xml:space="preserve">
-    <value>Close DS4Windows via the notification icon</value>
+    <value>Close MiWindows via the notification icon</value>
   </data>
   <data name="RightClickPresets" xml:space="preserve">
     <value>Right Click to set presets for a set of controls</value>
@@ -664,8 +664,8 @@
   <data name="ALocactionNeeded" xml:space="preserve">
     <value>A location must be picked to continue.</value>
   </data>
-  <data name="CloseDS4W" xml:space="preserve">
-    <value>Close DS4Windows?</value>
+  <data name="CloseMiW" xml:space="preserve">
+    <value>Close MiWindows?</value>
   </data>
   <data name="OtherFileLocation" xml:space="preserve">
     <value>, other location files will be deleted</value>
@@ -673,8 +673,8 @@
   <data name="EE" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\EE.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="StoppedDS4Windows" xml:space="preserve">
-    <value>Stopped DS4Windows</value>
+  <data name="StoppedMiWindows" xml:space="preserve">
+    <value>Stopped MiWindows</value>
   </data>
   <data name="LatencyNotOverTen" xml:space="preserve">
     <value>Controller *number*'s latency now under 10ms</value>

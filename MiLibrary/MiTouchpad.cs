@@ -47,7 +47,7 @@ namespace MiWindows
         }
     }
 
-    public class DS4Touchpad
+    public class MiTouchpad
     {
         //public event EventHandler<TouchpadEventArgs> TouchesBegan = null; // finger one or two landed (or both, or one then two, or two then one; any touches[] count increase)
         //public event EventHandler<TouchpadEventArgs> TouchesMoved = null; // deltaX/deltaY are set because one or both fingers were already down on a prior sensor reading

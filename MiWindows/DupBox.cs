@@ -14,8 +14,8 @@ namespace MiWindows
     public partial class DupBox : Form
     {
         public string oldfilename;
-        DS4Form yes;
-        public DupBox(string name, DS4Form mainwindow)
+        MiForm yes;
+        public DupBox(string name, MiForm mainwindow)
         {
             InitializeComponent();
             oldfilename = name;

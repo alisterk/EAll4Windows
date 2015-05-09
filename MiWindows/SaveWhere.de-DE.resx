@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="label4.Text" xml:space="preserve">
-    <value>Für die, die eine Standardinstallation bevorzugen. Einstellungen werden unter %appdata%/ds4tool gespeichert.</value>
+    <value>Für die, die eine Standardinstallation bevorzugen. Einstellungen werden unter %appdata%/mitool gespeichert.</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
     <value>Für die, die ein portables Programm bevorzugen. Beachte: Diese Option funktioniert nicht in einem Administratorverzeichnis ohne Benutzerkontensteuerung.</value>

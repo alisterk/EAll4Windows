@@ -168,13 +168,13 @@
     <value>315, 446</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Bienvenue à DS4Windows</value>
+    <value>Bienvenue à MiWindows</value>
   </data>
   <data name="bnFinish.Text" xml:space="preserve">
     <value>Fini</value>
   </data>
   <data name="bnStep1.Text" xml:space="preserve">
-    <value>Étape 1: Installez les pilotes DS4</value>
+    <value>Étape 1: Installez les pilotes Mi</value>
   </data>
   <data name="button2.Text" xml:space="preserve">
     <value>Étape 2: Si vous êtes sous Windows 7 ou antérieur, installez les pilotes 360</value>

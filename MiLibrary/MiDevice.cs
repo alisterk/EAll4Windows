@@ -15,18 +15,18 @@ using System.IO;
 using System.Collections;
 namespace MiWindows
 {
-    public struct DS4Color
+    public struct MiColor
     {
         public byte red;
         public byte green;
         public byte blue;
-        public DS4Color(System.Drawing.Color c)
+        public MiColor(System.Drawing.Color c)
         {
             red = c.R;
             green = c.G;
             blue = c.B;
         }
-        public DS4Color(byte r, byte g, byte b)
+        public MiColor(byte r, byte g, byte b)
         {
             red = r;
             green = g;
@@ -34,9 +34,9 @@ namespace MiWindows
         }
         public override bool Equals(object obj)
         {
-            if (obj is DS4Color)
+            if (obj is MiColor)
             {
-                DS4Color dsc = ((DS4Color)obj);
+                MiColor dsc = ((MiColor)obj);
                 return (this.red == dsc.red && this.green == dsc.green && this.blue == dsc.blue);
             }
             else
@@ -60,9 +60,9 @@ namespace MiWindows
      * The haptics engine uses a stack of these states representing the light bar and rumble motor settings.
      * It (will) handle composing them and the details of output report management.
      */
-    public struct DS4HapticState
+    public struct MiHapticState
     {
-        public DS4Color LightBarColor;
+        public MiColor LightBarColor;
         public bool LightBarExplicitlyOff;
         public byte LightBarFlashDurationOn, LightBarFlashDurationOff;
         public byte RumbleMotorStrengthLeftHeavySlow, RumbleMotorStrengthRightLightFast;
@@ -93,12 +93,12 @@ namespace MiWindows
         private byte[] btInputReport = null;
         private byte[] outputReport;
         //private byte[] outputReportBuffer, outputReport;
-        //private readonly DS4Touchpad touchpad = null;
+        //private readonly MiTouchpad touchpad = null;
         private byte rightLightFastRumble;
         private byte leftHeavySlowRumble;
-        //private DS4Color ligtBarColor;
+        //private MiColor ligtBarColor;
         //private byte ledFlashOn, ledFlashOff;
-        private Thread ds4Input, ds4Output;
+        private Thread miInput, miOutput;
         //private int battery;
         public DateTime lastActive = DateTime.UtcNow;
         public DateTime firstActive = DateTime.UtcNow;
@@ -143,7 +143,7 @@ namespace MiWindows
             }
         }
 
-        //public DS4Color LightBarColor
+        //public MiColor LightBarColor
         //{
         //    get { return ligtBarColor; }
         //    set
@@ -179,7 +179,7 @@ namespace MiWindows
         //    }
         //}
 
-        //public DS4Touchpad Touchpad { get { return touchpad; } }
+        //public MiTouchpad Touchpad { get { return touchpad; } }
 
         public static ConnectionType HidConnectionType(HidDevice hidDevice)
         {
@@ -205,34 +205,34 @@ namespace MiWindows
                 //outputReport = new byte[BT_OUTPUT_REPORT_LENGTH];
                 //outputReportBuffer = new byte[BT_OUTPUT_REPORT_LENGTH];
             //}
-            //touchpad = new DS4Touchpad();
+            //touchpad = new MiTouchpad();
         }
 
         public void StartUpdate()
         {
-            if (ds4Input == null)
+            if (miInput == null)
             {
                 Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> start");
                 //sendOutputReport(true); // initialize the output report
-                //ds4Output = new Thread(performDs4Output);
-                //ds4Output.Name = "DS4 Output thread: " + Mac;
-                //ds4Output.Start();
-                ds4Input = new Thread(performDs4Input);
-                ds4Input.Name = "DS4 Input thread: " + Mac;
-                ds4Input.Start();
+                //miOutput = new Thread(performMiOutput);
+                //miOutput.Name = "Mi Output thread: " + Mac;
+                //miOutput.Start();
+                miInput = new Thread(performMiInput);
+                miInput.Name = "Mi Input thread: " + Mac;
+                miInput.Start();
             }
             else
-                Console.WriteLine("Thread already running for DS4: " + Mac);
+                Console.WriteLine("Thread already running for Mi: " + Mac);
         }
 
         public void StopUpdate()
         {
-            if (ds4Input.ThreadState != System.Threading.ThreadState.Stopped || ds4Input.ThreadState != System.Threading.ThreadState.Aborted)
+            if (miInput.ThreadState != System.Threading.ThreadState.Stopped || miInput.ThreadState != System.Threading.ThreadState.Aborted)
             {
                 try
                 {
-                    ds4Input.Abort();
-                    ds4Input.Join();
+                    miInput.Abort();
+                    miInput.Join();
                 }
                 catch (Exception e)
                 {
@@ -244,12 +244,12 @@ namespace MiWindows
 
         private void StopOutputUpdate()
         {
-            if (ds4Output.ThreadState != System.Threading.ThreadState.Stopped || ds4Output.ThreadState != System.Threading.ThreadState.Aborted)
+            if (miOutput.ThreadState != System.Threading.ThreadState.Stopped || miOutput.ThreadState != System.Threading.ThreadState.Aborted)
             {
                 try
                 {
-                    ds4Output.Abort();
-                    ds4Output.Join();
+                    miOutput.Abort();
+                    miOutput.Join();
                 }
                 catch (Exception e)
                 {
@@ -270,7 +270,7 @@ namespace MiWindows
             }
         }
 
-        private void performDs4Output()
+        private void performMiOutput()
         {
             lock (outputReport)
             {
@@ -280,8 +280,8 @@ namespace MiWindows
                     if (writeOutput())
                     {
                         lastError = 0;
-                        if (testRumble.IsRumbleSet()) // repeat test rumbles periodically; rumble has auto-shut-off in the DS4 firmware
-                            Monitor.Wait(outputReport, 10000); // DS4 firmware stops it after 5 seconds, so let the motors rest for that long, too.
+                        if (testRumble.IsRumbleSet()) // repeat test rumbles periodically; rumble has auto-shut-off in the Mi firmware
+                            Monitor.Wait(outputReport, 10000); // Mi firmware stops it after 5 seconds, so let the motors rest for that long, too.
                         else
                             Monitor.Wait(outputReport);
                     }
@@ -307,7 +307,7 @@ namespace MiWindows
         public double Latency = 0;
         bool warn;
         public string error;
-        private void performDs4Input()
+        private void performMiInput()
         {
             firstActive = DateTime.UtcNow;
             System.Timers.Timer readTimeout = new System.Timers.Timer(); // Await 30 seconds for the initial packet, then 3 seconds thereafter.
@@ -434,8 +434,8 @@ namespace MiWindows
                 var back = ((byte)inputReport[2] & Convert.ToByte(4)) != 0;
                 cState.Menu = menu;
                 cState.Back = back;
-                cState.L1 = ((byte)inputReport[1] & Convert.ToByte(128)) != 0;
-                cState.R1 = ((byte)inputReport[1] & Convert.ToByte(64)) != 0;
+                cState.L1 = ((byte)inputReport[1] & Convert.ToByte(64)) != 0;
+                cState.R1 = ((byte)inputReport[1] & Convert.ToByte(128)) != 0;
 
                 cState.HomeSimulated = menu && leftStick;
                 //cState.TouchButton = (inputReport[7] & (1 << 2 - 1)) != 0;
@@ -458,18 +458,18 @@ namespace MiWindows
                 //    }
                 //}
                 //catch { currerror = "Index out of bounds: battery"; }
-                // XXX DS4State mapping needs fixup, turn touches into an array[4] of structs.  And include the touchpad details there instead.
+                // XXX MiState mapping needs fixup, turn touches into an array[4] of structs.  And include the touchpad details there instead.
                 //try
                 //{
-                //    for (int touches = inputReport[-1 + DS4Touchpad.TOUCHPAD_DATA_OFFSET - 1], touchOffset = 0; touches > 0; touches--, touchOffset += 9)
+                //    for (int touches = inputReport[-1 + MiTouchpad.TOUCHPAD_DATA_OFFSET - 1], touchOffset = 0; touches > 0; touches--, touchOffset += 9)
                 //    {
-                //        cState.TouchPacketCounter = inputReport[-1 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset];
-                //        cState.Touch1 = (inputReport[0 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] >> 7) != 0 ? false : true; // >= 1 touch detected
-                //        cState.Touch1Identifier = (byte)(inputReport[0 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] & 0x7f);
-                //        cState.Touch2 = (inputReport[4 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] >> 7) != 0 ? false : true; // 2 touches detected
-                //        cState.Touch2Identifier = (byte)(inputReport[4 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] & 0x7f);
-                //        cState.TouchLeft = (inputReport[1 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] + ((inputReport[2 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] & 0xF) * 255) >= 1920 * 2 / 5) ? false : true;
-                //        cState.TouchRight = (inputReport[1 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] + ((inputReport[2 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] & 0xF) * 255) < 1920 * 2 / 5) ? false : true;
+                //        cState.TouchPacketCounter = inputReport[-1 + MiTouchpad.TOUCHPAD_DATA_OFFSET + touchOffset];
+                //        cState.Touch1 = (inputReport[0 + MiTouchpad.TOUCHPAD_DATA_OFFSET + touchOffset] >> 7) != 0 ? false : true; // >= 1 touch detected
+                //        cState.Touch1Identifier = (byte)(inputReport[0 + MiTouchpad.TOUCHPAD_DATA_OFFSET + touchOffset] & 0x7f);
+                //        cState.Touch2 = (inputReport[4 + MiTouchpad.TOUCHPAD_DATA_OFFSET + touchOffset] >> 7) != 0 ? false : true; // 2 touches detected
+                //        cState.Touch2Identifier = (byte)(inputReport[4 + MiTouchpad.TOUCHPAD_DATA_OFFSET + touchOffset] & 0x7f);
+                //        cState.TouchLeft = (inputReport[1 + MiTouchpad.TOUCHPAD_DATA_OFFSET + touchOffset] + ((inputReport[2 + MiTouchpad.TOUCHPAD_DATA_OFFSET + touchOffset] & 0xF) * 255) >= 1920 * 2 / 5) ? false : true;
+                //        cState.TouchRight = (inputReport[1 + MiTouchpad.TOUCHPAD_DATA_OFFSET + touchOffset] + ((inputReport[2 + MiTouchpad.TOUCHPAD_DATA_OFFSET + touchOffset] & 0xF) * 255) < 1920 * 2 / 5) ? false : true;
                 //        // Even when idling there is still a touch packet indicating no touch 1 or 2
                 //        touchpad.handleTouchpad(inputReport, cState, touchOffset);
                 //    }
@@ -556,8 +556,8 @@ namespace MiWindows
         //                if (!writeOutput())
         //                {
         //                    Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> encountered synchronous write failure: " + Marshal.GetLastWin32Error());
-        //                    ds4Output.Abort();
-        //                    ds4Output.Join();
+        //                    miOutput.Abort();
+        //                    miOutput.Join();
         //                }
         //            }
         //            catch
@@ -625,7 +625,7 @@ namespace MiWindows
             return false;
         }
 
-        private DS4HapticState testRumble = new DS4HapticState();
+        private MiHapticState testRumble = new MiHapticState();
         public void setRumble(byte rightLightFastMotor, byte leftHeavySlowMotor)
         {
             testRumble.RumbleMotorStrengthRightLightFast = rightLightFastMotor;
@@ -691,7 +691,7 @@ namespace MiWindows
             return true;
         }
 
-        //private DS4HapticState[] hapticState = new DS4HapticState[1];
+        //private MiHapticState[] hapticState = new MiHapticState[1];
         //private int hapticStackIndex = 0;
         //private void resetHapticState()
         //{
@@ -702,10 +702,10 @@ namespace MiWindows
         //private void setHapticState()
         //{
         //    int i = 0;
-        //    DS4Color lightBarColor = LightBarColor;
+        //    MiColor lightBarColor = LightBarColor;
         //    byte lightBarFlashDurationOn = LightBarOnDuration, lightBarFlashDurationOff = LightBarOffDuration;
         //    byte rumbleMotorStrengthLeftHeavySlow = LeftHeavySlowRumble, rumbleMotorStrengthRightLightFast = rightLightFastRumble;
-        //    foreach (DS4HapticState haptic in hapticState)
+        //    foreach (MiHapticState haptic in hapticState)
         //    {
         //        if (i++ == hapticStackIndex)
         //            break; // rest haven't been used this time
@@ -728,11 +728,11 @@ namespace MiWindows
         //    RightLightFastRumble = rumbleMotorStrengthRightLightFast;
         //}
 
-        //public void pushHapticState(DS4HapticState hs)
+        //public void pushHapticState(MiHapticState hs)
         //{
         //    if (hapticStackIndex == hapticState.Length)
         //    {
-        //        DS4HapticState[] newHaptics = new DS4HapticState[hapticState.Length + 1];
+        //        MiHapticState[] newHaptics = new MiHapticState[hapticState.Length + 1];
         //        Array.Copy(hapticState, newHaptics, hapticState.Length);
         //        hapticState = newHaptics;
         //    }

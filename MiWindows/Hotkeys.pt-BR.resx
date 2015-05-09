@@ -122,7 +122,7 @@
     <value>554, 19</value>
   </data>
   <data name="lbAbout.Text" xml:space="preserve">
-    <value>DS4Windows - Jays2Kings Construir (Versão</value>
+    <value>MiWindows - Jays2Kings Construir (Versão</value>
   </data>
   <data name="lLChangelog.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
@@ -155,7 +155,7 @@
     <value>523, 472</value>
   </data>
   <data name="lbHotkeys.Text" xml:space="preserve">
-    <value>Esconder Controle DS4: Esconde entrada regular do DS4 (DINPUT) de outros programas verifique se você está recebendo dupla entrada em jogos ou R2 pausa jogos 
+    <value>Esconder Controle Mi: Esconde entrada regular do Mi (DINPUT) de outros programas verifique se você está recebendo dupla entrada em jogos ou R2 pausa jogos 
 
 Clique esquerdo do touchpad: Toque Esquerdo
 

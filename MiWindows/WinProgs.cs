@@ -21,7 +21,7 @@ namespace MiWindows
     {
         ToolTip tp = new ToolTip();
         ComboBox[] cbs;
-        public DS4Form form;
+        public MiForm form;
         //C:\ProgramData\Microsoft\Windows\Start Menu\Programs
         string steamgamesdir, origingamesdir;
         protected String m_Profile = Global.appdatapath + "\\Auto Profiles.xml";
@@ -30,7 +30,7 @@ namespace MiWindows
         List<string> lodsf = new List<string>();
         bool appsloaded = false;
 
-        public WinProgs(string[] oc, DS4Form main)
+        public WinProgs(string[] oc, MiForm main)
         {
             InitializeComponent();
 

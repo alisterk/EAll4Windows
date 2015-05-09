@@ -6672,7 +6672,7 @@
   <data name="tabAutoProfiles.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="hideDS4CheckBox.ToolTip" xml:space="preserve">
+  <data name="hideMiCheckBox.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="cBSwipeProfiles.ToolTip" xml:space="preserve">

@@ -20,7 +20,7 @@ namespace MiWindows
         // whole system, including other users. But the application can not be brought
         // into view, of course. 
         private static String SingleAppComEventName = "{a52b5b20-d9ee-4f32-8518-307fa14aa0c6}";
-        static Mutex mutex = new Mutex(true, "{FI329DM2-DS4W-J2K2-HYES-92H21B3WJARG}");
+        static Mutex mutex = new Mutex(true, "{FI329DM2-MiW-J2K2-HYES-92H21B3WJARG}");
         private static BackgroundWorker singleAppComThread = null;
         private static EventWaitHandle threadComEvent = null;
         public static ControlService rootHub;
@@ -67,7 +67,7 @@ namespace MiWindows
                 rootHub = new ControlService();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new DS4Form(args));
+                Application.Run(new MiForm(args));
                 mutex.ReleaseMutex();
             }
 
@@ -120,7 +120,7 @@ namespace MiWindows
         {
             if (frm != null)
             {
-                if (frm is DS4Form)
+                if (frm is MiForm)
                 {
                     // display the form and bring to foreground.
                     frm.WindowState = FormWindowState.Normal;

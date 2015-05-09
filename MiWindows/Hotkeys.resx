@@ -190,7 +190,7 @@
     <value>0</value>
   </data>
   <data name="lbAbout.Text" xml:space="preserve">
-    <value>DS4Windows - Jays2Kings Build (Version </value>
+    <value>MiWindows - Jays2Kings Build (Version </value>
   </data>
   <data name="lbAbout.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleCenter</value>
@@ -220,7 +220,7 @@
     <value>18</value>
   </data>
   <data name="linkInhexSTER.Text" xml:space="preserve">
-    <value>InhexSTER (Starter of DS4Tool)</value>
+    <value>InhexSTER (Starter of MiTool)</value>
   </data>
   <data name="&gt;&gt;linkInhexSTER.Name" xml:space="preserve">
     <value>linkInhexSTER</value>
@@ -796,7 +796,7 @@
     <value>3</value>
   </data>
   <data name="lbHotkeys.Text" xml:space="preserve">
-    <value>Hide DS4 Controller: Hides the DS4's regular input (Dinput) from other programs, check if you are getting double input in games or R2 pauses games
+    <value>Hide Mi Controller: Hides the Mi's regular input (Dinput) from other programs, check if you are getting double input in games or R2 pauses games
 
 Click left side of touchpad: Left Touch
 

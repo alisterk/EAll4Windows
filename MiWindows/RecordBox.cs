@@ -19,7 +19,7 @@ namespace MiWindows
     public partial class RecordBox : Form
     {
         Stopwatch sw = new Stopwatch();
-        Timer ds4 = new Timer();
+        Timer mi = new Timer();
         public List<int> macros = new List<int>(), macrosAfter = new List<int>();
         public List<string> macronames = new List<string>();
         SpecActions sA;
@@ -37,8 +37,8 @@ namespace MiWindows
             else
                 cBStyle.SelectedIndex = 0;
             AddtoMiList();
-            ds4.Tick += ds4_Tick;
-            ds4.Interval = 1;
+            mi.Tick += mi_Tick;
+            mi.Interval = 1;
             if (kbm.macrostag.Count > 0)
             {
                 macros.AddRange(kbm.macrostag);
@@ -56,8 +56,8 @@ namespace MiWindows
             else
                 cBStyle.SelectedIndex = 0;
             AddtoMiList();
-            ds4.Tick += ds4_Tick;
-            ds4.Interval = 1;
+            mi.Tick += mi_Tick;
+            mi.Interval = 1;
             lbRecordTip.Visible = false;
             cBStyle.Visible = false;
             pnlMouseButtons.Location = new Point(pnlMouseButtons.Location.X, pnlMouseButtons.Location.Y - 75);
@@ -108,16 +108,16 @@ namespace MiWindows
             else
                 macros.Add(value);
         }
-        void ds4_Tick(object sender, EventArgs e)
+        void mi_Tick(object sender, EventArgs e)
         {
             if (Program.rootHub.MiControllers[0] != null)
             {
-                cState = Program.rootHub.getDS4State(0);
+                cState = Program.rootHub.getMiState(0);
                 if (btnRecord.Text == Properties.Resources.StopText)
                     foreach (MiControls dc in dcs)
                         if (Mapping.getBoolMapping(dc, cState, null, null))
                         {
-                            int value = DS4ControltoInt(dc);
+                            int value = MiControltoInt(dc);
                             int count = 0;
                             foreach (int i in macros)
                             {
@@ -152,7 +152,7 @@ namespace MiWindows
                         {
                             if (macros.Count != 0)
                             {
-                                int value = DS4ControltoInt(dc);
+                                int value = MiControltoInt(dc);
                                 int count = 0;
                                 foreach (int i in macros)
                                 {
@@ -180,7 +180,7 @@ namespace MiWindows
             }
         }
         
-        public static int DS4ControltoInt(MiControls ctrl)
+        public static int MiControltoInt(MiControls ctrl)
         {
             switch (ctrl)
             {
@@ -255,7 +255,7 @@ namespace MiWindows
                     sw.Start();
                 Program.rootHub.recordingMacro = true;
                 saved = false;
-                ds4.Start();
+                mi.Start();
                 if (!recordAfter)
                     macros.Clear();
                 lVMacros.Items.Clear();
@@ -267,7 +267,7 @@ namespace MiWindows
             else
             {
                 Program.rootHub.recordingMacro = false;
-                ds4.Stop();
+                mi.Stop();
                 if (recordAfter)
                 {
                     lVMacros.Items.Clear();
@@ -657,7 +657,7 @@ namespace MiWindows
                 else
                     Close();
             }
-            else MessageBox.Show(Properties.Resources.NoMacroRecorded, "DS4Windows", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else MessageBox.Show(Properties.Resources.NoMacroRecorded, "MiWindows", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
 
@@ -672,7 +672,7 @@ namespace MiWindows
                 if (Global.appdatapath == Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName)
                     savePresets.InitialDirectory = Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName + @"\Macros\";
                 else
-                    savePresets.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DS4Tool" + @"\Macros\";
+                    savePresets.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MiTool" + @"\Macros\";
                 if (!Directory.Exists(savePresets.InitialDirectory))
                 {
                     Directory.CreateDirectory(savePresets.InitialDirectory);
@@ -688,7 +688,7 @@ namespace MiWindows
                         sw.Close();
                     }
             }
-            else MessageBox.Show(Properties.Resources.NoMacroRecorded, "DS4Windows", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else MessageBox.Show(Properties.Resources.NoMacroRecorded, "MiWindows", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void btnLoadP_Click(object sender, EventArgs e)
@@ -713,7 +713,7 @@ namespace MiWindows
             if (Global.appdatapath == Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName)
                 openPresets.InitialDirectory = Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName + @"\Macros\";
             else
-                openPresets.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DS4Tool" + @"\Macros\";
+                openPresets.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MiTool" + @"\Macros\";
             if (openPresets.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 string file = openPresets.FileName;
@@ -871,7 +871,7 @@ namespace MiWindows
         private void RecordBox_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!saved && macros.Count > 0)
-                if (MessageBox.Show(Properties.Resources.SaveRecordedMacro, "DS4Windows", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                if (MessageBox.Show(Properties.Resources.SaveRecordedMacro, "MiWindows", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
                     btnSave_Click(null, null);
         }
 

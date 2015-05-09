@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="lbAbout.Text" xml:space="preserve">
-    <value>DS4Windows - Jays2Kings Build (Versiune</value>
+    <value>MiWindows - Jays2Kings Build (Versiune</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="lLChangelog.Size" type="System.Drawing.Size, System.Drawing">

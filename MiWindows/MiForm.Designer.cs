@@ -1,6 +1,6 @@
 ﻿namespace MiWindows
 {
-    partial class DS4Form
+    partial class MiForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DS4Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MiForm));
             this.lvDebug = new System.Windows.Forms.ListView();
             this.chTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chData = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -110,7 +110,7 @@
             this.tabAutoProfiles = new System.Windows.Forms.TabPage();
             this.tabSettings = new System.Windows.Forms.TabPage();
             this.fLPSettings = new System.Windows.Forms.FlowLayoutPanel();
-            this.hideDS4CheckBox = new System.Windows.Forms.CheckBox();
+            this.hideMiCheckBox = new System.Windows.Forms.CheckBox();
             this.cBSwipeProfiles = new System.Windows.Forms.CheckBox();
             this.StartWindowsCheckBox = new System.Windows.Forms.CheckBox();
             this.startMinimizedCheckBox = new System.Windows.Forms.CheckBox();
@@ -811,7 +811,7 @@
             // fLPSettings
             // 
             resources.ApplyResources(this.fLPSettings, "fLPSettings");
-            this.fLPSettings.Controls.Add(this.hideDS4CheckBox);
+            this.fLPSettings.Controls.Add(this.hideMiCheckBox);
             this.fLPSettings.Controls.Add(this.cBSwipeProfiles);
             this.fLPSettings.Controls.Add(this.StartWindowsCheckBox);
             this.fLPSettings.Controls.Add(this.startMinimizedCheckBox);
@@ -828,13 +828,13 @@
             this.fLPSettings.Name = "fLPSettings";
             this.toolTip1.SetToolTip(this.fLPSettings, resources.GetString("fLPSettings.ToolTip"));
             // 
-            // hideDS4CheckBox
+            // hideMiCheckBox
             // 
-            resources.ApplyResources(this.hideDS4CheckBox, "hideDS4CheckBox");
-            this.hideDS4CheckBox.Name = "hideDS4CheckBox";
-            this.toolTip1.SetToolTip(this.hideDS4CheckBox, resources.GetString("hideDS4CheckBox.ToolTip"));
-            this.hideDS4CheckBox.UseVisualStyleBackColor = true;
-            this.hideDS4CheckBox.CheckedChanged += new System.EventHandler(this.hideDS4CheckBox_CheckedChanged);
+            resources.ApplyResources(this.hideMiCheckBox, "hideMiCheckBox");
+            this.hideMiCheckBox.Name = "hideMiCheckBox";
+            this.toolTip1.SetToolTip(this.hideMiCheckBox, resources.GetString("hideMiCheckBox.ToolTip"));
+            this.hideMiCheckBox.UseVisualStyleBackColor = true;
+            this.hideMiCheckBox.CheckedChanged += new System.EventHandler(this.hideMiCheckBox_CheckedChanged);
             // 
             // cBSwipeProfiles
             // 
@@ -1072,7 +1072,7 @@
             // 
             resources.ApplyResources(this.saveProfiles, "saveProfiles");
             // 
-            // DS4Form
+            // MiForm
             // 
             resources.ApplyResources(this, "$this");
             this.AllowDrop = true;
@@ -1080,7 +1080,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.tabMain);
             this.Controls.Add(this.pnlButton);
-            this.Name = "DS4Form";
+            this.Name = "MiForm";
             this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ScpForm_Closing);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ScpForm_DragDrop);
@@ -1202,7 +1202,7 @@
         private System.Windows.Forms.FlowLayoutPanel fLPSettings;
         private System.Windows.Forms.LinkLabel lLBUpdate;
         private System.Windows.Forms.LinkLabel linkSetup;
-        private System.Windows.Forms.CheckBox hideDS4CheckBox;
+        private System.Windows.Forms.CheckBox hideMiCheckBox;
         private System.Windows.Forms.CheckBox cBUpdate;
         private System.Windows.Forms.Panel pNUpdate;
         private System.Windows.Forms.ComboBox cBUpdateTime;

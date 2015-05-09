@@ -6867,11 +6867,11 @@
   <data name="tabAutoProfiles.Text" xml:space="preserve">
     <value>Profile automate</value>
   </data>
-  <data name="hideDS4CheckBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="hideMiCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 17</value>
   </data>
-  <data name="hideDS4CheckBox.Text" xml:space="preserve">
-    <value>Ascunde maneta DS4</value>
+  <data name="hideMiCheckBox.Text" xml:space="preserve">
+    <value>Ascunde maneta Mi</value>
   </data>
   <data name="cBSwipeProfiles.Size" type="System.Drawing.Size, System.Drawing">
     <value>252, 17</value>

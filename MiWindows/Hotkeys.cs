@@ -39,33 +39,33 @@ namespace MiWindows
             switch (((System.Windows.Forms.Control)sender).Name)
             {
                 //if (File.Exists(appdatapath + "\\Auto Profiles.xml"))
-                case "linkJays2Kings": lbLinkText.Text = "http://ds4windows.com"; break;
-                case "linkElectro": lbLinkText.Text = "https://code.google.com/r/brianfundakowskifeldman-ds4windows/"; break;
-                case "linkInhexSTER": lbLinkText.Text = "https://code.google.com/p/ds4-tool/"; break;
-                case "linkJhebbel": lbLinkText.Text = "http://dsdcs.com/index.php/portfolio/software-development/4-ds4windows"; break;
-                case "linkSourceCode": lbLinkText.Text = "https://github.com/Jays2Kings/DS4Windows"; break;
+                case "linkJays2Kings": lbLinkText.Text = "http://miwindows.com"; break;
+                case "linkElectro": lbLinkText.Text = "https://code.google.com/r/brianfundakowskifeldman-miwindows/"; break;
+                case "linkInhexSTER": lbLinkText.Text = "https://code.google.com/p/mi-tool/"; break;
+                case "linkJhebbel": lbLinkText.Text = "http://dsdcs.com/index.php/portfolio/software-development/4-miwindows"; break;
+                case "linkSourceCode": lbLinkText.Text = "https://github.com/Jays2Kings/MiWindows"; break;
                 default: lbLinkText.Text = string.Empty; break;
             }
         }
 
         private void linkJays2Kings_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://ds4windows.com");
+            System.Diagnostics.Process.Start("http://miwindows.com");
         }
 
         private void linkElectro_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://code.google.com/r/brianfundakowskifeldman-ds4windows/");
+            System.Diagnostics.Process.Start("https://code.google.com/r/brianfundakowskifeldman-miwindows/");
         }
 
         private void linkInhexSTER_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://code.google.com/p/ds4-tool/");
+            System.Diagnostics.Process.Start("https://code.google.com/p/mi-tool/");
         }
 
         private void linkJhebbel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://dsdcs.com/index.php/portfolio/software-development/4-ds4windows");
+            System.Diagnostics.Process.Start("http://dsdcs.com/index.php/portfolio/software-development/4-miwindows");
         }
 
         private void lLChangelog_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -75,12 +75,12 @@ namespace MiWindows
 
         private void linkDonate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2FTZ9BZEHSQ8Q&lc=US&item_name=DS4Windows&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted");
+            System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2FTZ9BZEHSQ8Q&lc=US&item_name=MiWindows&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted");
         }
 
         private void linkSourceCode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/Jays2Kings/DS4Windows");
+            System.Diagnostics.Process.Start("https://github.com/Jays2Kings/MiWindows");
         }
 
     }

@@ -11,14 +11,14 @@ namespace MiWindows
         private static HashSet<String> DevicePaths = new HashSet<String>();
         public static bool isExclusiveMode = false;
 
-        //enumerates ds4 controllers in the system
+        //enumerates mi controllers in the system
         public static void findControllers()
         {
             lock (Devices)
             {
                 IEnumerable<HidDevice> hDevices = HidDevices.Enumerate(0x2717, 0x3144);
                 // Sort Bluetooth first in case USB is also connected on the same controller.
-                //!hDevices = hDevices.OrderBy<HidDevice, ConnectionType>((HidDevice d) => { return DS4Device.HidConnectionType(d); });
+                //!hDevices = hDevices.OrderBy<HidDevice, ConnectionType>((HidDevice d) => { return MiDevice.HidConnectionType(d); });
 
                 foreach (HidDevice hDevice in hDevices)
                 {
@@ -49,9 +49,9 @@ namespace MiWindows
             }
         }
 
-        //allows to get DS4Device by specifying unique MAC address
+        //allows to get MiDevice by specifying unique MAC address
         //format for MAC address is XX:XX:XX:XX:XX:XX
-        //!public static MiDevice getDS4Controller(string mac)
+        //!public static MiDevice getMiController(string mac)
         //{
         //    lock (Devices)
         //    {
@@ -65,7 +65,7 @@ namespace MiWindows
         //    }
         //}
         
-        //returns DS4 controllers that were found and are running
+        //returns Mi controllers that were found and are running
         public static IEnumerable<MiDevice> getMiControllers()
         {
             lock (Devices)

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="label4.Text" xml:space="preserve">
-    <value>Para aqueles que preferem a Instalação regular as configurações salvas estão em % appdata% / ds4tool</value>
+    <value>Para aqueles que preferem a Instalação regular as configurações salvas estão em % appdata% / mitool</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
     <value>Para aqueles que preferem um programa portátil Nota: esta opção não funciona se a pasta requisitar privilegios de administrador</value>

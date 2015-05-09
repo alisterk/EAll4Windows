@@ -11,9 +11,9 @@ using System.Security.Principal;
 namespace MiWindows
 {
     [Flags]
-    public enum DS4KeyType : byte { None = 0, ScanCode = 1, Toggle = 2, Unbound = 4, Macro = 8, HoldMacro = 16, RepeatMacro = 32 }; //Increment by exponents of 2*, starting at 2^0
+    public enum MiKeyType : byte { None = 0, ScanCode = 1, Toggle = 2, Unbound = 4, Macro = 8, HoldMacro = 16, RepeatMacro = 32 }; //Increment by exponents of 2*, starting at 2^0
     public enum Ds3PadId : byte { None = 0xFF, One = 0x00, Two = 0x01, Three = 0x02, Four = 0x03, All = 0x04 };
-    //!public enum DS4Controls : byte { None, LXNeg, LXPos, LYNeg, LYPos, RXNeg, RXPos, RYNeg, RYPos, L1, L2, L3, R1, R2, R3, Square, Triangle, Circle, Cross, DpadUp, DpadRight, DpadDown, DpadLeft, PS, TouchLeft, TouchUpper, TouchMulti, TouchRight, Share, Options, GyroXPos, GyroXNeg, GyroZPos, GyroZNeg, SwipeLeft, SwipeRight, SwipeUp, SwipeDown };
+    //!public enum MiControls : byte { None, LXNeg, LXPos, LYNeg, LYPos, RXNeg, RXPos, RYNeg, RYPos, L1, L2, L3, R1, R2, R3, Square, Triangle, Circle, Cross, DpadUp, DpadRight, DpadDown, DpadLeft, PS, TouchLeft, TouchUpper, TouchMulti, TouchRight, Share, Options, GyroXPos, GyroXNeg, GyroZPos, GyroZNeg, SwipeLeft, SwipeRight, SwipeUp, SwipeDown };
     public enum MiControls : byte { None
         , LXNeg, LXPos, LYNeg, LYPos, RXNeg, RXPos, RYNeg, RYPos
         , L1, L2, LT
@@ -171,10 +171,10 @@ namespace MiWindows
             set { m_Config.swipeProfiles = value; }
             get { return m_Config.swipeProfiles; }
         }
-        public static bool DS4Mapping
+        public static bool MiMapping
         {
-            set { m_Config.ds4Mapping = value; }
-            get { return m_Config.ds4Mapping; }
+            set { m_Config.miMapping = value; }
+            get { return m_Config.miMapping; }
         }
         public static bool QuickCharge
         {
@@ -271,24 +271,24 @@ namespace MiWindows
         {
             get { return m_Config.useTPforControls; }
         }
-        public static DS4Color[] MainColor
+        public static MiColor[] MainColor
         {
             get { return m_Config.m_Leds; }
         }
-        public static DS4Color[] LowColor
+        public static MiColor[] LowColor
         {
             get { return m_Config.m_LowLeds; }
         }
-        public static DS4Color[] ChargingColor
+        public static MiColor[] ChargingColor
         {
             get { return m_Config.m_ChargingLeds; }
         }
 
-        public static DS4Color[] FlashColor
+        public static MiColor[] FlashColor
         {
             get { return m_Config.m_FlashLeds; }
         }
-        public static DS4Color[] ShiftColor
+        public static MiColor[] ShiftColor
         {
             get { return m_Config.m_ShiftLeds; }
         }
@@ -424,7 +424,7 @@ namespace MiWindows
         {
             return m_Config.GetCustomExtras(device, controlName);
         }
-        public static DS4KeyType getCustomKeyType(int device, MiControls controlName)
+        public static MiKeyType getCustomKeyType(int device, MiControls controlName)
         {
             return m_Config.GetCustomKeyType(device, controlName);
         }
@@ -453,7 +453,7 @@ namespace MiWindows
         {
             return m_Config.customMapExtras[device];
         }
-        public static Dictionary<MiControls, DS4KeyType> getCustomKeyTypes(int device)
+        public static Dictionary<MiControls, MiKeyType> getCustomKeyTypes(int device)
         {
             return m_Config.customMapKeyTypes[device];
         }
@@ -474,7 +474,7 @@ namespace MiWindows
         {
             return m_Config.GetShiftCustomExtras(device, controlName);
         }
-        public static DS4KeyType getShiftCustomKeyType(int device, MiControls controlName)
+        public static MiKeyType getShiftCustomKeyType(int device, MiControls controlName)
         {
             return m_Config.GetShiftCustomKeyType(device, controlName);
         }
@@ -503,7 +503,7 @@ namespace MiWindows
         {
             return m_Config.shiftCustomMapExtras[device];
         }
-        public static Dictionary<MiControls, DS4KeyType> getShiftCustomKeyTypes(int device)
+        public static Dictionary<MiControls, MiKeyType> getShiftCustomKeyTypes(int device)
         {
             return m_Config.shiftCustomMapKeyTypes[device];
         }
@@ -546,7 +546,7 @@ namespace MiWindows
             r /= 100f;
             return (byte)Math.Round((b1 * (1 - r) + b2 * r), 0);
         }
-        public static DS4Color getTransitionedColor(DS4Color c1, DS4Color c2, double ratio)
+        public static MiColor getTransitionedColor(MiColor c1, MiColor c2, double ratio)
         {//;
             //Color cs = Color.FromArgb(c1.red, c1.green, c1.blue);
             c1.red = applyRatio(c1.red, c2.red, ratio);
@@ -606,7 +606,7 @@ namespace MiWindows
 
     public class BackingStore
     {
-        //public String m_Profile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DS4Tool" + "\\Profiles.xml";
+        //public String m_Profile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MiTool" + "\\Profiles.xml";
         public String m_Profile = Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName + "\\Profiles.xml";
         public String m_Actions = Global.appdatapath + "\\Actions.xml";
 
@@ -633,45 +633,45 @@ namespace MiWindows
         public int[] flashAt = { 0, 0, 0, 0, 0 };
         public int[] shiftModifier = { 0, 0, 0, 0, 0 };
         public bool[] mouseAccel = { true, true, true, true, true };
-        public DS4Color[] m_LowLeds = new DS4Color[]
+        public MiColor[] m_LowLeds = new MiColor[]
         {
-             new DS4Color(Color.Black),
-            new DS4Color(Color.Black),
-            new DS4Color(Color.Black),
-            new DS4Color(Color.Black),
-            new DS4Color(Color.Black)
+             new MiColor(Color.Black),
+            new MiColor(Color.Black),
+            new MiColor(Color.Black),
+            new MiColor(Color.Black),
+            new MiColor(Color.Black)
         };
-        public DS4Color[] m_Leds = new DS4Color[]
+        public MiColor[] m_Leds = new MiColor[]
         {
-            new DS4Color(Color.Blue),
-            new DS4Color(Color.Red),
-            new DS4Color(Color.Green),
-            new DS4Color(Color.Pink),
-            new DS4Color(Color.White)
+            new MiColor(Color.Blue),
+            new MiColor(Color.Red),
+            new MiColor(Color.Green),
+            new MiColor(Color.Pink),
+            new MiColor(Color.White)
         };
-        public DS4Color[] m_ChargingLeds = new DS4Color[] 
+        public MiColor[] m_ChargingLeds = new MiColor[] 
         {
-             new DS4Color(Color.Black),
-            new DS4Color(Color.Black),
-            new DS4Color(Color.Black),
-            new DS4Color(Color.Black),
-            new DS4Color(Color.Black)
+             new MiColor(Color.Black),
+            new MiColor(Color.Black),
+            new MiColor(Color.Black),
+            new MiColor(Color.Black),
+            new MiColor(Color.Black)
         };
-        public DS4Color[] m_ShiftLeds = new DS4Color[]
+        public MiColor[] m_ShiftLeds = new MiColor[]
         {
-            new DS4Color(Color.Black),
-            new DS4Color(Color.Black),
-            new DS4Color(Color.Black),
-            new DS4Color(Color.Black),
-            new DS4Color(Color.Black)
+            new MiColor(Color.Black),
+            new MiColor(Color.Black),
+            new MiColor(Color.Black),
+            new MiColor(Color.Black),
+            new MiColor(Color.Black)
         };
-        public DS4Color[] m_FlashLeds = new DS4Color[] 
+        public MiColor[] m_FlashLeds = new MiColor[] 
         {
-             new DS4Color(Color.Black),
-            new DS4Color(Color.Black),
-            new DS4Color(Color.Black),
-            new DS4Color(Color.Black),
-            new DS4Color(Color.Black)
+             new MiColor(Color.Black),
+            new MiColor(Color.Black),
+            new MiColor(Color.Black),
+            new MiColor(Color.Black),
+            new MiColor(Color.Black)
         };
         public bool[] shiftColorOn = { false, false, false, false, false };
         public int[] chargingType = { 0, 0, 0, 0, 0 };
@@ -690,18 +690,18 @@ namespace MiWindows
         public bool notifications = true;
         public bool disconnectBTAtStop = false;
         public bool swipeProfiles = true;
-        public bool ds4Mapping = true;
+        public bool miMapping = true;
         public bool quickCharge = false;
         public int firstXinputPort = 1;
         public bool closeMini = false;
         public List<SpecialAction> actions = new List<SpecialAction>();
-        public Dictionary<MiControls, DS4KeyType>[] customMapKeyTypes = { null, null, null, null, null };
+        public Dictionary<MiControls, MiKeyType>[] customMapKeyTypes = { null, null, null, null, null };
         public Dictionary<MiControls, UInt16>[] customMapKeys = { null, null, null, null, null };
         public Dictionary<MiControls, String>[] customMapMacros = { null, null, null, null, null };
         public Dictionary<MiControls, X360Controls>[] customMapButtons = { null, null, null, null, null };
         public Dictionary<MiControls, String>[] customMapExtras = { null, null, null, null, null };
 
-        public Dictionary<MiControls, DS4KeyType>[] shiftCustomMapKeyTypes = { null, null, null, null, null };
+        public Dictionary<MiControls, MiKeyType>[] shiftCustomMapKeyTypes = { null, null, null, null, null };
         public Dictionary<MiControls, UInt16>[] shiftCustomMapKeys = { null, null, null, null, null };
         public Dictionary<MiControls, String>[] shiftCustomMapMacros = { null, null, null, null, null };
         public Dictionary<MiControls, X360Controls>[] shiftCustomMapButtons = { null, null, null, null, null };
@@ -713,13 +713,13 @@ namespace MiWindows
         {
             for (int i = 0; i < 5; i++)
             {
-                customMapKeyTypes[i] = new Dictionary<MiControls, DS4KeyType>();
+                customMapKeyTypes[i] = new Dictionary<MiControls, MiKeyType>();
                 customMapKeys[i] = new Dictionary<MiControls, UInt16>();
                 customMapMacros[i] = new Dictionary<MiControls, String>();
                 customMapButtons[i] = new Dictionary<MiControls, X360Controls>();
                 customMapExtras[i] = new Dictionary<MiControls, string>();
 
-                shiftCustomMapKeyTypes[i] = new Dictionary<MiControls, DS4KeyType>();
+                shiftCustomMapKeyTypes[i] = new Dictionary<MiControls, MiKeyType>();
                 shiftCustomMapKeys[i] = new Dictionary<MiControls, UInt16>();
                 shiftCustomMapMacros[i] = new Dictionary<MiControls, String>();
                 shiftCustomMapButtons[i] = new Dictionary<MiControls, X360Controls>();
@@ -753,7 +753,7 @@ namespace MiWindows
                 return customMapExtras[device][controlName];
             else return "0";
         }
-        public DS4KeyType GetCustomKeyType(int device, MiControls controlName)
+        public MiKeyType GetCustomKeyType(int device, MiControls controlName)
         {
             try
             {
@@ -788,7 +788,7 @@ namespace MiWindows
                 return customMapExtras[device][controlName];
             else return "0";
         }
-        public DS4KeyType GetShiftCustomKeyType(int device, MiControls controlName)
+        public MiKeyType GetShiftCustomKeyType(int device, MiControls controlName)
         {
             try
             {
@@ -806,20 +806,20 @@ namespace MiWindows
             try
             {
                 XmlNode Node;
-                XmlNode xmlControls = m_Xdoc.SelectSingleNode("/DS4Windows/Control");
-                XmlNode xmlShiftControls = m_Xdoc.SelectSingleNode("/DS4Windows/ShiftControl");
+                XmlNode xmlControls = m_Xdoc.SelectSingleNode("/MiWindows/Control");
+                XmlNode xmlShiftControls = m_Xdoc.SelectSingleNode("/MiWindows/ShiftControl");
                 m_Xdoc.RemoveAll();
 
                 Node = m_Xdoc.CreateXmlDeclaration("1.0", "utf-8", String.Empty);
                 m_Xdoc.AppendChild(Node);
 
-                Node = m_Xdoc.CreateComment(String.Format(" DS4Windows Configuration Data. {0} ", DateTime.Now));
+                Node = m_Xdoc.CreateComment(String.Format(" MiWindows Configuration Data. {0} ", DateTime.Now));
                 m_Xdoc.AppendChild(Node);
 
                 Node = m_Xdoc.CreateWhitespace("\r\n");
                 m_Xdoc.AppendChild(Node);
 
-                Node = m_Xdoc.CreateNode(XmlNodeType.Element, "DS4Windows", null);
+                Node = m_Xdoc.CreateNode(XmlNodeType.Element, "MiWindows", null);
 
                 XmlNode xmlFlushHIDQueue = m_Xdoc.CreateNode(XmlNodeType.Element, "flushHIDQueue", null); xmlFlushHIDQueue.InnerText = flushHIDQueue[device].ToString(); Node.AppendChild(xmlFlushHIDQueue);
                 XmlNode xmlIdleDisconnectTimeout = m_Xdoc.CreateNode(XmlNodeType.Element, "idleDisconnectTimeout", null); xmlIdleDisconnectTimeout.InnerText = idleDisconnectTimeout[device].ToString(); Node.AppendChild(xmlIdleDisconnectTimeout);
@@ -886,16 +886,16 @@ namespace MiWindows
 
                             if (button.Tag is KeyValuePair<string, string>)
                                 if (((KeyValuePair<string, string>)button.Tag).Key == "Unbound")
-                                    keyType += DS4KeyType.Unbound;
+                                    keyType += MiKeyType.Unbound;
 
                             if (button.Font.Strikeout)
-                                keyType += DS4KeyType.HoldMacro;
+                                keyType += MiKeyType.HoldMacro;
                             if (button.Font.Underline)
-                                keyType += DS4KeyType.Macro;
+                                keyType += MiKeyType.Macro;
                             if (button.Font.Italic)
-                                keyType += DS4KeyType.Toggle;
+                                keyType += MiKeyType.Toggle;
                             if (button.Font.Bold)
-                                keyType += DS4KeyType.ScanCode;
+                                keyType += MiKeyType.ScanCode;
                             if (keyType != String.Empty)
                             {
                                 buttonNode = m_Xdoc.CreateNode(XmlNodeType.Element, button.Name, null);
@@ -981,16 +981,16 @@ namespace MiWindows
                                 string keyType = String.Empty;
                                 if (button.Tag is KeyValuePair<string, string>)
                                     if (((KeyValuePair<string, string>)button.Tag).Key == "Unbound")
-                                        keyType += DS4KeyType.Unbound;
+                                        keyType += MiKeyType.Unbound;
 
                                 if (button.Font.Strikeout)
-                                    keyType += DS4KeyType.HoldMacro;
+                                    keyType += MiKeyType.HoldMacro;
                                 if (button.Font.Underline)
-                                    keyType += DS4KeyType.Macro;
+                                    keyType += MiKeyType.Macro;
                                 if (button.Font.Italic)
-                                    keyType += DS4KeyType.Toggle;
+                                    keyType += MiKeyType.Toggle;
                                 if (button.Font.Bold)
-                                    keyType += DS4KeyType.ScanCode;
+                                    keyType += MiKeyType.ScanCode;
                                 if (keyType != String.Empty)
                                 {
                                     buttonNode = m_Xdoc.CreateNode(XmlNodeType.Element, button.Name, null);
@@ -1063,7 +1063,7 @@ namespace MiWindows
             catch { Saved = false; }
             return Saved;
         }
-        private MiControls getDS4ControlsByName(string key)
+        private MiControls getMiControlsByName(string key)
         {
             switch (key)
             {
@@ -1249,17 +1249,17 @@ namespace MiWindows
         public Boolean LoadProfile(int device, System.Windows.Forms.Control[] buttons, System.Windows.Forms.Control[] shiftbuttons, bool launchprogram, ControlService control, string propath = "")
         {
             Boolean Loaded = true;
-            Dictionary<MiControls, DS4KeyType> customMapKeyTypes = new Dictionary<MiControls, DS4KeyType>();
+            Dictionary<MiControls, MiKeyType> customMapKeyTypes = new Dictionary<MiControls, MiKeyType>();
             Dictionary<MiControls, UInt16> customMapKeys = new Dictionary<MiControls, UInt16>();
             Dictionary<MiControls, X360Controls> customMapButtons = new Dictionary<MiControls, X360Controls>();
             Dictionary<MiControls, String> customMapMacros = new Dictionary<MiControls, String>();
             Dictionary<MiControls, String> customMapExtras = new Dictionary<MiControls, String>();
-            Dictionary<MiControls, DS4KeyType> shiftCustomMapKeyTypes = new Dictionary<MiControls, DS4KeyType>();
+            Dictionary<MiControls, MiKeyType> shiftCustomMapKeyTypes = new Dictionary<MiControls, MiKeyType>();
             Dictionary<MiControls, UInt16> shiftCustomMapKeys = new Dictionary<MiControls, UInt16>();
             Dictionary<MiControls, X360Controls> shiftCustomMapButtons = new Dictionary<MiControls, X360Controls>();
             Dictionary<MiControls, String> shiftCustomMapMacros = new Dictionary<MiControls, String>();
             Dictionary<MiControls, String> shiftCustomMapExtras = new Dictionary<MiControls, String>();
-            string rootname = "DS4Windows";
+            string rootname = "MiWindows";
             Boolean missingSetting = false;
             string profilepath;
             if (propath == "")
@@ -1278,8 +1278,8 @@ namespace MiWindows
                 }
                 //if (device < 4)
                 //{
-                //    DS4LightBar.forcelight[device] = false;
-                //    DS4LightBar.forcedFlash[device] = 0;
+                //    MiLightBar.forcelight[device] = false;
+                //    MiLightBar.forcedFlash[device] = 0;
                 //}
                 try { Item = m_Xdoc.SelectSingleNode("/" + rootname + "/flushHIDQueue"); Boolean.TryParse(Item.InnerText, out flushHIDQueue[device]); }
                 catch { missingSetting = true; }//rootname = }
@@ -1474,28 +1474,28 @@ namespace MiWindows
                 }
                 catch { profileActions[device].Clear(); missingSetting = true; }
 
-                DS4KeyType keyType;
+                MiKeyType keyType;
                 UInt16 wvk;
                 if (buttons == null)
                 {
                     XmlNode ParentItem = m_Xdoc.SelectSingleNode("/" + rootname + "/Control/Button");
                     if (ParentItem != null)
                         foreach (XmlNode item in ParentItem.ChildNodes)
-                            customMapButtons.Add(getDS4ControlsByName(item.Name), getX360ControlsByName(item.InnerText));
+                            customMapButtons.Add(getMiControlsByName(item.Name), getX360ControlsByName(item.InnerText));
                     ParentItem = m_Xdoc.SelectSingleNode("/" + rootname + "/Control/Macro");
                     if (ParentItem != null)
                         foreach (XmlNode item in ParentItem.ChildNodes)
-                            customMapMacros.Add(getDS4ControlsByName(item.Name), item.InnerText);
+                            customMapMacros.Add(getMiControlsByName(item.Name), item.InnerText);
                     ParentItem = m_Xdoc.SelectSingleNode("/" + rootname + "/Control/Key");
                     if (ParentItem != null)
                         foreach (XmlNode item in ParentItem.ChildNodes)
                             if (UInt16.TryParse(item.InnerText, out wvk))
-                                customMapKeys.Add(getDS4ControlsByName(item.Name), wvk);
+                                customMapKeys.Add(getMiControlsByName(item.Name), wvk);
                     ParentItem = m_Xdoc.SelectSingleNode("/" + rootname + "/Control/Extras");
                     if (ParentItem != null)
                         foreach (XmlNode item in ParentItem.ChildNodes)
                             if (item.InnerText != string.Empty)
-                                customMapExtras.Add(getDS4ControlsByName(item.Name), item.InnerText);
+                                customMapExtras.Add(getMiControlsByName(item.Name), item.InnerText);
                             else
                                 ParentItem.RemoveChild(item);
                     ParentItem = m_Xdoc.SelectSingleNode("/" + rootname + "/Control/KeyType");
@@ -1503,57 +1503,57 @@ namespace MiWindows
                         foreach (XmlNode item in ParentItem.ChildNodes)
                             if (item != null)
                             {
-                                keyType = DS4KeyType.None;
-                                if (item.InnerText.Contains(DS4KeyType.ScanCode.ToString()))
-                                    keyType |= DS4KeyType.ScanCode;
-                                if (item.InnerText.Contains(DS4KeyType.Toggle.ToString()))
-                                    keyType |= DS4KeyType.Toggle;
-                                if (item.InnerText.Contains(DS4KeyType.Macro.ToString()))
-                                    keyType |= DS4KeyType.Macro;
-                                if (item.InnerText.Contains(DS4KeyType.HoldMacro.ToString()))
-                                    keyType |= DS4KeyType.HoldMacro;
-                                if (item.InnerText.Contains(DS4KeyType.Unbound.ToString()))
-                                    keyType |= DS4KeyType.Unbound;
-                                if (keyType != DS4KeyType.None)
-                                    customMapKeyTypes.Add(getDS4ControlsByName(item.Name), keyType);
+                                keyType = MiKeyType.None;
+                                if (item.InnerText.Contains(MiKeyType.ScanCode.ToString()))
+                                    keyType |= MiKeyType.ScanCode;
+                                if (item.InnerText.Contains(MiKeyType.Toggle.ToString()))
+                                    keyType |= MiKeyType.Toggle;
+                                if (item.InnerText.Contains(MiKeyType.Macro.ToString()))
+                                    keyType |= MiKeyType.Macro;
+                                if (item.InnerText.Contains(MiKeyType.HoldMacro.ToString()))
+                                    keyType |= MiKeyType.HoldMacro;
+                                if (item.InnerText.Contains(MiKeyType.Unbound.ToString()))
+                                    keyType |= MiKeyType.Unbound;
+                                if (keyType != MiKeyType.None)
+                                    customMapKeyTypes.Add(getMiControlsByName(item.Name), keyType);
                             }
                     if (shiftModifier[device] > 0)
                     {
                         ParentItem = m_Xdoc.SelectSingleNode("/" + rootname + "/ShiftControl/Button");
                         if (ParentItem != null)
                             foreach (XmlNode item in ParentItem.ChildNodes)
-                                shiftCustomMapButtons.Add(getDS4ControlsByName(item.Name), getX360ControlsByName(item.InnerText));
+                                shiftCustomMapButtons.Add(getMiControlsByName(item.Name), getX360ControlsByName(item.InnerText));
                         ParentItem = m_Xdoc.SelectSingleNode("/" + rootname + "/ShiftControl/Macro");
                         if (ParentItem != null)
                             foreach (XmlNode item in ParentItem.ChildNodes)
-                                shiftCustomMapMacros.Add(getDS4ControlsByName(item.Name), item.InnerText);
+                                shiftCustomMapMacros.Add(getMiControlsByName(item.Name), item.InnerText);
                         ParentItem = m_Xdoc.SelectSingleNode("/" + rootname + "/ShiftControl/Key");
                         if (ParentItem != null)
                             foreach (XmlNode item in ParentItem.ChildNodes)
                                 if (UInt16.TryParse(item.InnerText, out wvk))
-                                    shiftCustomMapKeys.Add(getDS4ControlsByName(item.Name), wvk);
+                                    shiftCustomMapKeys.Add(getMiControlsByName(item.Name), wvk);
                         ParentItem = m_Xdoc.SelectSingleNode("/" + rootname + "/ShiftControl/Extras");
                         if (ParentItem != null)
                             foreach (XmlNode item in ParentItem.ChildNodes)
-                                shiftCustomMapExtras.Add(getDS4ControlsByName(item.Name), item.InnerText);
+                                shiftCustomMapExtras.Add(getMiControlsByName(item.Name), item.InnerText);
                         ParentItem = m_Xdoc.SelectSingleNode("/" + rootname + "/ShiftControl/KeyType");
                         if (ParentItem != null)
                             foreach (XmlNode item in ParentItem.ChildNodes)
                                 if (item != null)
                                 {
-                                    keyType = DS4KeyType.None;
-                                    if (item.InnerText.Contains(DS4KeyType.ScanCode.ToString()))
-                                        keyType |= DS4KeyType.ScanCode;
-                                    if (item.InnerText.Contains(DS4KeyType.Toggle.ToString()))
-                                        keyType |= DS4KeyType.Toggle;
-                                    if (item.InnerText.Contains(DS4KeyType.Macro.ToString()))
-                                        keyType |= DS4KeyType.Macro;
-                                    if (item.InnerText.Contains(DS4KeyType.HoldMacro.ToString()))
-                                        keyType |= DS4KeyType.HoldMacro;
-                                    if (item.InnerText.Contains(DS4KeyType.Unbound.ToString()))
-                                        keyType |= DS4KeyType.Unbound;
-                                    if (keyType != DS4KeyType.None)
-                                        shiftCustomMapKeyTypes.Add(getDS4ControlsByName(item.Name), keyType);
+                                    keyType = MiKeyType.None;
+                                    if (item.InnerText.Contains(MiKeyType.ScanCode.ToString()))
+                                        keyType |= MiKeyType.ScanCode;
+                                    if (item.InnerText.Contains(MiKeyType.Toggle.ToString()))
+                                        keyType |= MiKeyType.Toggle;
+                                    if (item.InnerText.Contains(MiKeyType.Macro.ToString()))
+                                        keyType |= MiKeyType.Macro;
+                                    if (item.InnerText.Contains(MiKeyType.HoldMacro.ToString()))
+                                        keyType |= MiKeyType.HoldMacro;
+                                    if (item.InnerText.Contains(MiKeyType.Unbound.ToString()))
+                                        keyType |= MiKeyType.Unbound;
+                                    if (keyType != MiKeyType.None)
+                                        shiftCustomMapKeyTypes.Add(getMiControlsByName(item.Name), keyType);
                                 }
                     }
                 }
@@ -1585,13 +1585,13 @@ namespace MiWindows
             return Loaded;
         }
 
-        public void LoadButtons(System.Windows.Forms.Control[] buttons, string control, Dictionary<MiControls, DS4KeyType> customMapKeyTypes,
+        public void LoadButtons(System.Windows.Forms.Control[] buttons, string control, Dictionary<MiControls, MiKeyType> customMapKeyTypes,
            Dictionary<MiControls, UInt16> customMapKeys, Dictionary<MiControls, X360Controls> customMapButtons, Dictionary<MiControls, String> customMapMacros, Dictionary<MiControls, String> customMapExtras)
         {
             XmlNode Item;
-            DS4KeyType keyType;
+            MiKeyType keyType;
             UInt16 wvk;
-            string rootname = "DS4Windows";
+            string rootname = "MiWindows";
             foreach (var button in buttons)
                 try
                 {
@@ -1604,31 +1604,31 @@ namespace MiWindows
                     if (Item != null)
                     {
                         //foundBinding = true;
-                        keyType = DS4KeyType.None;
-                        if (Item.InnerText.Contains(DS4KeyType.Unbound.ToString()))
+                        keyType = MiKeyType.None;
+                        if (Item.InnerText.Contains(MiKeyType.Unbound.ToString()))
                         {
-                            keyType = DS4KeyType.Unbound;
+                            keyType = MiKeyType.Unbound;
                             button.Tag = "Unbound";
                             button.Text = "Unbound";
                         }
                         else
                         {
-                            bool SC = Item.InnerText.Contains(DS4KeyType.ScanCode.ToString());
-                            bool TG = Item.InnerText.Contains(DS4KeyType.Toggle.ToString());
-                            bool MC = Item.InnerText.Contains(DS4KeyType.Macro.ToString());
-                            bool MR = Item.InnerText.Contains(DS4KeyType.HoldMacro.ToString());
+                            bool SC = Item.InnerText.Contains(MiKeyType.ScanCode.ToString());
+                            bool TG = Item.InnerText.Contains(MiKeyType.Toggle.ToString());
+                            bool MC = Item.InnerText.Contains(MiKeyType.Macro.ToString());
+                            bool MR = Item.InnerText.Contains(MiKeyType.HoldMacro.ToString());
                             button.Font = new Font(button.Font,
                                 (SC ? FontStyle.Bold : FontStyle.Regular) | (TG ? FontStyle.Italic : FontStyle.Regular) |
                                 (MC ? FontStyle.Underline : FontStyle.Regular) | (MR ? FontStyle.Strikeout : FontStyle.Regular));
-                            if (Item.InnerText.Contains(DS4KeyType.ScanCode.ToString()))
-                                keyType |= DS4KeyType.ScanCode;
-                            if (Item.InnerText.Contains(DS4KeyType.Toggle.ToString()))
-                                keyType |= DS4KeyType.Toggle;
-                            if (Item.InnerText.Contains(DS4KeyType.Macro.ToString()))
-                                keyType |= DS4KeyType.Macro;
+                            if (Item.InnerText.Contains(MiKeyType.ScanCode.ToString()))
+                                keyType |= MiKeyType.ScanCode;
+                            if (Item.InnerText.Contains(MiKeyType.Toggle.ToString()))
+                                keyType |= MiKeyType.Toggle;
+                            if (Item.InnerText.Contains(MiKeyType.Macro.ToString()))
+                                keyType |= MiKeyType.Macro;
                         }
-                        if (keyType != DS4KeyType.None)
-                            customMapKeyTypes.Add(getDS4ControlsByName(Item.Name), keyType);
+                        if (keyType != MiKeyType.None)
+                            customMapKeyTypes.Add(getMiControlsByName(Item.Name), keyType);
                     }
                     string extras;
                     Item = m_Xdoc.SelectSingleNode(String.Format("/" + rootname + "/" + control + "/Extras/{0}", button.Name));
@@ -1637,7 +1637,7 @@ namespace MiWindows
                         if (Item.InnerText != string.Empty)
                         {
                             extras = Item.InnerText;
-                            customMapExtras.Add(getDS4ControlsByName(button.Name), Item.InnerText);
+                            customMapExtras.Add(getMiControlsByName(button.Name), Item.InnerText);
                         }
                         else
                         {
@@ -1665,7 +1665,7 @@ namespace MiWindows
                         }
                         button.Text = "Macro";
                         button.Tag = new KeyValuePair<int[], string>(keys, extras);
-                        customMapMacros.Add(getDS4ControlsByName(button.Name), Item.InnerText);
+                        customMapMacros.Add(getMiControlsByName(button.Name), Item.InnerText);
                     }
                     else if (m_Xdoc.SelectSingleNode(String.Format("/" + rootname + "/" + control + "/Key/{0}", button.Name)) != null)
                     {
@@ -1673,7 +1673,7 @@ namespace MiWindows
                         if (UInt16.TryParse(Item.InnerText, out wvk))
                         {
                             //foundBinding = true;
-                            customMapKeys.Add(getDS4ControlsByName(Item.Name), wvk);
+                            customMapKeys.Add(getMiControlsByName(Item.Name), wvk);
                             button.Tag = new KeyValuePair<int, string>(wvk, extras);
                             button.Text = ((System.Windows.Forms.Keys)wvk).ToString();
                         }
@@ -1684,7 +1684,7 @@ namespace MiWindows
                         //foundBinding = true;
                         button.Tag = new KeyValuePair<string, string>(Item.InnerText, extras);
                         button.Text = Item.InnerText;
-                        customMapButtons.Add(getDS4ControlsByName(button.Name), getX360ControlsByName(Item.InnerText));
+                        customMapButtons.Add(getMiControlsByName(button.Name), getX360ControlsByName(Item.InnerText));
                     }
                     else
                     {
@@ -1735,7 +1735,7 @@ namespace MiWindows
                     catch { missingSetting = true; }
                     try { Item = m_Xdoc.SelectSingleNode("/Profile/SwipeProfiles"); Boolean.TryParse(Item.InnerText, out swipeProfiles); }
                     catch { missingSetting = true; }
-                    try { Item = m_Xdoc.SelectSingleNode("/Profile/UseDS4ForMapping"); Boolean.TryParse(Item.InnerText, out ds4Mapping); }
+                    try { Item = m_Xdoc.SelectSingleNode("/Profile/UseMiForMapping"); Boolean.TryParse(Item.InnerText, out miMapping); }
                     catch { missingSetting = true; }
                     try { Item = m_Xdoc.SelectSingleNode("/Profile/QuickCharge"); Boolean.TryParse(Item.InnerText, out quickCharge); }
                     catch { missingSetting = true; }
@@ -1789,7 +1789,7 @@ namespace MiWindows
             XmlNode xmlNotifications = m_Xdoc.CreateNode(XmlNodeType.Element, "Notifications", null); xmlNotifications.InnerText = notifications.ToString(); Node.AppendChild(xmlNotifications);
             XmlNode xmlDisconnectBT = m_Xdoc.CreateNode(XmlNodeType.Element, "DisconnectBTAtStop", null); xmlDisconnectBT.InnerText = disconnectBTAtStop.ToString(); Node.AppendChild(xmlDisconnectBT);
             XmlNode xmlSwipeProfiles = m_Xdoc.CreateNode(XmlNodeType.Element, "SwipeProfiles", null); xmlSwipeProfiles.InnerText = swipeProfiles.ToString(); Node.AppendChild(xmlSwipeProfiles);
-            XmlNode xmlDS4Mapping = m_Xdoc.CreateNode(XmlNodeType.Element, "UseDS4ForMapping", null); xmlDS4Mapping.InnerText = ds4Mapping.ToString(); Node.AppendChild(xmlDS4Mapping);
+            XmlNode xmlMiMapping = m_Xdoc.CreateNode(XmlNodeType.Element, "UseMiForMapping", null); xmlMiMapping.InnerText = miMapping.ToString(); Node.AppendChild(xmlMiMapping);
             XmlNode xmlQuickCharge = m_Xdoc.CreateNode(XmlNodeType.Element, "QuickCharge", null); xmlQuickCharge.InnerText = quickCharge.ToString(); Node.AppendChild(xmlQuickCharge);
             XmlNode xmlFirstXinputPort = m_Xdoc.CreateNode(XmlNodeType.Element, "FirstXinputPort", null); xmlFirstXinputPort.InnerText = firstXinputPort.ToString(); Node.AppendChild(xmlFirstXinputPort);
             XmlNode xmlCloseMini = m_Xdoc.CreateNode(XmlNodeType.Element, "CloseMinimizes", null); xmlCloseMini.InnerText = closeMini.ToString(); Node.AppendChild(xmlCloseMini);
@@ -2004,7 +2004,7 @@ namespace MiWindows
         public double delayTime = 0;
         public string extra;
         public bool pressRelease = false;
-        public DS4KeyType keyType;
+        public MiKeyType keyType;
         public SpecialAction(string name, string controls, string type, string details, double delay = 0, string extras = "")
         {
             this.name = name;
@@ -2024,7 +2024,7 @@ namespace MiWindows
                         macro.Add(v);
                 }
                 if (extras.Contains("Scan Code"))
-                    keyType |= DS4KeyType.ScanCode;
+                    keyType |= MiKeyType.ScanCode;
             }
             else if (type == "Key")
             {
@@ -2039,7 +2039,7 @@ namespace MiWindows
                         uTrigger.Add(getMiControlsByName(s));
                 }
                 if (details.Contains("Scan Code"))
-                    keyType |= DS4KeyType.ScanCode;
+                    keyType |= MiKeyType.ScanCode;
             }
             else if (type == "Program")
             {

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="bnStep1.Text" xml:space="preserve">
-    <value>Paso 1: Instalar el Driver DS4</value>
+    <value>Paso 1: Instalar el Driver Mi</value>
   </data>
   <data name="button2.Text" xml:space="preserve">
     <value>Paso 2: Si usas Windows 7 o inferior, instala el Driver 360</value>
@@ -140,6 +140,6 @@
     <value>Finalizado</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Bienvenido a DS4Windows</value>
+    <value>Bienvenido a MiWindows</value>
   </data>
 </root>

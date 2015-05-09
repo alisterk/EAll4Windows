@@ -6858,11 +6858,11 @@
   <data name="tabAutoProfiles.Text" xml:space="preserve">
     <value>Auto perfiles</value>
   </data>
-  <data name="hideDS4CheckBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="hideMiCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>141, 17</value>
   </data>
-  <data name="hideDS4CheckBox.Text" xml:space="preserve">
-    <value>Ocultar Controlador DS4</value>
+  <data name="hideMiCheckBox.Text" xml:space="preserve">
+    <value>Ocultar Controlador Mi</value>
   </data>
   <data name="cBSwipeProfiles.Size" type="System.Drawing.Size, System.Drawing">
     <value>226, 17</value>

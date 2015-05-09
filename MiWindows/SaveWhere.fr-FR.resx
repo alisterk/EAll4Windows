@@ -141,7 +141,7 @@ les autres paramètres</value>
     <value>Pour ceux qui préfèrent une application portable Note: Cette option ne fonctionne point si dans un dossier admin sans UAC (contrôle de compte d'utilisateur)</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
-    <value>Pour ceux préférant une installation normale, les paramètres sont sauvegardés à %appdata%/ds4tool</value>
+    <value>Pour ceux préférant une installation normale, les paramètres sont sauvegardés à %appdata%/mitool</value>
   </data>
   <data name="lbMultiSaves.Text" xml:space="preserve">
     <value>Multiples emplacements de sauvegarde supprimés</value>

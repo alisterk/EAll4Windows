@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="bnStep1.Text" xml:space="preserve">
-    <value>Passo 1: Installa il Driver DS4</value>
+    <value>Passo 1: Installa il Driver Mi</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="button2.Location" type="System.Drawing.Point, System.Drawing">
@@ -199,6 +199,6 @@ Una volta accoppiato, sei pronto. Buon divertimento!</value>
     <value>315, 477</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Benvenuto su DS4Windows</value>
+    <value>Benvenuto su MiWindows</value>
   </data>
 </root>

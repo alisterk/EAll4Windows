@@ -64,7 +64,7 @@ namespace MiWindows
                     cBActions.SelectedIndex = 1; 
                     macrostag = act.macro; 
                     lbMacroRecorded.Text = "Macro Recored";
-                    cBMacroScanCode.Checked = act.keyType.HasFlag(DS4KeyType.ScanCode);
+                    cBMacroScanCode.Checked = act.keyType.HasFlag(MiKeyType.ScanCode);
                     break;
                 case "Program": 
                     cBActions.SelectedIndex = 2; 
@@ -88,7 +88,7 @@ namespace MiWindows
                     cBActions.SelectedIndex = 4;
                     int key = int.Parse(act.details);
                     btnSelectKey.Text = ((Keys)key).ToString() +
-                        (act.keyType.HasFlag(DS4KeyType.ScanCode) ? " (SC)" : "") + 
+                        (act.keyType.HasFlag(MiKeyType.ScanCode) ? " (SC)" : "") + 
                         (!string.IsNullOrEmpty(act.ucontrols) ? " (Toggle)" : "");
                     btnSelectKey.Tag = key;
                     if (act.pressRelease)
@@ -358,7 +358,7 @@ namespace MiWindows
                 pBGraident.Refresh();
             }
             //if (device < 4)
-            //    DS4LightBar.forcelight[device] = false;
+            //    MiLightBar.forcelight[device] = false;
         }
 
         private void bnFullColor_Click(object sender, EventArgs e)
@@ -371,7 +371,7 @@ namespace MiWindows
                 pBGraident.Refresh();
             }
             //if (device < 4)
-            //  DS4LightBar.forcelight[device] = false;
+            //  MiLightBar.forcelight[device] = false;
         }
 
         private void pBGraident_Paint(object sender, PaintEventArgs e)
@@ -394,10 +394,10 @@ namespace MiWindows
             if (sender is Color && device < 4)
             {
                 Color color = (Color)sender;
-                DS4Color dcolor = new DS4Color { red = color.R, green = color.G, blue = color.B };
-                //DS4LightBar.forcedColor[device] = dcolor;
-                //DS4LightBar.forcedFlash[device] = 0;
-                //DS4LightBar.forcelight[device] = true;
+                MiColor dcolor = new MiColor { red = color.R, green = color.G, blue = color.B };
+                //MiLightBar.forcedColor[device] = dcolor;
+                //MiLightBar.forcedFlash[device] = 0;
+                //MiLightBar.forcelight[device] = true;
             }
         }
 

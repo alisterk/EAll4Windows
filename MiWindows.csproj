@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\Jonathan\Dropbox\Public\DS4 Tool\</PublishUrl>
+    <PublishUrl>C:\Users\Jonathan\Dropbox\Public\Mi Tool\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -23,7 +23,7 @@
     <UpdatePeriodically>true</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://dl.dropboxusercontent.com/u/16364552/DS4%2520Tool/</InstallUrl>
+    <InstallUrl>https://dl.dropboxusercontent.com/u/16364552/Mi%2520Tool/</InstallUrl>
     <MinimumRequiredVersion>1.0.0.1</MinimumRequiredVersion>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
@@ -56,7 +56,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>MiWindows\DS4W.ico</ApplicationIcon>
+    <ApplicationIcon>MiWindows\MiW.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -66,7 +66,7 @@
     <ManifestCertificateThumbprint>323D54121F2B048833B6BD932A5B00B1E78C8641</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>DS4Windows_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>MiWindows_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -114,7 +114,7 @@
       <DependentUpon>Alreadyrunning.cs</DependentUpon>
     </Compile>
     <Compile Include="MiControl\ControlService.cs" />
-    <Compile Include="MiControl\DS4LightBar.cs" />
+    <Compile Include="MiControl\MiLightBar.cs" />
     <Compile Include="MiControl\InputMethods.cs" />
     <Compile Include="MiControl\ITouchpadBehaviour.cs" />
     <Compile Include="MiControl\Log.cs" />
@@ -141,11 +141,11 @@
     <Compile Include="MiControl\X360Device.designer.cs">
       <DependentUpon>X360Device.cs</DependentUpon>
     </Compile>
-    <Compile Include="MiLibrary\DS4Device.cs" />
-    <Compile Include="MiLibrary\DS4Devices.cs" />
-    <Compile Include="MiLibrary\DS4State.cs" />
-    <Compile Include="MiLibrary\DS4StateExposed.cs" />
-    <Compile Include="MiLibrary\DS4Touchpad.cs" />
+    <Compile Include="MiLibrary\MiDevice.cs" />
+    <Compile Include="MiLibrary\MiDevices.cs" />
+    <Compile Include="MiLibrary\MiState.cs" />
+    <Compile Include="MiLibrary\MiStateExposed.cs" />
+    <Compile Include="MiLibrary\MiTouchpad.cs" />
     <Compile Include="MiWindows\Hotkeys.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -195,11 +195,11 @@
     <Compile Include="MiWindows\SaveWhere.Designer.cs">
       <DependentUpon>SaveWhere.cs</DependentUpon>
     </Compile>
-    <Compile Include="MiWindows\DS4Form.cs">
+    <Compile Include="MiWindows\MiForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MiWindows\DS4Form.Designer.cs">
-      <DependentUpon>DS4Form.cs</DependentUpon>
+    <Compile Include="MiWindows\MiForm.Designer.cs">
+      <DependentUpon>MiForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MiWindows\Settings.cs" />
     <Compile Include="MiWindows\SpecActions.cs">
@@ -223,23 +223,23 @@
     <EmbeddedResource Include="MiWindows\Alreadyrunning.resx">
       <DependentUpon>Alreadyrunning.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MiWindows\DS4Form.de-DE.resx">
-      <DependentUpon>DS4Form.cs</DependentUpon>
+    <EmbeddedResource Include="MiWindows\MiForm.de-DE.resx">
+      <DependentUpon>MiForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MiWindows\DS4Form.es.resx">
-      <DependentUpon>DS4Form.cs</DependentUpon>
+    <EmbeddedResource Include="MiWindows\MiForm.es.resx">
+      <DependentUpon>MiForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MiWindows\DS4Form.it-IT.resx">
-      <DependentUpon>DS4Form.cs</DependentUpon>
+    <EmbeddedResource Include="MiWindows\MiForm.it-IT.resx">
+      <DependentUpon>MiForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MiWindows\DS4Form.pt-BR.resx">
-      <DependentUpon>DS4Form.cs</DependentUpon>
+    <EmbeddedResource Include="MiWindows\MiForm.pt-BR.resx">
+      <DependentUpon>MiForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MiWindows\DS4Form.ro-RO.resx">
-      <DependentUpon>DS4Form.cs</DependentUpon>
+    <EmbeddedResource Include="MiWindows\MiForm.ro-RO.resx">
+      <DependentUpon>MiForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MiWindows\DS4Form.ru-RU.resx">
-      <DependentUpon>DS4Form.cs</DependentUpon>
+    <EmbeddedResource Include="MiWindows\MiForm.ru-RU.resx">
+      <DependentUpon>MiForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MiWindows\DupBox.de-DE.resx">
       <DependentUpon>DupBox.cs</DependentUpon>
@@ -282,18 +282,23 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MiWindows\KBM360.de-DE.resx">
       <DependentUpon>KBM360.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MiWindows\KBM360.es.resx">
       <DependentUpon>KBM360.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MiWindows\KBM360.fr-FR.resx">
       <DependentUpon>KBM360.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MiWindows\KBM360.it-IT.resx">
       <DependentUpon>KBM360.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MiWindows\KBM360.pt-BR.resx">
       <DependentUpon>KBM360.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MiWindows\KBM360.resx">
       <DependentUpon>KBM360.cs</DependentUpon>
@@ -310,9 +315,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MiWindows\KBM360.ro-RO.resx">
       <DependentUpon>KBM360.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MiWindows\KBM360.ru-RU.resx">
       <DependentUpon>KBM360.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MiWindows\Options.de-DE.resx">
       <DependentUpon>Options.cs</DependentUpon>
@@ -404,11 +411,11 @@
       <DependentUpon>SaveWhere.cs</DependentUpon>
       <LastGenOutput>SaveWhere1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="MiWindows\DS4Form.fr-FR.resx">
-      <DependentUpon>DS4Form.cs</DependentUpon>
+    <EmbeddedResource Include="MiWindows\MiForm.fr-FR.resx">
+      <DependentUpon>MiForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MiWindows\DS4Form.resx">
-      <DependentUpon>DS4Form.cs</DependentUpon>
+    <EmbeddedResource Include="MiWindows\MiForm.resx">
+      <DependentUpon>MiForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MiWindows\SaveWhere.ru-RU.resx">
       <DependentUpon>SaveWhere.cs</DependentUpon>
@@ -478,8 +485,8 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="MiWindows\app.config" />
-    <None Include="MiWindows\DS4Tool_TemporaryKey.pfx" />
-    <None Include="DS4Windows_TemporaryKey.pfx" />
+    <None Include="MiWindows\MiTool_TemporaryKey.pfx" />
+    <None Include="MiWindows_TemporaryKey.pfx" />
     <None Include="MySignKey.snk" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -512,7 +519,7 @@
     <None Include="Resources\1401402547_menu-24.png" />
     <None Include="Resources\delete.png" />
     <None Include="Resources\BT.png" />
-    <None Include="Resources\DS4 Controller.png" />
+    <None Include="Resources\Mi Controller.png" />
     <None Include="Resources\Clock.png" />
     <None Include="Resources\360LS.png" />
     <None Include="Resources\360RS.png" />
@@ -522,9 +529,9 @@
     <None Include="Resources\DOWN.png" />
     <None Include="Resources\360 fades.png" />
     <None Include="Resources\checked.png" />
-    <Content Include="MiWindows\DS4W.ico" />
+    <Content Include="MiWindows\MiW.ico" />
     <Content Include="HidLibrary\LICENSE.htm" />
-    <Content Include="Resources\DS4.ico" />
+    <Content Include="Resources\Mi.ico" />
     <None Include="Resources\mouse.png" />
     <None Include="Resources\rainbow.png" />
     <None Include="Resources\rainbowC.png" />
@@ -554,7 +561,7 @@
     <None Include="Resources\RSU.png" />
     <None Include="Resources\RT.png" />
     <None Include="Resources\Red Circle.png" />
-    <None Include="Resources\DS4W.ico" />
+    <None Include="Resources\MiW.ico" />
     <None Include="Resources\EE.wav" />
     <Content Include="Resources\Scp_All.ico" />
   </ItemGroup>

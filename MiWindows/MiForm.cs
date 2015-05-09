@@ -17,7 +17,7 @@ using System.ServiceProcess;
 
 namespace MiWindows
 {
-    public partial class DS4Form : Form
+    public partial class MiForm : Form
     {
         public string[] arguements;
         delegate void LogDebugDelegate(DateTime Time, String Data, bool warning);
@@ -29,8 +29,8 @@ namespace MiWindows
         WebClient wc = new WebClient();
         Timer test = new Timer(), hotkeysTimer = new Timer();
         string exepath = Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName;
-        string appdatapath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DS4Windows";
-        string oldappdatapath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DS4Tool";
+        string appdatapath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MiWindows";
+        string oldappdatapath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MiTool";
         string tempProfileProgram = "null";
         float dpix, dpiy;
         List<string> profilenames = new List<string>();
@@ -46,7 +46,7 @@ namespace MiWindows
         WinProgs WP;
         public bool mAllowVisible;
         bool contextclose;
-        string logFile = Global.appdatapath + @"\DS4Service.log";
+        string logFile = Global.appdatapath + @"\MiService.log";
         //StreamWriter logWriter;
         //bool outputlog = false;
 
@@ -68,7 +68,7 @@ namespace MiWindows
         [DllImport("psapi.dll")]
         private static extern uint GetModuleFileNameEx(IntPtr hWnd, IntPtr hModule, StringBuilder lpFileName, int nSize);
 
-        public DS4Form(string[] args)
+        public MiForm(string[] args)
         {
             //System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("fr-FR");
             InitializeComponent();
@@ -101,13 +101,13 @@ namespace MiWindows
                 try
                 {
                     if (Directory.Exists(appdatapath))
-                        Directory.Move(appdatapath, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DS4Windows Old");
+                        Directory.Move(appdatapath, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MiWindows Old");
                     Directory.Move(oldappdatapath, appdatapath);
                     Global.SaveWhere(appdatapath);
                 }
                 catch
                 {
-                    MessageBox.Show(Properties.Resources.CannotMoveFiles, "DS4Windows");
+                    MessageBox.Show(Properties.Resources.CannotMoveFiles, "MiWindows");
                     Process.Start("explorer.exe", @"/select, " + appdatapath);
                     Close();
                     return;
@@ -143,12 +143,12 @@ namespace MiWindows
             {
                 g.Dispose();
             }
-            Icon = Properties.Resources.DS4W;
-            notifyIcon1.Icon = Properties.Resources.DS4W;
+            Icon = Properties.Resources.MiW;
+            notifyIcon1.Icon = Properties.Resources.MiW;
             Program.rootHub.Debug += On_Debug;
 
             Log.GuiLog += On_Debug;
-            logFile = Global.appdatapath + "\\DS4Windows.log";
+            logFile = Global.appdatapath + "\\MiWindows.log";
             //logWriter = File.AppendText(logFile);
             Log.TrayIconLog += ShowNotification;
             // tmrUpdate.Enabled = true; TODO remove tmrUpdate and leave tick()
@@ -156,7 +156,7 @@ namespace MiWindows
             Directory.CreateDirectory(Global.appdatapath);
             Global.Load();
             if (!Global.Save()) //if can't write to file
-                if (MessageBox.Show("Cannot write at current location\nCopy Settings to appdata?", "DS4Windows",
+                if (MessageBox.Show("Cannot write at current location\nCopy Settings to appdata?", "MiWindows",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
                 {
                     try
@@ -171,23 +171,23 @@ namespace MiWindows
                         }
                     }
                     catch { }
-                    MessageBox.Show("Copy complete, please relaunch DS4Windows and remove settings from Program Directory", "DS4Windows");
+                    MessageBox.Show("Copy complete, please relaunch MiWindows and remove settings from Program Directory", "MiWindows");
                     Global.appdatapath = null;
                     Close();
                     return;
                 }
                 else
                 {
-                    MessageBox.Show("DS4Windows cannot edit settings here, This will now close", "DS4Windows");
+                    MessageBox.Show("MiWindows cannot edit settings here, This will now close", "MiWindows");
                     Global.appdatapath = null;
                     Close();
                     return;
                 }
             foreach (ToolStripMenuItem t in shortcuts)
                 t.DropDownItemClicked += Profile_Changed_Menu;
-            hideDS4CheckBox.CheckedChanged -= hideDS4CheckBox_CheckedChanged;
-            hideDS4CheckBox.Checked = Global.UseExclusiveMode;
-            hideDS4CheckBox.CheckedChanged += hideDS4CheckBox_CheckedChanged;
+            hideMiCheckBox.CheckedChanged -= hideMiCheckBox_CheckedChanged;
+            hideMiCheckBox.Checked = Global.UseExclusiveMode;
+            hideMiCheckBox.CheckedChanged += hideMiCheckBox_CheckedChanged;
             cBDisconnectBT.Checked = Global.DCBTatStop;
             cBQuickCharge.Checked = Global.QuickCharge;
             nUDXIPorts.Value = Global.FirstXinputPort;
@@ -214,7 +214,7 @@ namespace MiWindows
                         if (Path.GetExtension(s) == ".xml")
                         {
                             xDoc.Load(s);
-                            XmlNode el = xDoc.SelectSingleNode("DS4Windows/ProfileActions"); //.CreateElement("Action");
+                            XmlNode el = xDoc.SelectSingleNode("MiWindows/ProfileActions"); //.CreateElement("Action");
                             if (el != null)
                                 if (string.IsNullOrEmpty(el.InnerText))
                                     el.InnerText = "Disconnect Controller";
@@ -222,7 +222,7 @@ namespace MiWindows
                                     el.InnerText += "/Disconnect Controller";
                             else
                             {
-                                XmlNode Node = xDoc.SelectSingleNode("DS4Windows");
+                                XmlNode Node = xDoc.SelectSingleNode("MiWindows");
                                 el = xDoc.CreateElement("ProfileActions");
                                 el.InnerText = "Disconnect Controller";
                                 Node.AppendChild(el);
@@ -282,7 +282,7 @@ namespace MiWindows
                 cBUpdateTime.SelectedIndex = 0;
                 nUDUpdateTime.Value = checkwhen;
             }
-            Uri url = new Uri("http://ds4windows.com/Files/Builds/newest.txt"); //Sorry other devs, gonna have to find your own server
+            Uri url = new Uri("http://miwindows.com/Files/Builds/newest.txt"); //Sorry other devs, gonna have to find your own server
 
 
             if (checkwhen > 0 && DateTime.Now >= Global.LastChecked + TimeSpan.FromHours(checkwhen))
@@ -303,13 +303,13 @@ namespace MiWindows
             test.Tick += test_Tick;
             if (!System.IO.Directory.Exists(Global.appdatapath + "\\Virtual Bus Driver"))
                 linkUninstall.Visible = false;
-            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\DS4Windows.lnk"))
+            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\MiWindows.lnk"))
             {
                 StartWindowsCheckBox.Checked = true;
-                string lnkpath = WinProgs.ResolveShortcutAndArgument(Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\DS4Windows.lnk");
+                string lnkpath = WinProgs.ResolveShortcutAndArgument(Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\MiWindows.lnk");
                 if (!lnkpath.EndsWith("-m"))
                 {
-                    File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\DS4Windows.lnk");
+                    File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\MiWindows.lnk");
                     appShortcutToStartup();
                 }
             }
@@ -317,7 +317,7 @@ namespace MiWindows
 
         void NewVersion()
         {
-            if (File.Exists(exepath + "\\1.4.22.ds4w"))
+            if (File.Exists(exepath + "\\1.4.22.miw"))
             {
                 bool dcexists = false;
                 foreach (SpecialAction action in Global.GetActions())
@@ -339,7 +339,7 @@ namespace MiWindows
                             if (Path.GetExtension(s) == ".xml")
                             {
                                 xDoc.Load(s);
-                                XmlNode el = xDoc.SelectSingleNode("DS4Windows/ProfileActions");
+                                XmlNode el = xDoc.SelectSingleNode("MiWindows/ProfileActions");
                                 if (el != null)
                                     if (string.IsNullOrEmpty(el.InnerText))
                                         el.InnerText = "Disconnect Controller";
@@ -347,7 +347,7 @@ namespace MiWindows
                                         el.InnerText += "/Disconnect Controller";
                                 else
                                 {
-                                    XmlNode Node = xDoc.SelectSingleNode("DS4Windows");
+                                    XmlNode Node = xDoc.SelectSingleNode("MiWindows");
                                     el = xDoc.CreateElement("ProfileActions");
                                     el.InnerText = "Disconnect Controller";
                                     Node.AppendChild(el);
@@ -358,7 +358,7 @@ namespace MiWindows
                     }
                     catch { }
                 }
-                File.Delete(exepath + "\\1.4.22.ds4w");
+                File.Delete(exepath + "\\1.4.22.miw");
             }
         }
 
@@ -401,7 +401,7 @@ namespace MiWindows
                 case PowerModes.Resume:
                     if (btnStartStop.Text == Properties.Resources.StartText && wasrunning)
                     {
-                        //DS4LightBar.shuttingdown = false;
+                        //MiLightBar.shuttingdown = false;
                         wasrunning = false;
                         btnStartStop_Clicked();
                     }
@@ -409,7 +409,7 @@ namespace MiWindows
                 case PowerModes.Suspend:
                     if (btnStartStop.Text == Properties.Resources.StopText)
                     {
-                        //DS4LightBar.shuttingdown = true;
+                        //MiLightBar.shuttingdown = true;
                         btnStartStop_Clicked();
                         wasrunning = true;
                     }
@@ -538,23 +538,23 @@ namespace MiWindows
             string version = fvi.FileVersion;
             string newversion = File.ReadAllText(Global.appdatapath + "\\version.txt");
             if (version.Replace(',', '.').CompareTo(newversion) == -1)//CompareVersions();
-                if (MessageBox.Show(Properties.Resources.DownloadVersion.Replace("*number*", newversion), Properties.Resources.DS4Update, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                if (MessageBox.Show(Properties.Resources.DownloadVersion.Replace("*number*", newversion), Properties.Resources.MiUpdate, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
                 {
-                    if (!File.Exists(exepath + "\\DS4Updater.exe") || (File.Exists(exepath + "\\DS4Updater.exe")
-                        && (FileVersionInfo.GetVersionInfo(exepath + "\\DS4Updater.exe").FileVersion.CompareTo("1.1.0.0") == -1)))
+                    if (!File.Exists(exepath + "\\MiUpdater.exe") || (File.Exists(exepath + "\\MiUpdater.exe")
+                        && (FileVersionInfo.GetVersionInfo(exepath + "\\MiUpdater.exe").FileVersion.CompareTo("1.1.0.0") == -1)))
                     {
-                        Uri url2 = new Uri("http://ds4windows.com/Files/DS4Updater.exe");
+                        Uri url2 = new Uri("http://miwindows.com/Files/MiUpdater.exe");
                         WebClient wc2 = new WebClient();
                         if (Global.appdatapath == exepath)
-                            wc2.DownloadFile(url2, exepath + "\\DS4Updater.exe");
+                            wc2.DownloadFile(url2, exepath + "\\MiUpdater.exe");
                         else
                         {
                             MessageBox.Show(Properties.Resources.PleaseDownloadUpdater);
-                            Process.Start("http://ds4windows.com/Files/DS4Updater.exe");
+                            Process.Start("http://miwindows.com/Files/MiUpdater.exe");
                         }
                     }
                     Process p = new Process();
-                    p.StartInfo.FileName = exepath + "\\DS4Updater.exe";
+                    p.StartInfo.FileName = exepath + "\\MiUpdater.exe";
                     if (!cBDownloadLangauge.Checked)
                         p.StartInfo.Arguments = "-skipLang";
                     if (Global.AdminNeeded())
@@ -672,7 +672,7 @@ namespace MiWindows
             if (Form.ActiveForm != this && (cBNotifications.Checked || sender != null))
             {
                 this.notifyIcon1.BalloonTipText = args.Data;
-                notifyIcon1.BalloonTipTitle = "DS4Windows";
+                notifyIcon1.BalloonTipTitle = "MiWindows";
                 notifyIcon1.ShowBalloonTip(1);
             }
         }
@@ -682,7 +682,7 @@ namespace MiWindows
             if (Form.ActiveForm != this && cBNotifications.Checked)
             {
                 this.notifyIcon1.BalloonTipText = text;
-                notifyIcon1.BalloonTipTitle = "DS4Windows";
+                notifyIcon1.BalloonTipTitle = "MiWindows";
                 notifyIcon1.ShowBalloonTip(1);
             }
         }
@@ -764,7 +764,7 @@ namespace MiWindows
         }
         protected void ControllerStatusChanged()
         {
-            String tooltip = "DS4Windows v" + FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
+            String tooltip = "MiWindows v" + FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
             bool nocontrollers = true;
             for (Int32 Index = 0; Index < Pads.Length; Index++)
             {
@@ -775,13 +775,13 @@ namespace MiWindows
                     d.DisconnectBT();
                     return;
                 }
-                switch (Program.rootHub.getDS4Status(Index))
+                switch (Program.rootHub.getMiStatus(Index))
                 {
                     case "USB": statPB[Index].Visible = true; statPB[Index].Image = Properties.Resources.USB; toolTip1.SetToolTip(statPB[Index], ""); break;
                     case "BT": statPB[Index].Visible = true; statPB[Index].Image = Properties.Resources.BT; toolTip1.SetToolTip(statPB[Index], "Right click to disconnect"); break;
                     default: statPB[Index].Visible = false; toolTip1.SetToolTip(statPB[Index], ""); break;
                 }
-                Batteries[Index].Text = Program.rootHub.getDS4Battery(Index);
+                Batteries[Index].Text = Program.rootHub.getMiBattery(Index);
                 if (Pads[Index].Text != String.Empty)
                 {
                     Pads[Index].Enabled = true;
@@ -801,10 +801,10 @@ namespace MiWindows
                     Pads[Index].Text = Properties.Resources.Disconnected;
                     Enable_Controls(Index, false);
                 }
-                //if (((Index + 1) + ": " + Program.rootHub.getShortDS4ControllerInfo(Index)).Length > 50)
-                //MessageBox.Show(((Index + 1) + ": " + Program.rootHub.getShortDS4ControllerInfo(Index)).Length.ToString());
-                if (Program.rootHub.getShortDS4ControllerInfo(Index) != Properties.Resources.NoneText)
-                    tooltip += "\n" + (Index + 1) + ": " + Program.rootHub.getShortDS4ControllerInfo(Index); // Carefully stay under the 63 character limit.
+                //if (((Index + 1) + ": " + Program.rootHub.getShortMiControllerInfo(Index)).Length > 50)
+                //MessageBox.Show(((Index + 1) + ": " + Program.rootHub.getShortMiControllerInfo(Index)).Length.ToString());
+                if (Program.rootHub.getShortMiControllerInfo(Index) != Properties.Resources.NoneText)
+                    tooltip += "\n" + (Index + 1) + ": " + Program.rootHub.getShortMiControllerInfo(Index); // Carefully stay under the 63 character limit.
             }
             lbNoControllers.Visible = nocontrollers;
             tLPControllers.Visible = !nocontrollers;
@@ -818,7 +818,7 @@ namespace MiWindows
         private void pBStatus_MouseClick(object sender, MouseEventArgs e)
         {
             int i = Int32.Parse(((PictureBox)sender).Tag.ToString());
-            if (e.Button == System.Windows.Forms.MouseButtons.Right && Program.rootHub.getDS4Status(i) == "BT" && !Program.rootHub.MiControllers[i].Charging)
+            if (e.Button == System.Windows.Forms.MouseButtons.Right && Program.rootHub.getMiStatus(i) == "BT" && !Program.rootHub.MiControllers[i].Charging)
                 Program.rootHub.MiControllers[i].DisconnectBT();
         }
 
@@ -938,7 +938,7 @@ namespace MiWindows
         private void tSBImportProfile_Click(object sender, EventArgs e)
         {
             if (Global.appdatapath == Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName)
-                openProfiles.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DS4Tool" + @"\Profiles\";
+                openProfiles.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MiTool" + @"\Profiles\";
             else
                 openProfiles.InitialDirectory = Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName + @"\Profiles\";
             if (openProfiles.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -1045,7 +1045,7 @@ namespace MiWindows
             System.Diagnostics.Process.Start("control", "joy.cpl");
         }
 
-        private void hideDS4CheckBox_CheckedChanged(object sender, EventArgs e)
+        private void hideMiCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             // Prevent the Game Controllers window from throwing an error when controllers are un/hidden
             System.Diagnostics.Process[] rundll32 = System.Diagnostics.Process.GetProcessesByName("rundll32");
@@ -1054,7 +1054,7 @@ namespace MiWindows
                     if (module.FileName.Contains("joy.cpl"))
                         module.Dispose();
 
-            Global.UseExclusiveMode = hideDS4CheckBox.Checked;
+            Global.UseExclusiveMode = hideMiCheckBox.Checked;
             btnStartStop_Clicked(false);
             btnStartStop_Clicked(false);
             Global.Save();
@@ -1153,11 +1153,11 @@ namespace MiWindows
         private void StartWindowsCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             RegistryKey KeyLoc = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            if (StartWindowsCheckBox.Checked && !File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\DS4Windows.lnk"))
+            if (StartWindowsCheckBox.Checked && !File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\MiWindows.lnk"))
                 appShortcutToStartup();
             else if (!StartWindowsCheckBox.Checked)
-                File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\DS4Windows.lnk");
-            KeyLoc.DeleteValue("DS4Tool", false);
+                File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\MiWindows.lnk");
+            KeyLoc.DeleteValue("MiTool", false);
         }
 
         private void appShortcutToStartup()
@@ -1166,7 +1166,7 @@ namespace MiWindows
             dynamic shell = Activator.CreateInstance(t);
             try
             {
-                var lnk = shell.CreateShortcut(Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\DS4Windows.lnk");
+                var lnk = shell.CreateShortcut(Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\MiWindows.lnk");
                 try
                 {
                     string app = Assembly.GetExecutingAssembly().Location;
@@ -1221,7 +1221,7 @@ namespace MiWindows
             {
 
                 //if (File.Exists(appdatapath + "\\Auto Profiles.xml"))
-                case "linkUninstall": lbLastMessage.Text = Properties.Resources.IfRemovingDS4Windows; break;
+                case "linkUninstall": lbLastMessage.Text = Properties.Resources.IfRemovingMiWindows; break;
                 case "cBSwipeProfiles": lbLastMessage.Text = Properties.Resources.TwoFingerSwipe; break;
                 case "cBQuickCharge": lbLastMessage.Text = Properties.Resources.QuickCharge; break;
                 case "pnlXIPorts": lbLastMessage.Text = Properties.Resources.XinputPorts; break;
@@ -1409,7 +1409,7 @@ namespace MiWindows
 
         private void lLBUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Uri url = new Uri("http://ds4windows.com/Files/Builds/newest.txt"); //Sorry other devs, gonna have to find your own server
+            Uri url = new Uri("http://miwindows.com/Files/Builds/newest.txt"); //Sorry other devs, gonna have to find your own server
             WebClient wct = new WebClient();
             wct.DownloadFileAsync(url, Global.appdatapath + "\\version.txt");
             wct.DownloadFileCompleted += wct_DownloadFileCompleted;
@@ -1427,23 +1427,23 @@ namespace MiWindows
             string version2 = fvi.FileVersion;
             string newversion2 = File.ReadAllText(Global.appdatapath + "\\version.txt");
             if (version2.Replace(',', '.').CompareTo(File.ReadAllText(Global.appdatapath + "\\version.txt")) == -1)//CompareVersions();
-                if (MessageBox.Show(Properties.Resources.DownloadVersion.Replace("*number*", newversion2), Properties.Resources.DS4Update, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                if (MessageBox.Show(Properties.Resources.DownloadVersion.Replace("*number*", newversion2), Properties.Resources.MiUpdate, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
                 {
-                    if (!File.Exists(exepath + "\\DS4Updater.exe") || (File.Exists(exepath + "\\DS4Updater.exe")
-                         && (FileVersionInfo.GetVersionInfo(exepath + "\\DS4Updater.exe").FileVersion.CompareTo("1.1.0.0") == -1)))
+                    if (!File.Exists(exepath + "\\MiUpdater.exe") || (File.Exists(exepath + "\\MiUpdater.exe")
+                         && (FileVersionInfo.GetVersionInfo(exepath + "\\MiUpdater.exe").FileVersion.CompareTo("1.1.0.0") == -1)))
                     {
-                        Uri url2 = new Uri("http://ds4windows.com/Files/DS4Updater.exe");
+                        Uri url2 = new Uri("http://miwindows.com/Files/MiUpdater.exe");
                         WebClient wc2 = new WebClient();
                         if (Global.appdatapath == exepath)
-                            wc2.DownloadFile(url2, exepath + "\\DS4Updater.exe");
+                            wc2.DownloadFile(url2, exepath + "\\MiUpdater.exe");
                         else
                         {
                             MessageBox.Show(Properties.Resources.PleaseDownloadUpdater);
-                            Process.Start("http://ds4windows.com/Files/DS4Updater.exe");
+                            Process.Start("http://miwindows.com/Files/MiUpdater.exe");
                         }
                     }
                     Process p = new Process();
-                    p.StartInfo.FileName = exepath + "\\DS4Updater.exe";
+                    p.StartInfo.FileName = exepath + "\\MiUpdater.exe";
                     if (!cBDownloadLangauge.Checked)
                         p.StartInfo.Arguments = "-skipLang";
                     if (Global.AdminNeeded())
@@ -1456,7 +1456,7 @@ namespace MiWindows
             else
             {
                 File.Delete(Global.appdatapath + "\\version.txt");
-                MessageBox.Show(Properties.Resources.UpToDate, "DS4Windows Updater");
+                MessageBox.Show(Properties.Resources.UpToDate, "MiWindows Updater");
             }
         }
 
@@ -1510,7 +1510,7 @@ namespace MiWindows
             // shutdown.
             {
                 systemShutdown = false;
-                //DS4LightBar.shuttingdown = true;
+                //MiLightBar.shuttingdown = true;
             }
             if (oldsize == new System.Drawing.Size(0, 0))
             {

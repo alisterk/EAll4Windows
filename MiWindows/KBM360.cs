@@ -200,7 +200,7 @@ namespace MiWindows
                 if (rb != null) //if record macro is open
                 {
                     if (!rb.saved && rb.macros.Count > 0)
-                        if (MessageBox.Show(Properties.Resources.SaveRecordedMacro, "DS4Windows", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                        if (MessageBox.Show(Properties.Resources.SaveRecordedMacro, "MiWindows", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
                             rb.btnSave_Click(this, null);
                 }
                 if (lBMacroOn.Visible)
@@ -347,7 +347,7 @@ namespace MiWindows
             reg = Color.FromArgb(tBRedBar.Value, tBGreenBar.Value, tBBlueBar.Value);
             full = HuetoRGB(reg.GetHue(), reg.GetBrightness(), reg);
             bnColor.BackColor = Color.FromArgb((alphacolor > 205 ? 255 : (alphacolor + 50)), full);
-            Global.ShiftColor[device] = new DS4Color((byte)tBRedBar.Value, (byte)tBGreenBar.Value, (byte)tBBlueBar.Value);
+            Global.ShiftColor[device] = new MiColor((byte)tBRedBar.Value, (byte)tBGreenBar.Value, (byte)tBBlueBar.Value);
             lbRedV.Text = ((TrackBar)sender).Value.ToString();
         }
         private void greenBar_ValueChanged(object sender, EventArgs e)
@@ -361,7 +361,7 @@ namespace MiWindows
             reg = Color.FromArgb(tBRedBar.Value, tBGreenBar.Value, tBBlueBar.Value);
             full = HuetoRGB(reg.GetHue(), reg.GetBrightness(), reg);
             bnColor.BackColor = Color.FromArgb((alphacolor > 205 ? 255 : (alphacolor + 50)), full);
-            Global.ShiftColor[device] = new DS4Color((byte)tBRedBar.Value, (byte)tBGreenBar.Value, (byte)tBBlueBar.Value);
+            Global.ShiftColor[device] = new MiColor((byte)tBRedBar.Value, (byte)tBGreenBar.Value, (byte)tBBlueBar.Value);
             lbGreenV.Text = ((TrackBar)sender).Value.ToString();
         }
         private void blueBar_ValueChanged(object sender, EventArgs e)
@@ -375,7 +375,7 @@ namespace MiWindows
             reg = Color.FromArgb(tBRedBar.Value, tBGreenBar.Value, tBBlueBar.Value);
             full = HuetoRGB(reg.GetHue(), reg.GetBrightness(), reg);
             bnColor.BackColor = Color.FromArgb((alphacolor > 205 ? 255 : (alphacolor + 50)), full);
-            Global.ShiftColor[device] = new DS4Color((byte)tBRedBar.Value, (byte)tBGreenBar.Value, (byte)tBBlueBar.Value);
+            Global.ShiftColor[device] = new MiColor((byte)tBRedBar.Value, (byte)tBGreenBar.Value, (byte)tBBlueBar.Value);
             lbBlueV.Text = ((TrackBar)sender).Value.ToString();
         }
 
@@ -411,7 +411,7 @@ namespace MiWindows
                 tBBlueBar.Value = advColorDialog.Color.B;
             }
             //if (device < 4)
-            //    DS4LightBar.forcelight[device] = false;
+            //    MiLightBar.forcelight[device] = false;
         }
 
         private void advColorDialog_OnUpdateColor(object sender, EventArgs e)
@@ -419,10 +419,10 @@ namespace MiWindows
             if (sender is Color && device < 4)
             {
                 Color color = (Color)sender;
-                DS4Color dcolor = new DS4Color { red = color.R, green = color.G, blue = color.B };
-                //DS4LightBar.forcedColor[device] = dcolor;
-                //DS4LightBar.forcedFlash[device] = 0;
-                //DS4LightBar.forcelight[device] = true;
+                MiColor dcolor = new MiColor { red = color.R, green = color.G, blue = color.B };
+                //MiLightBar.forcedColor[device] = dcolor;
+                //MiLightBar.forcedFlash[device] = 0;
+                //MiLightBar.forcelight[device] = true;
             }
         }
 

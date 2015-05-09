@@ -9467,7 +9467,7 @@ Click the lightbar for color picker</value>
     <value>advColorDialog</value>
   </data>
   <data name="&gt;&gt;advColorDialog.Type" xml:space="preserve">
-    <value>DS4Windows.AdvancedColorDialog, DS4Windows, Version=1.4.25.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>MiWindows.AdvancedColorDialog, MiWindows, Version=1.4.25.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Options</value>

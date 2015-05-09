@@ -4,9 +4,9 @@
 //using System.Text;
 //using System.Drawing;
 
-//namespace DS4Windows
+//namespace MiWindows
 //{
-//    public class DS4LightBar
+//    public class MiLightBar
 //    {
 //        private readonly static byte[/* Light On duration */, /* Light Off duration */] BatteryIndicatorDurations =
 //        {
@@ -26,11 +26,11 @@
 //        static bool[] fadedirection = new bool[4] { false, false, false, false };
 //        static DateTime oldnow = DateTime.UtcNow;
 //        public static bool[] forcelight = new bool[4] { false, false, false, false };
-//        public static DS4Color[] forcedColor = new DS4Color[4];
+//        public static MiColor[] forcedColor = new MiColor[4];
 //        public static byte[] forcedFlash = new byte[4];
-//        public static void updateLightBar(MiDevice device, int deviceNum, DS4State cState, DS4StateExposed eState, Mouse tp)
+//        public static void updateLightBar(MiDevice device, int deviceNum, MiState cState, MiStateExposed eState, Mouse tp)
 //        {
-//            DS4Color color;
+//            MiColor color;
 //            if (!defualtLight && !forcelight[deviceNum])
 //            {
 //                if (Global.ShiftColorOn[deviceNum] && Global.ShiftModifier[deviceNum] > 0 && shiftMod(device, deviceNum, cState, eState, tp))
@@ -64,8 +64,8 @@
 //                    {
 //                        //if (device.Charging == false || device.Battery >= 100) // when charged, don't show the charging animation
 //                        {
-//                            DS4Color fullColor = Global.MainColor[deviceNum];
-//                            DS4Color lowColor =  Global.LowColor[deviceNum];
+//                            MiColor fullColor = Global.MainColor[deviceNum];
+//                            MiColor lowColor =  Global.LowColor[deviceNum];
 
 //                            color = Global.getTransitionedColor(lowColor, fullColor, (uint)device.Battery);
 //                        }
@@ -92,7 +92,7 @@
 //                                fadetimer[deviceNum] += 1;
 //                            else
 //                                fadetimer[deviceNum] -= 1;
-//                            color = Global.getTransitionedColor(color, new DS4Color(0,0,0), fadetimer[deviceNum]);
+//                            color = Global.getTransitionedColor(color, new MiColor(0,0,0), fadetimer[deviceNum]);
 //                        }
 //                    }
 
@@ -103,9 +103,9 @@
 //                        double topratio = TimeSpan.FromSeconds(Global.IdleDisconnectTimeout[deviceNum]).TotalMilliseconds;
 //                        double ratio = ((botratio / topratio) * 100);
 //                        if (ratio >= 50 && ratio <= 100)
-//                            color = Global.getTransitionedColor(color, new DS4Color(0, 0, 0), (uint)((ratio - 50) * 2));
+//                            color = Global.getTransitionedColor(color, new MiColor(0, 0, 0), (uint)((ratio - 50) * 2));
 //                        else if (ratio >= 100)
-//                            color = Global.getTransitionedColor(color, new DS4Color(0, 0, 0), 100);
+//                            color = Global.getTransitionedColor(color, new MiColor(0, 0, 0), 100);
 //                    }
 //                    if (device.Charging && device.Battery < 100)
 //                        switch (Global.ChargingType[deviceNum])
@@ -119,7 +119,7 @@
 //                                    fadetimer[deviceNum] += .1;
 //                                else
 //                                    fadetimer[deviceNum] -= .1;
-//                                color = Global.getTransitionedColor(color, new DS4Color(0, 0, 0), fadetimer[deviceNum]);
+//                                color = Global.getTransitionedColor(color, new MiColor(0, 0, 0), fadetimer[deviceNum]);
 //                                break;
 //                            case 2:
 //                                counters[deviceNum] += .167;
@@ -138,13 +138,13 @@
 //                color = forcedColor[deviceNum];
 //            }
 //            else if (shuttingdown)
-//                color = new DS4Color(0, 0, 0);
+//                color = new MiColor(0, 0, 0);
 //            else
 //            {
 //                if (device.ConnectionType == ConnectionType.BT)
-//                    color = new DS4Color(32, 64, 64);
+//                    color = new MiColor(32, 64, 64);
 //                else
-//                    color = new DS4Color(0, 0, 0);
+//                    color = new MiColor(0, 0, 0);
 //            }
 //            bool distanceprofile = (Global.ProfilePath[deviceNum].ToLower().Contains("distance") || Global.tempprofilename[deviceNum].ToLower().Contains("distance"));
 //            if (distanceprofile && !defualtLight)
@@ -152,11 +152,11 @@
 //                float rumble = device.LeftHeavySlowRumble / 2.55f;
 //                byte max = Math.Max(color.red, Math.Max(color.green, color.blue));
 //                if (device.LeftHeavySlowRumble > 100)
-//                    color = Global.getTransitionedColor(new DS4Color(max, max, 0), new DS4Color(255, 0, 0), rumble);
+//                    color = Global.getTransitionedColor(new MiColor(max, max, 0), new MiColor(255, 0, 0), rumble);
 //                else
-//                    color = Global.getTransitionedColor(color, Global.getTransitionedColor(new DS4Color(max, max, 0), new DS4Color(255, 0, 0), 39.6078f), device.LeftHeavySlowRumble);
+//                    color = Global.getTransitionedColor(color, Global.getTransitionedColor(new MiColor(max, max, 0), new MiColor(255, 0, 0), 39.6078f), device.LeftHeavySlowRumble);
 //            }
-//            DS4HapticState haptics = new DS4HapticState
+//            MiHapticState haptics = new MiHapticState
 //            {
 //                LightBarColor = color
 //            };
@@ -200,59 +200,59 @@
 
 //        public static bool defualtLight = false, shuttingdown = false;
 
-//        public static bool shiftMod(MiDevice device, int deviceNum, DS4State cState, DS4StateExposed eState, Mouse tp)
+//        public static bool shiftMod(MiDevice device, int deviceNum, MiState cState, MiStateExposed eState, Mouse tp)
 //        {
 //            bool shift;
 //            switch (Global.ShiftModifier[deviceNum])
 //            {
-//                case 1: shift = Mapping.getBoolMapping(DS4Controls.Cross, cState, eState, tp); break;
-//                case 2: shift = Mapping.getBoolMapping(DS4Controls.Circle, cState, eState, tp); break;
-//                case 3: shift = Mapping.getBoolMapping(DS4Controls.Square, cState, eState, tp); break;
-//                case 4: shift = Mapping.getBoolMapping(DS4Controls.Triangle, cState, eState, tp); break;
-//                case 5: shift = Mapping.getBoolMapping(DS4Controls.Options, cState, eState, tp); break;
-//                case 6: shift = Mapping.getBoolMapping(DS4Controls.Share, cState, eState, tp); break;
-//                case 7: shift = Mapping.getBoolMapping(DS4Controls.DpadUp, cState, eState, tp); break;
-//                case 8: shift = Mapping.getBoolMapping(DS4Controls.DpadDown, cState, eState, tp); break;
-//                case 9: shift = Mapping.getBoolMapping(DS4Controls.DpadLeft, cState, eState, tp); break;
-//                case 10: shift = Mapping.getBoolMapping(DS4Controls.DpadRight, cState, eState, tp); break;
-//                case 11: shift = Mapping.getBoolMapping(DS4Controls.PS, cState, eState, tp); break;
-//                case 12: shift = Mapping.getBoolMapping(DS4Controls.L1, cState, eState, tp); break;
-//                case 13: shift = Mapping.getBoolMapping(DS4Controls.R1, cState, eState, tp); break;
-//                case 14: shift = Mapping.getBoolMapping(DS4Controls.L2, cState, eState, tp); break;
-//                case 15: shift = Mapping.getBoolMapping(DS4Controls.R2, cState, eState, tp); break;
-//                case 16: shift = Mapping.getBoolMapping(DS4Controls.L3, cState, eState, tp); break;
-//                case 17: shift = Mapping.getBoolMapping(DS4Controls.R3, cState, eState, tp); break;
-//                case 18: shift = Mapping.getBoolMapping(DS4Controls.TouchLeft, cState, eState, tp); break;
-//                case 19: shift = Mapping.getBoolMapping(DS4Controls.TouchUpper, cState, eState, tp); break;
-//                case 20: shift = Mapping.getBoolMapping(DS4Controls.TouchMulti, cState, eState, tp); break;
-//                case 21: shift = Mapping.getBoolMapping(DS4Controls.TouchRight, cState, eState, tp); break;
-//                case 22: shift = Mapping.getBoolMapping(DS4Controls.GyroZNeg, cState, eState, tp); break;
-//                case 23: shift = Mapping.getBoolMapping(DS4Controls.GyroZPos, cState, eState, tp); break;
-//                case 24: shift = Mapping.getBoolMapping(DS4Controls.GyroXPos, cState, eState, tp); break;
-//                case 25: shift = Mapping.getBoolMapping(DS4Controls.GyroXNeg, cState, eState, tp); break;
+//                case 1: shift = Mapping.getBoolMapping(MiControls.Cross, cState, eState, tp); break;
+//                case 2: shift = Mapping.getBoolMapping(MiControls.Circle, cState, eState, tp); break;
+//                case 3: shift = Mapping.getBoolMapping(MiControls.Square, cState, eState, tp); break;
+//                case 4: shift = Mapping.getBoolMapping(MiControls.Triangle, cState, eState, tp); break;
+//                case 5: shift = Mapping.getBoolMapping(MiControls.Options, cState, eState, tp); break;
+//                case 6: shift = Mapping.getBoolMapping(MiControls.Share, cState, eState, tp); break;
+//                case 7: shift = Mapping.getBoolMapping(MiControls.DpadUp, cState, eState, tp); break;
+//                case 8: shift = Mapping.getBoolMapping(MiControls.DpadDown, cState, eState, tp); break;
+//                case 9: shift = Mapping.getBoolMapping(MiControls.DpadLeft, cState, eState, tp); break;
+//                case 10: shift = Mapping.getBoolMapping(MiControls.DpadRight, cState, eState, tp); break;
+//                case 11: shift = Mapping.getBoolMapping(MiControls.PS, cState, eState, tp); break;
+//                case 12: shift = Mapping.getBoolMapping(MiControls.L1, cState, eState, tp); break;
+//                case 13: shift = Mapping.getBoolMapping(MiControls.R1, cState, eState, tp); break;
+//                case 14: shift = Mapping.getBoolMapping(MiControls.L2, cState, eState, tp); break;
+//                case 15: shift = Mapping.getBoolMapping(MiControls.R2, cState, eState, tp); break;
+//                case 16: shift = Mapping.getBoolMapping(MiControls.L3, cState, eState, tp); break;
+//                case 17: shift = Mapping.getBoolMapping(MiControls.R3, cState, eState, tp); break;
+//                case 18: shift = Mapping.getBoolMapping(MiControls.TouchLeft, cState, eState, tp); break;
+//                case 19: shift = Mapping.getBoolMapping(MiControls.TouchUpper, cState, eState, tp); break;
+//                case 20: shift = Mapping.getBoolMapping(MiControls.TouchMulti, cState, eState, tp); break;
+//                case 21: shift = Mapping.getBoolMapping(MiControls.TouchRight, cState, eState, tp); break;
+//                case 22: shift = Mapping.getBoolMapping(MiControls.GyroZNeg, cState, eState, tp); break;
+//                case 23: shift = Mapping.getBoolMapping(MiControls.GyroZPos, cState, eState, tp); break;
+//                case 24: shift = Mapping.getBoolMapping(MiControls.GyroXPos, cState, eState, tp); break;
+//                case 25: shift = Mapping.getBoolMapping(MiControls.GyroXNeg, cState, eState, tp); break;
 //                case 26: shift = device.getCurrentState().Touch1; break;
 //                default: shift = false; break;
 //            }
 //            return shift;
 //        }
-//        public static DS4Color HuetoRGB(float hue, byte sat)
+//        public static MiColor HuetoRGB(float hue, byte sat)
 //        {
 //            byte C = sat;
 //            int X = (int)((C * (float)(1 - Math.Abs((hue / 60) % 2 - 1))));
 //            if (0 <= hue && hue < 60)
-//                return new DS4Color(C, (byte)X, 0);
+//                return new MiColor(C, (byte)X, 0);
 //            else if (60 <= hue && hue < 120)
-//                return new DS4Color((byte)X, C, 0);
+//                return new MiColor((byte)X, C, 0);
 //            else if (120 <= hue && hue < 180)
-//                return new DS4Color(0, C, (byte)X);
+//                return new MiColor(0, C, (byte)X);
 //            else if (180 <= hue && hue < 240)
-//                return new DS4Color(0, (byte)X, C);
+//                return new MiColor(0, (byte)X, C);
 //            else if (240 <= hue && hue < 300)
-//                return new DS4Color((byte)X, 0, C);
+//                return new MiColor((byte)X, 0, C);
 //            else if (300 <= hue && hue < 360)
-//                return new DS4Color(C, 0, (byte)X);
+//                return new MiColor(C, 0, (byte)X);
 //            else
-//                return new DS4Color(Color.Red);
+//                return new MiColor(Color.Red);
 //        }
 //    }
 //}

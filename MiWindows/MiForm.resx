@@ -165,8 +165,8 @@
   <data name="lbBatt1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
   </data>
-  <data name="hideDS4CheckBox.Text" xml:space="preserve">
-    <value>Hide DS4 Controller</value>
+  <data name="hideMiCheckBox.Text" xml:space="preserve">
+    <value>Hide Mi Controller</value>
   </data>
   <data name="bnEditC1.TabIndex" type="System.Int32, mscorlib">
     <value>43</value>
@@ -225,7 +225,7 @@
   <data name="&gt;&gt;lbLastXIPort.Name" xml:space="preserve">
     <value>lbLastXIPort</value>
   </data>
-  <data name="hideDS4CheckBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="hideMiCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 17</value>
   </data>
   <data name="&gt;&gt;lbTest.Parent" xml:space="preserve">
@@ -1181,8 +1181,8 @@
   <data name="tabControllers.Size" type="System.Drawing.Size, System.Drawing">
     <value>896, 359</value>
   </data>
-  <data name="&gt;&gt;hideDS4CheckBox.Name" xml:space="preserve">
-    <value>hideDS4CheckBox</value>
+  <data name="&gt;&gt;hideMiCheckBox.Name" xml:space="preserve">
+    <value>hideMiCheckBox</value>
   </data>
   <data name="pBStatus3.Size" type="System.Drawing.Size, System.Drawing">
     <value>39, 20</value>
@@ -1199,7 +1199,7 @@
   <data name="cBDisconnectBT.Location" type="System.Drawing.Point, System.Drawing">
     <value>10, 125</value>
   </data>
-  <data name="hideDS4CheckBox.AutoSize" type="System.Boolean, mscorlib">
+  <data name="hideMiCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="cBUpdate.AutoSize" type="System.Boolean, mscorlib">
@@ -1416,7 +1416,7 @@
   <data name="cBFlashWhenLate.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="hideDS4CheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="hideMiCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="&gt;&gt;lbPad3.Parent" xml:space="preserve">
@@ -1721,7 +1721,7 @@
   <data name="pBStatus3.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="&gt;&gt;hideDS4CheckBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;hideMiCheckBox.Parent" xml:space="preserve">
     <value>fLPSettings</value>
   </data>
   <data name="lbCheckEvery.Location" type="System.Drawing.Point, System.Drawing">
@@ -1958,7 +1958,7 @@
     <value>3, 13</value>
   </data>
   <data name="notifyIcon1.Text" xml:space="preserve">
-    <value>DS4 Xinput Tool</value>
+    <value>Mi Xinput Tool</value>
   </data>
   <data name="&gt;&gt;notifyIcon1.Type" xml:space="preserve">
     <value>System.Windows.Forms.NotifyIcon, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -8697,7 +8697,7 @@
   <data name="&gt;&gt;tSBCancel.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;hideDS4CheckBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;hideMiCheckBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="tabSettings.ToolTip" xml:space="preserve">
@@ -8922,13 +8922,13 @@
   <data name="&gt;&gt;lBProfiles.Type" xml:space="preserve">
     <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="hideDS4CheckBox.ToolTip" xml:space="preserve">
+  <data name="hideMiCheckBox.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="startToolStripMenuItem.Text" xml:space="preserve">
     <value>Start</value>
   </data>
-  <data name="hideDS4CheckBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="hideMiCheckBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>10, 10</value>
   </data>
   <data name="&gt;&gt;editProfileForController1ToolStripMenuItem.Name" xml:space="preserve">
@@ -9000,7 +9000,7 @@
   <data name="&gt;&gt;lbLastMessage.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="hideDS4CheckBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="hideMiCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
   </data>
   <data name="editProfileForController1ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
@@ -9019,7 +9019,7 @@
     <value />
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>DS4Form</value>
+    <value>MiForm</value>
   </data>
   <data name="lbCheckEvery.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -9176,7 +9176,7 @@
     <value>tabLog</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>DS4Windows</value>
+    <value>MiWindows</value>
   </data>
   <data name="&gt;&gt;editToolStripMenuItem.Name" xml:space="preserve">
     <value>editToolStripMenuItem</value>
@@ -9217,7 +9217,7 @@
   <data name="&gt;&gt;cBCloseMini.Parent" xml:space="preserve">
     <value>fLPSettings</value>
   </data>
-  <data name="&gt;&gt;hideDS4CheckBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;hideMiCheckBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="nUDXIPorts.ToolTip" xml:space="preserve">

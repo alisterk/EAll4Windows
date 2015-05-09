@@ -21,7 +21,7 @@ namespace MiWindows
         public SaveWhere(bool multisavespots)
         {
             InitializeComponent();
-            Icon = Properties.Resources.DS4W;
+            Icon = Properties.Resources.MiW;
             multisaves = multisavespots;
             lbMultiSaves.Visible = multisaves;
             cBDeleteOther.Visible = multisaves;
@@ -36,7 +36,7 @@ namespace MiWindows
             Global.SaveWhere(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName);
             if (multisaves && !cBDeleteOther.Checked)
             {
-                try { Directory.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DS4Windows", true); }
+                try { Directory.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MiWindows", true); }
                 catch { }
             }
             else if (!multisaves)
@@ -54,10 +54,10 @@ namespace MiWindows
                     File.Delete(exepath + "\\Profiles.xml");
                     File.Delete(exepath + "\\Auto Profiles.xml");
                 }
-                catch (UnauthorizedAccessException) { MessageBox.Show("Cannot Delete old settings, please manaully delete", "DS4Windows"); }
+                catch (UnauthorizedAccessException) { MessageBox.Show("Cannot Delete old settings, please manaully delete", "MiWindows"); }
             else if (!multisaves)
-                Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DS4Windows\\Profiles.xml");
-            Global.SaveWhere(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DS4Windows");
+                Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MiWindows\\Profiles.xml");
+            Global.SaveWhere(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MiWindows");
             Close();
         }
 
@@ -94,7 +94,7 @@ namespace MiWindows
         private void SaveWhere_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (String.IsNullOrEmpty(Global.appdatapath))
-                if (MessageBox.Show(Properties.Resources.ALocactionNeeded, Properties.Resources.CloseDS4W,
+                if (MessageBox.Show(Properties.Resources.ALocactionNeeded, Properties.Resources.CloseMiW,
              MessageBoxButtons.YesNo) == DialogResult.No)
                     e.Cancel = true;
         }

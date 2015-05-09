@@ -20,7 +20,7 @@ namespace MiWindows
         private Color reg, full;
         private Image colored, greyscale;
         ToolTip tp = new ToolTip();
-        public DS4Form root;
+        public MiForm root;
         bool olddinputcheck = false;
         Image L = Properties.Resources.LeftTouch;
         Image R = Properties.Resources.RightTouch;
@@ -30,7 +30,7 @@ namespace MiWindows
         private float dpiy;
         public Dictionary<string, string> defaults = new Dictionary<string, string>();
         public bool saving;
-        public Options(int deviceNum, string name, DS4Form rt)
+        public Options(int deviceNum, string name, MiForm rt)
         {
             InitializeComponent();
             btnRumbleHeavyTest.Text = Properties.Resources.TestHText;
@@ -108,7 +108,7 @@ namespace MiWindows
                 if (device == 4) //if temp device is called
                     Global.ProfilePath[4] = name;
                 Global.LoadProfile(device, buttons.ToArray(), subbuttons.ToArray(), false, Program.rootHub);
-                DS4Color color = Global.MainColor[device];
+                MiColor color = Global.MainColor[device];
                 tBRedBar.Value = color.red;
                 tBGreenBar.Value = color.green;
                 tBBlueBar.Value = color.blue;
@@ -118,25 +118,25 @@ namespace MiWindows
                 pnlLowBattery.Visible = cBLightbyBattery.Checked;
                 lbFull.Text = (cBLightbyBattery.Checked ? "Full:" : "Color:");
                 pnlFull.Location = new Point(pnlFull.Location.X, (cBLightbyBattery.Checked ? (int)(dpix * 42) : (pnlFull.Location.Y + pnlLowBattery.Location.Y) / 2));
-                DS4Color lowColor = Global.LowColor[device];
+                MiColor lowColor = Global.LowColor[device];
                 tBLowRedBar.Value = lowColor.red;
                 tBLowGreenBar.Value = lowColor.green;
                 tBLowBlueBar.Value = lowColor.blue;
 
-                DS4Color shiftColor = Global.ShiftColor[device];
+                MiColor shiftColor = Global.ShiftColor[device];
                 tBShiftRedBar.Value = shiftColor.red;
                 tBShiftGreenBar.Value = shiftColor.green;
                 tBShiftBlueBar.Value = shiftColor.blue;
                 cBShiftLight.Checked = Global.ShiftColorOn[device];
 
-                DS4Color cColor = Global.ChargingColor[device];
+                MiColor cColor = Global.ChargingColor[device];
                 btnChargingColor.BackColor = Color.FromArgb(cColor.red, cColor.green, cColor.blue);
                 if (Global.FlashType[device] > cBFlashType.Items.Count - 1)
                     cBFlashType.SelectedIndex = 0;
                 else
                     cBFlashType.SelectedIndex = Global.FlashType[device];
-                DS4Color fColor = Global.FlashColor[device];
-                if (fColor.Equals(new DS4Color { red = 0, green = 0, blue = 0 }))
+                MiColor fColor = Global.FlashColor[device];
+                if (fColor.Equals(new MiColor { red = 0, green = 0, blue = 0 }))
                     if (Global.Rainbow[device] == 0)
                         btnFlashColor.BackColor = pBController.BackColor;
                     else
@@ -202,7 +202,7 @@ namespace MiWindows
                 cBTPforControls.Checked = Global.UseTPforControls[device];
                 nUDLSCurve.Value = Global.LSCurve[device];
                 nUDRSCurve.Value = Global.RSCurve[device];
-                cBControllerInput.Checked = Global.DS4Mapping;
+                cBControllerInput.Checked = Global.MiMapping;
             }
             else
             {
@@ -231,7 +231,7 @@ namespace MiWindows
             btnShiftRightStick.Enter += btnShiftSticks_Enter;
             UpdateLists();
             inputtimer.Start();
-            inputtimer.Tick += InputDS4;
+            inputtimer.Tick += InputMi;
             //sixaxisTimer.Tick += ControllerReadout_Tick;
             //sixaxisTimer.Interval = 1000 / 60;
             LoadActions(string.IsNullOrEmpty(filename));
@@ -247,7 +247,7 @@ namespace MiWindows
                 //string type = action.type;
                 switch (action.type)
                 {
-                    case "Macro": lvi.SubItems.Add(Properties.Resources.Macro + (action.keyType.HasFlag(DS4KeyType.ScanCode) ? " (" + Properties.Resources.ScanCode + ")" : "")); break;
+                    case "Macro": lvi.SubItems.Add(Properties.Resources.Macro + (action.keyType.HasFlag(MiKeyType.ScanCode) ? " (" + Properties.Resources.ScanCode + ")" : "")); break;
                     case "Program": lvi.SubItems.Add(Properties.Resources.LaunchProgram.Replace("*program*", Path.GetFileNameWithoutExtension(action.details))); break;
                     case "Profile": lvi.SubItems.Add(Properties.Resources.LoadProfile.Replace("*profile*", action.details)); break;
                     case "Key": lvi.SubItems.Add(((Keys)int.Parse(action.details)).ToString() + (action.uTrigger.Count > 0 ? " (Toggle)" : "")); break;
@@ -300,8 +300,8 @@ namespace MiWindows
         //        SetDynamicTrackBarValue(tBsixaxisAccelY, (Program.rootHub.ExposedState[(int)nUDSixaxis.Value - 1].AccelY + tBsixaxisAccelY.Value * 2) / 3);
         //        SetDynamicTrackBarValue(tBsixaxisAccelZ, (Program.rootHub.ExposedState[(int)nUDSixaxis.Value - 1].AccelZ + tBsixaxisAccelZ.Value * 2) / 3);
 
-        //        int x = Program.rootHub.getDS4State((int)nUDSixaxis.Value - 1).LX;
-        //        int y = Program.rootHub.getDS4State((int)nUDSixaxis.Value - 1).LY;
+        //        int x = Program.rootHub.getMiState((int)nUDSixaxis.Value - 1).LX;
+        //        int y = Program.rootHub.getMiState((int)nUDSixaxis.Value - 1).LY;
         //        //else
         //        //double hypot = Math.Min(127.5f, Math.Sqrt(Math.Pow(x - 127.5f, 2) + Math.Pow(y - 127.5f, 2)));
         //        if (nUDLSCurve.Value > 0)
@@ -335,8 +335,8 @@ namespace MiWindows
         //        else
         //        btnLSTrack.Location = new Point((int)(dpix * x / 2.09 + lbLSTrack.Location.X), (int)(dpiy * y / 2.09 + lbLSTrack.Location.Y));
         //        //*/
-        //        x = Program.rootHub.getDS4State((int)nUDSixaxis.Value - 1).RX;
-        //        y = Program.rootHub.getDS4State((int)nUDSixaxis.Value - 1).RY;
+        //        x = Program.rootHub.getMiState((int)nUDSixaxis.Value - 1).RX;
+        //        y = Program.rootHub.getMiState((int)nUDSixaxis.Value - 1).RY;
         //        if (nUDRSCurve.Value > 0)
         //        {
         //            float max = x + y;
@@ -372,7 +372,7 @@ namespace MiWindows
         //        btnSATrack.Location = new Point((int)(dpix * Clamp(0,x / 2.09,lbSATrack.Size.Width) + lbSATrack.Location.X), (int)(dpiy * Clamp(0,y / 2.09,lbSATrack.Size.Height)  + lbSATrack.Location.Y));
 
 
-        //        tBL2.Value = Program.rootHub.getDS4State((int)nUDSixaxis.Value - 1).L2;
+        //        tBL2.Value = Program.rootHub.getMiState((int)nUDSixaxis.Value - 1).L2;
         //        lbL2Track.Location = new Point(tBL2.Location.X - (int)(dpix * 15), (int)((dpix * (24 - tBL2.Value / 10.625) + 10)));
         //        if (tBL2.Value == 255)
         //            lbL2Track.ForeColor = Color.Green;
@@ -381,7 +381,7 @@ namespace MiWindows
         //        else
         //            lbL2Track.ForeColor = Color.Black;
 
-        //        tBR2.Value = Program.rootHub.getDS4State((int)nUDSixaxis.Value - 1).R2;
+        //        tBR2.Value = Program.rootHub.getMiState((int)nUDSixaxis.Value - 1).R2;
         //        lbR2Track.Location = new Point(tBR2.Location.X + (int)(dpix * 20), (int)((dpix * (24 - tBR2.Value / 10.625) + 10)));
         //        if (tBR2.Value == 255)
         //            lbR2Track.ForeColor = Color.Green;
@@ -407,7 +407,7 @@ namespace MiWindows
             percent /= 100f;
             return value1 * percent + value2 * (1 - percent);
         }
-        private void InputDS4(object sender, EventArgs e)
+        private void InputMi(object sender, EventArgs e)
         {
             if (Form.ActiveForm == root && cBControllerInput.Checked && tabControls.SelectedIndex < 2)
             switch (Program.rootHub.GetInputkeys((int)nUDSixaxis.Value - 1))
@@ -547,15 +547,15 @@ namespace MiWindows
             pnlLowBattery.Visible = cBLightbyBattery.Checked;
             lbFull.Text = (cBLightbyBattery.Checked ? Properties.Resources.Full + ":": Properties.Resources.Color + ":");
             pnlFull.Location = new Point(pnlFull.Location.X, (cBLightbyBattery.Checked ? (int)(dpix * 42) : (pnlFull.Location.Y + pnlLowBattery.Location.Y) / 2));
-            Global.MainColor[device] = new DS4Color((byte)tBRedBar.Value, (byte)tBGreenBar.Value, (byte)tBBlueBar.Value);
-            Global.LowColor[device] = new DS4Color((byte)tBLowRedBar.Value, (byte)tBLowGreenBar.Value, (byte)tBLowBlueBar.Value);
-            Global.ShiftColor[device] = new DS4Color((byte)tBShiftRedBar.Value, (byte)tBShiftGreenBar.Value, (byte)tBShiftBlueBar.Value);
-            Global.ChargingColor[device] = new DS4Color(btnChargingColor.BackColor);
+            Global.MainColor[device] = new MiColor((byte)tBRedBar.Value, (byte)tBGreenBar.Value, (byte)tBBlueBar.Value);
+            Global.LowColor[device] = new MiColor((byte)tBLowRedBar.Value, (byte)tBLowGreenBar.Value, (byte)tBLowBlueBar.Value);
+            Global.ShiftColor[device] = new MiColor((byte)tBShiftRedBar.Value, (byte)tBShiftGreenBar.Value, (byte)tBShiftBlueBar.Value);
+            Global.ChargingColor[device] = new MiColor(btnChargingColor.BackColor);
             Global.FlashType[device] = (byte)cBFlashType.SelectedIndex;
             if (btnFlashColor.BackColor != pBController.BackColor)
-                Global.FlashColor[device] = new DS4Color(btnFlashColor.BackColor);
+                Global.FlashColor[device] = new MiColor(btnFlashColor.BackColor);
             else
-                Global.FlashColor[device] = new DS4Color(Color.Black);
+                Global.FlashColor[device] = new MiColor(Color.Black);
             Global.L2Deadzone[device] = (byte)Math.Round((nUDL2.Value * 255), 0);
             Global.R2Deadzone[device] = (byte)Math.Round((nUDR2.Value * 255), 0);
             Global.RumbleBoost[device] = (byte)nUDRumbleBoost.Value;
@@ -578,7 +578,7 @@ namespace MiWindows
             Global.DinputOnly[device] = cBDinput.Checked;
             Global.StartTouchpadOff[device] = cbStartTouchpadOff.Checked;
             Global.UseTPforControls[device] = cBTPforControls.Checked;
-            Global.DS4Mapping = cBControllerInput.Checked;
+            Global.MiMapping = cBControllerInput.Checked;
             Global.LSCurve[device] = (int)Math.Round(nUDLSCurve.Value, 0);
             Global.RSCurve[device] = (int)Math.Round(nUDRSCurve.Value, 0);
             List<string> pactions = new List<string>();
@@ -705,7 +705,7 @@ namespace MiWindows
                 tBBlueBar.Value = advColorDialog.Color.B;
             }
             //if (device < 4)
-            //    DS4LightBar.forcelight[device] = false;
+            //    MiLightBar.forcelight[device] = false;
         }
         private void lowColorChooserButton_Click(object sender, EventArgs e)
         {
@@ -719,7 +719,7 @@ namespace MiWindows
                 tBLowBlueBar.Value = advColorDialog.Color.B;
             }
             //if (device < 4)
-            //    DS4LightBar.forcelight[device] = false;
+            //    MiLightBar.forcelight[device] = false;
         }
 
 
@@ -732,18 +732,18 @@ namespace MiWindows
                 btnChargingColor.BackColor = advColorDialog.Color;
             }
             //if (device < 4)
-            //    DS4LightBar.forcelight[device] = false;
-            Global.ChargingColor[device] = new DS4Color(btnChargingColor.BackColor);
+            //    MiLightBar.forcelight[device] = false;
+            Global.ChargingColor[device] = new MiColor(btnChargingColor.BackColor);
         }
         private void advColorDialog_OnUpdateColor(object sender, EventArgs e)
         {
             if (sender is Color && device < 4)
             {
                 Color color = (Color)sender;
-                DS4Color dcolor = new DS4Color { red = color.R, green = color.G, blue = color.B };
-                //DS4LightBar.forcedColor[device] = dcolor;
-                //DS4LightBar.forcedFlash[device] = 0;
-                //DS4LightBar.forcelight[device] = true;
+                MiColor dcolor = new MiColor { red = color.R, green = color.G, blue = color.B };
+                //MiLightBar.forcedColor[device] = dcolor;
+                //MiLightBar.forcedFlash[device] = 0;
+                //MiLightBar.forcelight[device] = true;
             }
         }
         int bgc = 255; //Color of the form background, If greyscale color
@@ -757,7 +757,7 @@ namespace MiWindows
             reg = Color.FromArgb(tBRedBar.Value, tBGreenBar.Value, tBBlueBar.Value);
             full = HuetoRGB(reg.GetHue(), reg.GetBrightness(), reg);
             pBController.BackColor = Color.FromArgb((alphacolor > 205 ? 255 : (alphacolor + 50)), full);
-            Global.MainColor[device] = new DS4Color((byte)tBRedBar.Value, (byte)tBGreenBar.Value, (byte)tBBlueBar.Value);
+            Global.MainColor[device] = new MiColor((byte)tBRedBar.Value, (byte)tBGreenBar.Value, (byte)tBBlueBar.Value);
             if (!saving)
                 tp.Show(((TrackBar)sender).Value.ToString(), ((TrackBar)sender), (int)(dpix * 100), 0, 2000);
         }
@@ -771,7 +771,7 @@ namespace MiWindows
             reg = Color.FromArgb(tBRedBar.Value, tBGreenBar.Value, tBBlueBar.Value);
             full = HuetoRGB(reg.GetHue(), reg.GetBrightness(), reg);
             pBController.BackColor = Color.FromArgb((alphacolor > 205 ? 255 : (alphacolor + 50)), full);
-            Global.MainColor[device] = new DS4Color((byte)tBRedBar.Value, (byte)tBGreenBar.Value, (byte)tBBlueBar.Value);
+            Global.MainColor[device] = new MiColor((byte)tBRedBar.Value, (byte)tBGreenBar.Value, (byte)tBBlueBar.Value);
             if (!saving)
                 tp.Show(((TrackBar)sender).Value.ToString(), ((TrackBar)sender), (int)(100*dpix), 0, 2000);
         }
@@ -785,7 +785,7 @@ namespace MiWindows
             reg = Color.FromArgb(tBRedBar.Value, tBGreenBar.Value, tBBlueBar.Value);
             full = HuetoRGB(reg.GetHue(), reg.GetBrightness(), reg);
             pBController.BackColor = Color.FromArgb((alphacolor > 205 ? 255 : (alphacolor + 50)), full);
-            Global.MainColor[device] = new DS4Color((byte)tBRedBar.Value, (byte)tBGreenBar.Value, (byte)tBBlueBar.Value);
+            Global.MainColor[device] = new MiColor((byte)tBRedBar.Value, (byte)tBGreenBar.Value, (byte)tBBlueBar.Value);
             if (!saving)
                 tp.Show(((TrackBar)sender).Value.ToString(), ((TrackBar)sender), (int)(100 * dpix), 0, 2000);
         }
@@ -800,7 +800,7 @@ namespace MiWindows
             reg = Color.FromArgb(tBLowRedBar.Value, tBLowGreenBar.Value, tBLowBlueBar.Value);
             full = HuetoRGB(reg.GetHue(), reg.GetBrightness(), reg);
             lowColorChooserButton.BackColor = Color.FromArgb((alphacolor > 205 ? 255 : (alphacolor + 50)), full);
-            Global.LowColor[device] = new DS4Color((byte)tBLowRedBar.Value, (byte)tBLowGreenBar.Value, (byte)tBLowBlueBar.Value);
+            Global.LowColor[device] = new MiColor((byte)tBLowRedBar.Value, (byte)tBLowGreenBar.Value, (byte)tBLowBlueBar.Value);
             if (!saving)
                 tp.Show(((TrackBar)sender).Value.ToString(), ((TrackBar)sender), (int)(100 * dpix), 0, 2000);
         }
@@ -815,7 +815,7 @@ namespace MiWindows
             reg = Color.FromArgb(tBLowRedBar.Value, tBLowGreenBar.Value, tBLowBlueBar.Value);
             full = HuetoRGB(reg.GetHue(), reg.GetBrightness(), reg);
             lowColorChooserButton.BackColor = Color.FromArgb((alphacolor > 205 ? 255 : (alphacolor + 50)), full);
-            Global.LowColor[device] = new DS4Color((byte)tBLowRedBar.Value, (byte)tBLowGreenBar.Value, (byte)tBLowBlueBar.Value);
+            Global.LowColor[device] = new MiColor((byte)tBLowRedBar.Value, (byte)tBLowGreenBar.Value, (byte)tBLowBlueBar.Value);
             if (!saving)
                 tp.Show(((TrackBar)sender).Value.ToString(), ((TrackBar)sender), (int)(100 * dpix), 0, 2000);
         }
@@ -830,7 +830,7 @@ namespace MiWindows
             reg = Color.FromArgb(tBLowRedBar.Value, tBLowGreenBar.Value, tBLowBlueBar.Value);
             full = HuetoRGB(reg.GetHue(), reg.GetBrightness(), reg);
             lowColorChooserButton.BackColor = Color.FromArgb((alphacolor > 205 ? 255 : (alphacolor + 50)), full);
-            Global.LowColor[device] = new DS4Color((byte)tBLowRedBar.Value, (byte)tBLowGreenBar.Value, (byte)tBLowBlueBar.Value);
+            Global.LowColor[device] = new MiColor((byte)tBLowRedBar.Value, (byte)tBLowGreenBar.Value, (byte)tBLowBlueBar.Value);
             if (!saving)
                 tp.Show(((TrackBar)sender).Value.ToString(), ((TrackBar)sender), (int)(100 * dpix), 0, 2000);
         }
@@ -845,7 +845,7 @@ namespace MiWindows
             reg = Color.FromArgb(tBShiftRedBar.Value, tBShiftGreenBar.Value, tBShiftBlueBar.Value);
             full = HuetoRGB(reg.GetHue(), reg.GetBrightness(), reg);
             pBShiftController.BackColor = Color.FromArgb((alphacolor > 205 ? 255 : (alphacolor + 50)), full);
-            Global.ShiftColor[device] = new DS4Color((byte)tBShiftRedBar.Value, (byte)tBShiftGreenBar.Value, (byte)tBShiftBlueBar.Value);
+            Global.ShiftColor[device] = new MiColor((byte)tBShiftRedBar.Value, (byte)tBShiftGreenBar.Value, (byte)tBShiftBlueBar.Value);
             if (!saving)
                 tp.Show(((TrackBar)sender).Value.ToString(), ((TrackBar)sender), (int)(100 * dpix), 0, 2000);
         }
@@ -860,7 +860,7 @@ namespace MiWindows
             reg = Color.FromArgb(tBShiftRedBar.Value, tBShiftGreenBar.Value, tBShiftBlueBar.Value);
             full = HuetoRGB(reg.GetHue(), reg.GetBrightness(), reg);
             pBShiftController.BackColor = Color.FromArgb((alphacolor > 205 ? 255 : (alphacolor + 50)), full);
-            Global.ShiftColor[device] = new DS4Color((byte)tBShiftRedBar.Value, (byte)tBShiftGreenBar.Value, (byte)tBShiftBlueBar.Value);
+            Global.ShiftColor[device] = new MiColor((byte)tBShiftRedBar.Value, (byte)tBShiftGreenBar.Value, (byte)tBShiftBlueBar.Value);
             if (!saving)
                 tp.Show(((TrackBar)sender).Value.ToString(), ((TrackBar)sender), (int)(100 * dpix), 0, 2000);
         }
@@ -875,7 +875,7 @@ namespace MiWindows
             reg = Color.FromArgb(tBShiftRedBar.Value, tBShiftGreenBar.Value, tBShiftBlueBar.Value);
             full = HuetoRGB(reg.GetHue(), reg.GetBrightness(), reg);
             pBShiftController.BackColor = Color.FromArgb((alphacolor > 205 ? 255 : (alphacolor + 50)), full);
-            Global.ShiftColor[device] = new DS4Color((byte)tBShiftRedBar.Value, (byte)tBShiftGreenBar.Value, (byte)tBShiftBlueBar.Value);
+            Global.ShiftColor[device] = new MiColor((byte)tBShiftRedBar.Value, (byte)tBShiftGreenBar.Value, (byte)tBShiftBlueBar.Value);
             if (!saving)
                 tp.Show(((TrackBar)sender).Value.ToString(), ((TrackBar)sender), (int)(100 * dpix), 0, 2000);
         }
@@ -1400,7 +1400,7 @@ namespace MiWindows
 
         private void Toucpad_Leave(object sender, EventArgs e)
         {
-            pBController.Image = Properties.Resources.DS4_Controller;
+            pBController.Image = Properties.Resources.Mi_Controller;
         }
 
         private void numUDRS_ValueChanged(object sender, EventArgs e)
@@ -1731,7 +1731,7 @@ namespace MiWindows
 
         private void cBControllerInput_CheckedChanged(object sender, EventArgs e)
         {
-            Global.DS4Mapping=cBControllerInput.Checked;
+            Global.MiMapping=cBControllerInput.Checked;
         }
 
         private void btnAddAction_Click(object sender, EventArgs e)
@@ -2113,15 +2113,15 @@ namespace MiWindows
                     btnFlashColor.BackColor = advColorDialog.Color;
                 else
                     btnFlashColor.BackColor = pBController.BackColor;
-                Global.FlashColor[device] = new DS4Color(advColorDialog.Color);
+                Global.FlashColor[device] = new MiColor(advColorDialog.Color);
             }
             //if (device < 4)
-            //    DS4LightBar.forcelight[device] = false;
+            //    MiLightBar.forcelight[device] = false;
         }
 
         private void pBController_BackColorChanged(object sender, EventArgs e)
         {
-            if (Global.FlashColor[device].Equals(new DS4Color { red = 0, green = 0, blue = 0 }))
+            if (Global.FlashColor[device].Equals(new MiColor { red = 0, green = 0, blue = 0 }))
             {
                 btnFlashColor.BackColor = pBController.BackColor;
             }
