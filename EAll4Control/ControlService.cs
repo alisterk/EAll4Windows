@@ -6,7 +6,10 @@ using System.Text;
 using System.IO;
 using System.Reflection;
 using System.Media;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+
 namespace EAll4Windows
 {
     public class ControlService
@@ -142,6 +145,8 @@ namespace EAll4Windows
                                 LogDebug(prolog);
                                 Log.LogToTray(prolog);
                             }
+
+                        
                         if (ind >= 4) // out of Xinput devices!
                             break;
                     }
@@ -151,9 +156,11 @@ namespace EAll4Windows
                     LogDebug(e.Message);
                     Log.LogToTray(e.Message);
                 }
+                Application.DoEvents();
                 running = true;
 
             }
+            Application.DoEvents();
             return true;
         }
 
@@ -247,10 +254,14 @@ namespace EAll4Windows
                                 Log.LogToTray(prolog);
                             }
 
+                            Application.DoEvents();
+
+                           
                             break;
                         }
                 }
             }
+            Application.DoEvents();
             return true;
         }
 

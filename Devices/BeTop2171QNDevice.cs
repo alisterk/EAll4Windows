@@ -54,6 +54,10 @@ namespace EAll4Windows.Devices
         public int Battery { get { return battery; } }
         public bool Charging { get { return charging; } }
 
+
+        public bool _isAvaliable;
+       
+
         public byte RightLightFastRumble
         {
             get { return rightLightFastRumble; }
@@ -97,6 +101,11 @@ namespace EAll4Windows.Devices
             hDevice = hidDevice;
             conType = HidConnectionType(hDevice);
             Mac = hDevice.readSerial();
+
+            if (!string.IsNullOrEmpty(Mac))
+            {
+                _isAvaliable = true;
+            }
 
             //var irb = hDevice.Capabilities.InputReportByteLength;
             //var aa = hDevice.Capabilities.OutputReportByteLength;
@@ -179,7 +188,7 @@ namespace EAll4Windows.Devices
         /** Is the device alive and receiving valid sensor input reports? */
         public bool IsAlive()
         {
-            return true;// priorInputReport30 != 0xff;
+            return _isAvaliable;// priorInputReport30 != 0xff;
         }
         private byte priorInputReport30 = 0xff;
         public double Latency { get; set; } = 0;
@@ -227,8 +236,21 @@ namespace EAll4Windows.Devices
                     readTimeout.Enabled = false;
                     if (res == HidDevice.ReadStatus.Success)
                     {
+                        _isAvaliable = true;
                         Array.Copy(btInputReport, 0, inputReport, 0, inputReport.Length);
                     }
+                    else
+                    {
+                        _isAvaliable = false;
+                        Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> disconnect due to read failure: " + Marshal.GetLastWin32Error());
+                        IsDisconnecting = true;
+                        if (Removal != null)
+                            Removal(this, EventArgs.Empty);
+
+                        break;
+                        return;
+                    }
+
                     //else
                     //{
                     //    Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> disconnect due to read failure: " + Marshal.GetLastWin32Error());
