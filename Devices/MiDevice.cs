@@ -153,16 +153,19 @@ namespace EAll4Windows
 
         private void StopOutputUpdate()
         {
-            if (eall4Output.ThreadState != System.Threading.ThreadState.Stopped || eall4Output.ThreadState != System.Threading.ThreadState.Aborted)
+            if (eall4Output != null)
             {
-                try
+                if (eall4Output.ThreadState != System.Threading.ThreadState.Stopped || eall4Output.ThreadState != System.Threading.ThreadState.Aborted)
                 {
-                    eall4Output.Abort();
-                    eall4Output.Join();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
+                    try
+                    {
+                        eall4Output.Abort();
+                        eall4Output.Join();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
                 }
             }
         }
