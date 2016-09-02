@@ -98,8 +98,8 @@ namespace EAll4Windows.Devices
             conType = HidConnectionType(hDevice);
             Mac = hDevice.readSerial();
 
-            var irb = hDevice.Capabilities.InputReportByteLength;
-            var aa = hDevice.Capabilities.OutputReportByteLength;
+            //var irb = hDevice.Capabilities.InputReportByteLength;
+            //var aa = hDevice.Capabilities.OutputReportByteLength;
 
             //if (conType == ConnectionType.USB)
             //{
@@ -278,7 +278,7 @@ namespace EAll4Windows.Devices
                 cState.Y = ((byte)inputReport[1] & Convert.ToByte(16)) != 0; //ok
                 switch (inputReport[3])
                 {
-                   // case 0:  break; //cState.DpadUp = true; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = false;
+                    case 0:cState.DpadUp = true; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = false;break;
                     case 1: cState.DpadUp = true; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = false; break;
                     case 2: cState.DpadUp = false; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = true; break;
                     case 3: cState.DpadUp = false; cState.DpadDown = true; cState.DpadLeft = false; cState.DpadRight = true; break;
