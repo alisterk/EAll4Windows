@@ -12,7 +12,7 @@ namespace EAll4Windows.Devices
 {
     class BeTop2171QNDevice : IEAll4Device
     {
-        private const int InputReportByteLengthBT = 24;
+        private const int InputReportByteLengthBT = 64;
         private HidDevice hDevice;
         private string Mac;
         private ControllerState cState = new ControllerState();
@@ -22,7 +22,7 @@ namespace EAll4Windows.Devices
         //private byte[] gyro = new byte[6];
         private byte[] inputReport;
         private byte[] btInputReport = null;
-        //private byte[] outputReportBuffer, outputReport;
+        private byte[] outputReportBuffer, outputReport;
         //private EAll4Touchpad touchpad = null;
         private byte rightLightFastRumble;
         private byte leftHeavySlowRumble;
@@ -120,8 +120,8 @@ namespace EAll4Windows.Devices
             //{
             btInputReport = new byte[InputReportByteLengthBT];
             inputReport = new byte[btInputReport.Length - 2];
-            //outputReport = new byte[OutputReportByteLengthBT];
-            //outputReportBuffer = new byte[OutputReportByteLengthBT];
+            outputReport = new byte[3];
+            outputReportBuffer = new byte[3];
             //}
             //touchpad = new EAll4Touchpad();
         }
@@ -131,7 +131,7 @@ namespace EAll4Windows.Devices
             if (eall4Input == null)
             {
                 Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> start");
-                //sendOutputReport(true); // initialize the output report
+                sendOutputReport(true); // initialize the output report
                 //eall4Output = new Thread(performEAll4Output);
                 //eall4Output.Name = "EAll4 Output thread: " + Mac;
                 //eall4Output.Start();
@@ -251,6 +251,9 @@ namespace EAll4Windows.Devices
                         return;
                     }
 
+
+                   
+
                     //else
                     //{
                     //    Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> disconnect due to read failure: " + Marshal.GetLastWin32Error());
@@ -285,14 +288,16 @@ namespace EAll4Windows.Devices
                 DateTime utcNow = System.DateTime.UtcNow; // timestamp with UTC in case system time zone changes
                 //resetHapticState();
                 cState.ReportTimeStamp = utcNow;
-                cState.LX = inputReport[4];
-                cState.LY = inputReport[5];
-                cState.RX = inputReport[6];
-                cState.RY = inputReport[7];
+                cState.LX = inputReport[4];// left joystick x-axis//左摇杆x轴
+                cState.LY = inputReport[5];// left joystick y-axis//左摇杆Y轴
+                cState.RX = inputReport[6];// right joystick x-axis//右摇杆x轴
+                cState.RY = inputReport[7];//right joystick y-axis//右摇杆y轴
 
 
                 cState.LT = inputReport[8];
                 cState.RT = inputReport[9];
+                cState.LB = ((byte)inputReport[1] & Convert.ToByte(64)) != 0;
+                cState.RB = ((byte)inputReport[1] & Convert.ToByte(128)) != 0;
 
                 cState.A = ((byte)inputReport[1] & Convert.ToByte(1)) != 0;  // ok
                 cState.B = ((byte)inputReport[1] & Convert.ToByte(2)) != 0; //ok
@@ -300,14 +305,14 @@ namespace EAll4Windows.Devices
                 cState.Y = ((byte)inputReport[1] & Convert.ToByte(16)) != 0; //ok
                 switch (inputReport[3])
                 {
-                    case 0:cState.DpadUp = true; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = false;break;
-                    case 1: cState.DpadUp = true; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = false; break;
-                    case 2: cState.DpadUp = false; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = true; break;
-                    case 3: cState.DpadUp = false; cState.DpadDown = true; cState.DpadLeft = false; cState.DpadRight = true; break;
-                    case 4: cState.DpadUp = false; cState.DpadDown = true; cState.DpadLeft = false; cState.DpadRight = false; break;
-                    case 5: cState.DpadUp = false; cState.DpadDown = true; cState.DpadLeft = true; cState.DpadRight = false; break;
-                    case 6: cState.DpadUp = false; cState.DpadDown = false; cState.DpadLeft = true; cState.DpadRight = false; break;
-                    case 7: cState.DpadUp = true; cState.DpadDown = false; cState.DpadLeft = true; cState.DpadRight = false; break;
+                    case 0:cState.DpadUp = true; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = false;break; //up
+                    case 1: cState.DpadUp = true; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = true; break;//up right//fixed on 2016-12-28
+                    case 2: cState.DpadUp = false; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = true; break;//right
+                    case 3: cState.DpadUp = false; cState.DpadDown = true; cState.DpadLeft = false; cState.DpadRight = true; break;//down right
+                    case 4: cState.DpadUp = false; cState.DpadDown = true; cState.DpadLeft = false; cState.DpadRight = false; break;//down
+                    case 5: cState.DpadUp = false; cState.DpadDown = true; cState.DpadLeft = true; cState.DpadRight = false; break;//down left
+                    case 6: cState.DpadUp = false; cState.DpadDown = false; cState.DpadLeft = true; cState.DpadRight = false; break;// left
+                    case 7: cState.DpadUp = true; cState.DpadDown = false; cState.DpadLeft = true; cState.DpadRight = false; break;//up left
                     default: cState.DpadUp = false; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = false; break;
                 }
 
@@ -318,22 +323,153 @@ namespace EAll4Windows.Devices
                 var back = ((byte)inputReport[2] & Convert.ToByte(4)) != 0;
                 cState.Start = menu;
                 cState.Back = back;
-                cState.LB = ((byte)inputReport[1] & Convert.ToByte(64)) != 0;
-                cState.RB = ((byte)inputReport[1] & Convert.ToByte(128)) != 0;
+               
 
                 cState.Guide = menu && leftStick;
                 // XXX fix initialization ordering so the null checks all go away
+
+                //battery level, the be-top protocal look like not contain battery data.. can not display battery level for now.
+                //var batteryLevel = Convert.ToInt32(inputReport[18]) / 255;
+                //battery = batteryLevel;
+
+                //cState.Battery = 60;
+
                 if (Report != null)
                     Report(this, EventArgs.Empty);
                 //sendOutputReport(false);
+
+                // the be-top bluetooth report protocal unknow fo now , the rumble function can not supported.
+                //sendOutputReport(false);
+
+
                 if (!string.IsNullOrEmpty(error))
                     error = string.Empty;
                 if (!string.IsNullOrEmpty(currerror))
                     error = currerror;
                 cState.CopyTo(pState);
+
+              
+                
+
+            }
+        }
+        private void performEAll4Output()
+        {
+            lock (outputReport)
+            {
+                int lastError = 0;
+                while (true)
+                {
+                    if (writeOutput())
+                    {
+                        lastError = 0;
+                        if (testRumble.IsRumbleSet()) // repeat test rumbles periodically; rumble has auto-shut-off in the EAll4 firmware
+                            Monitor.Wait(outputReport, 10000); // EAll4 firmware stops it after 5 seconds, so let the motors rest for that long, too.
+                        else
+                            Monitor.Wait(outputReport);
+                    }
+                    else
+                    {
+                        int thisError = Marshal.GetLastWin32Error();
+                        if (lastError != thisError)
+                        {
+                            Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> encountered write failure: " + thisError);
+                            lastError = thisError;
+                        }
+                    }
+                }
+            }
+        }
+        private bool writeOutput()
+        {
+            //if (conType == ConnectionType.BT)
+            //{
+             
+                return hDevice.WriteOutputReportViaControl(outputReport);
+            //}
+            
+        }
+        private void setTestRumble()
+        {
+            if (testRumble.IsRumbleSet())
+            {
+                pushHapticState(testRumble);
+                if (testRumble.RumbleMotorsExplicitlyOff)
+                    testRumble.RumbleMotorsExplicitlyOff = false;
             }
         }
 
+        private byte lastRightLight;
+        private byte lastLeftHeavy;
+        private void sendOutputReport(bool synchronous)
+        {
+            setTestRumble();
+          
+            if (conType == ConnectionType.BT)
+            {
+                var changed = false;
+
+                if (lastRightLight != testRumble.RumbleMotorStrengthRightLightFast)
+                {
+                    lastRightLight = testRumble.RumbleMotorStrengthRightLightFast;
+
+                    changed = true;
+
+                }
+
+                if (lastLeftHeavy != testRumble.RumbleMotorStrengthLeftHeavySlow)
+                {
+                    lastLeftHeavy = testRumble.RumbleMotorStrengthLeftHeavySlow;
+                    changed = true;
+                }
+
+                if (changed)
+                {
+                    outputReportBuffer[0] = 0x20;
+                    outputReportBuffer[1] = testRumble.RumbleMotorStrengthRightLightFast;
+                    outputReportBuffer[1] = testRumble.RumbleMotorStrengthLeftHeavySlow;
+
+                    hDevice.WriteOutputReportViaControl(outputReportBuffer);
+                }
+
+
+               
+
+
+            }
+           
+            //lock (outputReport)
+            //{
+            //    if (synchronous)
+            //    {
+            //        outputReportBuffer.CopyTo(outputReport, 0);
+            //        try
+            //        {
+            //            if (!writeOutput())
+            //            {
+            //                Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> encountered synchronous write failure: " + Marshal.GetLastWin32Error());
+            //                eall4Output.Abort();
+            //                eall4Output.Join();
+            //            }
+            //        }
+            //        catch
+            //        {
+            //            // If it's dead already, don't worry about it.
+            //        }
+            //    }
+            //    else
+            //    {
+            //        bool output = false;
+            //        for (int i = 0; !output && i < outputReport.Length; i++)
+            //            output = outputReport[i] != outputReportBuffer[i];
+            //        if (output)
+            //        {
+            //            outputReportBuffer.CopyTo(outputReport, 0);
+            //            Monitor.Pulse(outputReport);
+            //        }
+            //    }
+            //}
+        }
         public void FlushHID()
         {
             hDevice.flush_Queue();
@@ -388,9 +524,27 @@ namespace EAll4Windows.Devices
         private EAll4HapticState testRumble = new EAll4HapticState();
         public void setRumble(byte rightLightFastMotor, byte leftHeavySlowMotor)
         {
+            //if (rightLightFastMotor != 0 || leftHeavySlowMotor != 0)
+            //{
+            //    //test rumble.
+
+            //    if (leftHeavySlowMotor != 0)
+            //    {
+            //        Console.WriteLine("havi rumble:" + leftHeavySlowMotor.ToString());
+            //    }
+
+            //    if (rightLightFastMotor != 0)
+            //    {
+            //        Console.WriteLine("rumble light:" + rightLightFastMotor.ToString());
+            //    }
+            //}
+
             testRumble.RumbleMotorStrengthRightLightFast = rightLightFastMotor;
             testRumble.RumbleMotorStrengthLeftHeavySlow = leftHeavySlowMotor;
             testRumble.RumbleMotorsExplicitlyOff = rightLightFastMotor == 0 && leftHeavySlowMotor == 0;
+
+            
+
         }
 
         public void pushHapticState(EAll4HapticState haptics)
