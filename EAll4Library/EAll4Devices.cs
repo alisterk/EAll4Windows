@@ -111,10 +111,16 @@ namespace EAll4Windows
         {
             lock (Devices)
             {
+                
                 IEAll4Device ieAll4Device = (IEAll4Device)sender;
-                ieAll4Device.HidDevice.CloseDevice();
-                Devices.Remove(ieAll4Device.MacAddress);
-                DevicePaths.Remove(ieAll4Device.HidDevice.DevicePath);
+
+                if (!ieAll4Device.IsAlive())
+                {
+                    ieAll4Device.HidDevice.CloseDevice();
+                    Devices.Remove(ieAll4Device.MacAddress);
+                    DevicePaths.Remove(ieAll4Device.HidDevice.DevicePath);
+                }
+             
             }
         }
     }

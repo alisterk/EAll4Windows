@@ -425,14 +425,18 @@ namespace EAll4Windows
                     ind = i;
             if (ind != -1)
             {
-                CurrentState[ind].Battery = PreviousState[ind].Battery = 0; // Reset for the next connection's initial status change.
-                x360Bus.Unplug(ind);
-                LogDebug(Properties.Resources.ControllerWasRemoved.Replace("*Mac address*", ieAll4Device.MacAddress));
-                Log.LogToTray(Properties.Resources.ControllerWasRemoved.Replace("*Mac address*", ieAll4Device.MacAddress));
-                System.Threading.Thread.Sleep(XINPUT_UNPLUG_SETTLE_TIME);
-                controllers[ind] = null;
-                touchPad[ind] = null;
-                Global.ControllerStatusChanged(this);
+                var device = (IEAll4Device) sender;
+                if (!device.IsAlive())
+                {
+                    CurrentState[ind].Battery = PreviousState[ind].Battery = 0; // Reset for the next connection's initial status change.
+                    x360Bus.Unplug(ind);
+                    LogDebug(Properties.Resources.ControllerWasRemoved.Replace("*Mac address*", ieAll4Device.MacAddress));
+                    Log.LogToTray(Properties.Resources.ControllerWasRemoved.Replace("*Mac address*", ieAll4Device.MacAddress));
+                    System.Threading.Thread.Sleep(XINPUT_UNPLUG_SETTLE_TIME);
+                    controllers[ind] = null;
+                    touchPad[ind] = null;
+                    Global.ControllerStatusChanged(this);
+                }
             }
         }
         public bool[] lag = { false, false, false, false };
