@@ -92,7 +92,7 @@ namespace EAll4Windows
             if (EAll4Devices.isExclusiveMode && !ieAll4Device.IsExclusive)
             {
                 await System.Threading.Tasks.Task.Delay(5);
-                String message = Properties.Resources.CouldNotOpenEAll4.Replace("*Mac address*", ieAll4Device.MacAddress) + " " + Properties.Resources.QuitOtherPrograms;
+                String message = Properties.Resources.CouldNotOpenEAll4.Replace("*Mac address*", ieAll4Device.MacAddress) + " WarnExclusiveModeFailure " + Properties.Resources.QuitOtherPrograms;
                 LogDebug(message, true);
                 Log.LogToTray(message);
             }
@@ -430,8 +430,9 @@ namespace EAll4Windows
                 {
                     CurrentState[ind].Battery = PreviousState[ind].Battery = 0; // Reset for the next connection's initial status change.
                     x360Bus.Unplug(ind);
-                    LogDebug(Properties.Resources.ControllerWasRemoved.Replace("*Mac address*", ieAll4Device.MacAddress));
-                    Log.LogToTray(Properties.Resources.ControllerWasRemoved.Replace("*Mac address*", ieAll4Device.MacAddress));
+                    LogDebug(Properties.Resources.ControllerWasRemoved.Replace("*Mac address*", ieAll4Device.MacAddress) + sender.ToString());
+                    Nlog.Debug(Properties.Resources.ControllerWasRemoved.Replace("*Mac address*", ieAll4Device.MacAddress) + sender.ToString()+"on_eall4removal");
+                    Log.LogToTray(Properties.Resources.ControllerWasRemoved.Replace("*Mac address*", ieAll4Device.MacAddress)+sender.ToString());
                     System.Threading.Thread.Sleep(XINPUT_UNPLUG_SETTLE_TIME);
                     controllers[ind] = null;
                     touchPad[ind] = null;

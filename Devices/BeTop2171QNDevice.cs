@@ -245,6 +245,8 @@ namespace EAll4Windows.Devices
                         Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> disconnect due to read failure: " + Marshal.GetLastWin32Error());
                         Log.LogToTray(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") +
                                       "> disconnect due to read failure(notUsb): " + Marshal.GetLastWin32Error());
+                        Nlog.Debug(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") +
+                                   "> disconnect due to read failure(notUsb): " + Marshal.GetLastWin32Error());
                         IsDisconnecting = true;
                         if (Removal != null)
                             Removal(this, EventArgs.Empty);
@@ -277,6 +279,9 @@ namespace EAll4Windows.Devices
                         Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> disconnect due to read failure: " + Marshal.GetLastWin32Error());
                         Log.LogToTray(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") +
                                       "> disconnect due to read failure(USB): " + Marshal.GetLastWin32Error());
+
+                        Nlog.Debug(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") +
+                                   "> disconnect due to read failure(USB): " + Marshal.GetLastWin32Error());
                         StopOutputUpdate();
                         IsDisconnecting = true;
                         if (Removal != null)
@@ -512,6 +517,7 @@ namespace EAll4Windows.Devices
                 }
                 NativeMethods.BluetoothFindRadioClose(searchHandle);
                 Console.WriteLine("Disconnect successful: " + success);
+               Nlog.Debug("Disconnect successful(DisconnectBT): " + success);
                 Log.LogToTray("Disconnect successful(DisconnectBT): " + success);
                 success = true; // XXX return value indicates failure, but it still works?
                 if (success)
